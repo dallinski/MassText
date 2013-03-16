@@ -14,13 +14,17 @@ public class URItools {
 	
 	Context context;
 
-	public void myMethod(String phoneNumber, QuickContactBadge qcb, Context c) {
+	public void setContactUri(String phoneNumber, QuickContactBadge qcb, Context c) {
 		context = c;
 
 	    String contactId = fetchContactIdFromPhoneNumber(phoneNumber); 
-	    Uri uri = getPhotoUri(Long.parseLong(contactId));
-	    qcb.setImageBitmap(loadContactPhoto(context.getContentResolver(), Long.parseLong(contactId)));
-
+	    try {
+			Long photoUriLong = Long.parseLong(contactId);
+			Uri uri = getPhotoUri(photoUriLong);
+		    qcb.setImageBitmap(loadContactPhoto(context.getContentResolver(), photoUriLong));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String fetchContactIdFromPhoneNumber(String phoneNumber) {

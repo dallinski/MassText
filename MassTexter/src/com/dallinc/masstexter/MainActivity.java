@@ -276,7 +276,11 @@ public class MainActivity extends FragmentActivity {
 		
 	    builder.setPositiveButton("Insert", new DialogInterface.OnClickListener() {
 		    @Override
-		    public void onClick(DialogInterface dialog, int which) {		    	
+		    public void onClick(DialogInterface dialog, int which) {	
+		    	if(inputTitle.getText().toString().length() < 1){
+	    			Toast.makeText(getApplicationContext(), "You didn't write a variable name!", Toast.LENGTH_SHORT).show();
+		    		return;
+	    		}
 		    	if(edit){
 		    		String textToInsert = "%" + inputTitle.getText().toString() + "%";
 		        	int start = myEditText.getSelectionStart();

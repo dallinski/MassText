@@ -38,6 +38,7 @@ public class EditGroup extends Activity {
 				return;
 			}
 		}
+		group = new Group("New Group");
 	}
 	
 	public void updateList(){
@@ -52,7 +53,7 @@ public class EditGroup extends Activity {
 			QuickContactBadge qcb = (QuickContactBadge) view.findViewById(R.id.quickContactBadge1);
 			qcb.assignContactFromPhone(group.get(i).number(), true);
 			URItools uriTools = new URItools();
-			uriTools.myMethod(group.get(i).number(), qcb, this);
+			uriTools.setContactUri(group.get(i).number(), qcb, this);
 			TextView nameView = (TextView) view.findViewById(R.id.contact_name);
 			nameView.setText(group.get(i).name());
 			TextView numView = (TextView) view.findViewById(R.id.contact_number);
