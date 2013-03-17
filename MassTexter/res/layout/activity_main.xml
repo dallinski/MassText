@@ -59,79 +59,62 @@
         android:text="@string/finalize" />
 
     <LinearLayout
-        android:id="@+id/messages_cluster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:layout_above="@+id/groups_cluster"
-        android:showDividers="middle" >
-
-        <Button
-            android:id="@+id/messages_add_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/messages_add"
-            android:onClick="addMessage" />
-
-        <Button
-            android:id="@+id/messages_delete_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/messages_delete"
-            android:onClick="deleteMessage" />
-
-        <Button
-            android:id="@+id/messages_edit_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/messages_edit"
-            android:onClick="editMessage" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/groups_cluster"
+        android:id="@+id/management_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="5dp"
         android:showDividers="middle" >
-
+        
         <Button
-            android:id="@+id/groups_add_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/groups_add"
-            android:onClick="addGroup" />
-
-        <Button
-            android:id="@+id/groups_delete_button"
+            android:id="@+id/manage_groups"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/groups_delete"
-            android:onClick="deleteGroup" />
-
+            android:background="@drawable/groups_manage"
+            android:onClick="goToGroupManagement" />
+        
         <Button
-            android:id="@+id/groups_edit_button"
+            android:id="@+id/manage_messages"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/groups_edit"
-            android:onClick="editGroup" />
+            android:layout_marginRight="15dp"
+            android:background="@drawable/messages_manage"
+            android:onClick="goToMessageManagement" />
+        
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/finalize"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true" >
+        
+        <TextView
+	        android:id="@+id/preview_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:text="Preview:"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <TextView
+            android:id="@+id/preview_message"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/preview_title"
+            android:layout_marginTop="3dp"
+            android:textColor="#A3A3A3"
+            android:typeface="sans" />
+        
+    </RelativeLayout>
 
 </RelativeLayout>

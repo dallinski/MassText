@@ -2,6 +2,7 @@ package com.dallinc.masstexter;
 
 import java.text.*;
 import java.util.*;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -16,16 +17,17 @@ import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.*;
 import android.widget.*;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class MainActivity extends FragmentActivity {
 	
 	static SharedPreferences settings;
-	ArrayList<Template> messages;
+	static ArrayList<Template> messages;
 	static ArrayList<Group> groups;
 	Spinner groups_spinner;
 	Spinner messages_spinner;
-	ArrayAdapter<String> groups_adapter;
-	ArrayAdapter<String> messages_adapter;
+	static ArrayAdapter<String> groups_adapter;
+	static ArrayAdapter<String> messages_adapter;
 	String tempMessage;
 
 	@Override
@@ -39,6 +41,10 @@ public class MainActivity extends FragmentActivity {
 		groups = new ArrayList<Group>();
 		initializeSpinners();
 		parseStoredData();
+		
+		ChangeLog cl = new ChangeLog(this);
+	    if (cl.firstRun())
+	        cl.getLogDialog().show();
 	}
 	
 	public void parseStoredData(){
@@ -79,6 +85,9 @@ public class MainActivity extends FragmentActivity {
 				System.out.println("found a bad stored preference");
 			}
 		}
+		if(messages.size() > 0){
+			setPreviewText(messages.get(0).message());
+		}
 	}
 	
 	public void initializeSpinners(){
@@ -99,9 +108,22 @@ public class MainActivity extends FragmentActivity {
 		}
 		messages_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		messages_spinner.setAdapter(messages_adapter);
+		
+		messages_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		    @Override
+		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+		        setPreviewText(messages.get(position).message());
+		    }
+
+		    @Override
+		    public void onNothingSelected(AdapterView<?> parentView) {
+		    	setPreviewText("");
+		    }
+
+		});
 	}
 	
-	public String[] messageToArray(ArrayList<Template> templates){
+	public static String[] messageToArray(ArrayList<Template> templates){
 		String[] temp = new String[templates.size()];
 		for(int i=0; i<templates.size(); i++){
 			temp[i] = templates.get(i).name();
@@ -109,7 +131,7 @@ public class MainActivity extends FragmentActivity {
 		return temp;
 	}
 	
-	public String[] groupToArray(ArrayList<Group> g){
+	public static String[] groupToArray(ArrayList<Group> g){
 		String[] temp = new String[g.size()];
 		for(int i=0; i<g.size(); i++){
 			temp[i] = g.get(i).name();
@@ -117,12 +139,24 @@ public class MainActivity extends FragmentActivity {
 		return temp;
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.activity_main, menu);
-//		return true;
-//	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getTitle().toString().equals("Change Log")){
+			ChangeLog cl = new ChangeLog(this);
+			cl.getFullLogDialog().show();
+		}
+		else{
+			
+		}
+		return true;
+	}
 	
 	@SuppressLint("ValidFragment")
 	public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
@@ -192,373 +226,6 @@ public class MainActivity extends FragmentActivity {
 	    newFragment.show(getSupportFragmentManager(), "datePicker");
 	}
 	
-	public void addMessage(View v){
-		addMessage(v, "", "");
-	}
-	public void addMessage(final View v, String title, String body){
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("New Message Template");
-	    
-	    LinearLayout linLayout= new LinearLayout(this);
-	    linLayout.setOrientation(1); //1 is for vertical orientation
-	    final EditText inputTitle = new EditText(this); 
-	    final EditText inputBody = new EditText(this);
-	    inputTitle.setSingleLine();
-	    inputTitle.setHint("Message Name");
-	    inputTitle.setText(title);
-	    inputBody.setHint("Message Body");
-	    inputBody.setText(body);
-	    linLayout.addView(inputTitle);
-	    linLayout.addView(inputBody);
-	    builder.setView(linLayout);
-		
-	    builder.setPositiveButton("Preview", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	if(inputTitle.getText().toString().length() < 1){
-		    		addMessage(v,inputTitle.getText().toString(),inputBody.getText().toString());
-		    		Toast.makeText(getApplicationContext(), "Input a name", Toast.LENGTH_SHORT).show();
-		    	}
-		    	else if(inputBody.getText().toString().length() < 1){
-		    		addMessage(v,inputTitle.getText().toString(),inputBody.getText().toString());
-		    		Toast.makeText(getApplicationContext(), "Input a message", Toast.LENGTH_SHORT).show();
-		    	}
-		    	else{
-		    		templatePreview(v, inputTitle.getText().toString(),inputBody.getText().toString(), new Template("-1","-1"));
-		    	}
-		    }
-		});
-	    builder.setNeutralButton("Insert Variable", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	insertVariable(v, inputTitle.getText().toString(), inputBody.getText().toString(), new Template("-1","-1"), inputBody);
-		    }
-		});
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-	    AlertDialog alert = builder.create();	    
-	    alert.show();
-	}
-	
-	public void insertVariable(final View v, final String title, final String body, final Template existingTemplate, final EditText myEditText){
-		final boolean edit = !existingTemplate.name().equals("-1");
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Insert Variable");
-	    
-	    final String[] options = new String[]{"date", "time", "first name", "full name"};
-	    builder.setItems(options, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int item) {
-	        	if(edit){
-	        		String textToInsert = "%" + options[item] + "%";
-		        	int start = myEditText.getSelectionStart();
-		        	int end = myEditText.getSelectionEnd();
-		        	if(start == -1)
-		        		start = 0;
-		        	if(end == -1)
-		        		end = 0;
-		        	String withVar = myEditText.getText().replace(Math.min(start, end), Math.max(start, end), textToInsert, 0, textToInsert.length()).toString();
-		        	editMessageDialog(v, title, withVar, existingTemplate);
-		       	}
-	        	else
-	        		addMessage(v, title, body + "%" + options[item] + "%");
-	        }
-	    });
-	    final EditText inputTitle = new EditText(this);
-	    inputTitle.setSingleLine();
-	    inputTitle.setHint("custom variable");
-	    builder.setView(inputTitle);
-		
-	    builder.setPositiveButton("Insert", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {	
-		    	if(inputTitle.getText().toString().length() < 1){
-	    			Toast.makeText(getApplicationContext(), "You didn't write a variable name!", Toast.LENGTH_SHORT).show();
-		    		return;
-	    		}
-		    	if(edit){
-		    		String textToInsert = "%" + inputTitle.getText().toString() + "%";
-		        	int start = myEditText.getSelectionStart();
-		        	int end = myEditText.getSelectionEnd();
-		        	if(start == -1)
-		        		start = 0;
-		        	if(end == -1)
-		        		end = 0;
-		        	String withVar = myEditText.getText().replace(Math.min(start, end), Math.max(start, end), textToInsert, 0, textToInsert.length()).toString();
-		        	editMessageDialog(v, title, withVar, existingTemplate);
-		    	}
-	        	else
-	        		addMessage(v, title, body + "%" + inputTitle.getText().toString() + "%");
-		    }
-		});
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	if(edit)
-	        		editMessageDialog(v, title, body, existingTemplate);
-	        	else
-	        		addMessage(v, title, body);
-		    }
-		});
-	    AlertDialog alert = builder.create();	    
-	    alert.show();
-	}
-	
-	public void templatePreview(final View v, final String title, final String body, final Template existingTemplate) {
-		final boolean edit = !existingTemplate.name().equals("-1");
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Template Preview (" + title + ")");
-		
-		TextView tv = new TextView(getApplicationContext());
-		tv.setPadding(5, 0, 0, 5);
-		String toDisplay = body.replaceAll("`fullName", "\"full name\"");
-		toDisplay = toDisplay.replaceAll("`firstName", "\"first name\"");
-		toDisplay = toDisplay.replaceAll("%", "\"");
-		tv.setText(toDisplay);
-		builder.setView(tv);
-
-		// Set up the buttons
-		builder.setPositiveButton(edit ? "Finish editing" : "Create", new DialogInterface.OnClickListener() { 
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	Template toAdd = new Template(title, body);
-		    	if(edit){
-		    		int removeindex = messages.indexOf(existingTemplate);
-		    		messages.remove(removeindex);
-		    		messages.add(removeindex, toAdd);
-		    	}
-		    	else{
-		    		messages_adapter.add(title);
-		    		messages.add(toAdd);
-		    		SharedPreferences.Editor editor = settings.edit();
-		    		editor.putString("message" + title, title + "\t" + body);
-		    		editor.commit();
-		    	}
-		    }
-		});
-		builder.setNeutralButton("Edit", new DialogInterface.OnClickListener() { 
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	if(edit)
-		    		editMessageDialog(v, title, body, existingTemplate);
-		    	else
-		    		addMessage(v, title, body);
-		    }
-		});
-		builder.setNegativeButton(edit ? "Cancel" : "Trash", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-
-		builder.show();
-	}
-	
-	public void deleteMessage(View v){
-		if(messages.size() < 1){
-			Toast.makeText(this, "No messages to delete", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		
-		String[] options = messageToArray(messages);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Delete Message");
-	    builder.setItems(options, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int item) {
-	        	SharedPreferences.Editor editor = settings.edit();
-	        	editor.remove("message" + messages.get(item).name());
-	        	editor.commit();
-	        	messages_adapter.remove(messages.get(item).name());
-	        	messages.remove(item);
-	        }
-	    });
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-	    AlertDialog alert = builder.create();
-	    alert.show();
-	}
-
-	public void editMessage(final View v){
-		if(messages.size() < 1){
-			Toast.makeText(this, "No messages to edit", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		
-		String[] options = messageToArray(messages);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Edit Message");
-	    builder.setItems(options, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int item) {
-	        	Template t = messages.get(item);
-	        	editMessageDialog(v, t.name(), t.message(), t);
-	        }
-	    });
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-	    AlertDialog alert = builder.create();
-	    alert.show();
-	}
-	
-	public void editMessageDialog(final View v, final String title, final String body, final Template template){
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Edit Message Template");
-	    
-	    LinearLayout linLayout= new LinearLayout(this);
-	    linLayout.setOrientation(1); //1 is for vertical orientation
-	    final EditText inputTitle = new EditText(this); 
-	    final EditText inputBody = new EditText(this);
-	    inputTitle.setSingleLine();
-	    inputTitle.setHint("Message Name");
-	    inputTitle.setText(title);
-	    inputBody.setHint("Message Body");
-	    inputBody.setText(body);
-	    linLayout.addView(inputTitle);
-	    linLayout.addView(inputBody);
-	    builder.setView(linLayout);
-		
-	    builder.setPositiveButton("Preview", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	if(inputTitle.getText().toString().length() < 1){
-		    		editMessageDialog(v, inputTitle.getText().toString(), inputBody.getText().toString(), template);
-		    		Toast.makeText(getApplicationContext(), "Input a name", Toast.LENGTH_SHORT).show();
-		    	}
-		    	else if(inputBody.getText().toString().length() < 1){
-		    		editMessageDialog(v, inputTitle.getText().toString(), inputBody.getText().toString(), template);
-		    		Toast.makeText(getApplicationContext(), "Input a message", Toast.LENGTH_SHORT).show();
-		    	}
-		    	else{
-		    		templatePreview(v, inputTitle.getText().toString(),inputBody.getText().toString(), template);
-		    	}
-		    }
-		});
-	    builder.setNeutralButton("Insert Variable", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	insertVariable(v, inputTitle.getText().toString(), inputBody.getText().toString(), template, inputBody);
-		    }
-		});
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-	    AlertDialog alert = builder.create();	    
-	    alert.show();
-	}
-	
-	public void addGroup(final View v){ 
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("New Group");
-	    final EditText inputTitle = new EditText(this); 
-	    inputTitle.setSingleLine();
-	    inputTitle.setHint("Group name");
-	    builder.setView(inputTitle);
-		
-	    builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	if(inputTitle.getText().toString().length() < 1){
-		    		addGroup(v);
-		    		Toast.makeText(getApplicationContext(), "Input a group name", Toast.LENGTH_SHORT).show();
-		    		return;
-		    	}
-		    	Group newGroup = new Group(inputTitle.getText().toString());
-		    	groups.add(newGroup);
-		    	groups_adapter.add(inputTitle.getText().toString());
-		    	Intent i = new Intent(getApplicationContext(), EditGroup.class);
-		    	i.putExtra("title", inputTitle.getText().toString());
-				startActivity(i);
-		    }
-		});
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-	    AlertDialog alert = builder.create();	    
-	    alert.show();
-	}
-	
-	public void deleteGroup(View v){
-		if(groups.size() < 1){
-			Toast.makeText(this, "No groups to delete", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		
-		String[] options = groupToArray(groups);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Delete Group");
-	    builder.setItems(options, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int item) {
-	        	SharedPreferences.Editor editor = settings.edit();
-	        	for(int i=0; i<groups.get(item).size(); i++){
-	        		editor.remove("group" + groups.get(item).name() + i);
-	        		editor.commit();
-	        	}
-	        	groups_adapter.remove(groups.get(item).name());
-	        	groups.remove(item);
-	        }
-	    });
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-	    AlertDialog alert = builder.create();
-	    alert.show();
-	}
-
-	public void editGroup(View v){
-		if(groups.size() < 1){
-			Toast.makeText(this, "No groups to edit", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		
-		String[] options = groupToArray(groups);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Edit Group");
-	    builder.setItems(options, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int item) {
-	        	Group temp = groups.get(item);
-	        	Intent i = new Intent(getApplicationContext(), EditGroup.class);
-		    	i.putExtra("title", temp.name());
-				startActivity(i);
-	        }
-	    });
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-	    AlertDialog alert = builder.create();
-	    alert.show();
-	}
 	
 	public void fillInTheBlanks(View v){
 		if(messages.size() < 1){
@@ -726,6 +393,41 @@ public class MainActivity extends FragmentActivity {
 		    return cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
 		else
 			return "noname noname";
+	}
+	
+	public void goToGroupManagement(View v){
+		Intent i = new Intent(getApplicationContext(), GroupManage.class);
+		startActivity(i);
+	}
+	
+	public void goToMessageManagement(View v){
+		Intent i = new Intent(getApplicationContext(), MessageManage.class);
+		startActivity(i);
+	}
+	
+	public static int indexOfTemplate(String templateName){
+		for(int i=0; i<messages.size(); i++){
+			if(messages.get(i).name().equalsIgnoreCase(templateName))
+				return i;
+		}
+		return -1;
+	}
+	
+	public static int indexOfGroup(String name){
+		for(int i=0; i<groups.size(); i++){
+			if(groups.get(i).name().equalsIgnoreCase(name))
+				return i;
+		}
+		return -1;
+	}
+	
+	public void setPreviewText(String s){
+		TextView preview = (TextView) findViewById(R.id.preview_message);
+		preview.setBackgroundResource(R.drawable.edittext_rounded_corners);
+		
+		String toDisplay = s.replaceAll("[%*%]", "\"");
+		
+		preview.setText(toDisplay);
 	}
 
 }

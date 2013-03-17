@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dallinc.masstexter"
-    android:versionCode="6"
-    android:versionName="1.1" >
+    android:versionCode="7"
+    android:versionName="1.1.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -34,6 +34,18 @@
         <activity
             android:name="com.dallinc.masstexter.EditGroup"
             android:label="@string/title_activity_edit_group" >
+        </activity>
+        <activity
+            android:name="com.dallinc.masstexter.GroupManage"
+            android:label="@string/title_activity_group_manage" >
+        </activity>
+        <activity
+            android:name="com.dallinc.masstexter.MessageManage"
+            android:label="@string/title_activity_message_manage" >
+        </activity>
+        <activity
+            android:name="com.dallinc.masstexter.EditMessage"
+            android:label="@string/title_activity_edit_message" >
         </activity>
     </application>
 
