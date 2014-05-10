@@ -1,21 +1,19 @@
 package com.dallinc.masstexter;
 
 public class CustomContact {
+    String name;
+    String number;
 
-	String name;
-	String number;
-	
-	public CustomContact(String n, String num){
-		name = n;
-		number = num;
-	}
-	
-	public String name(){
-		return name;
-	}
-	
-	public String number(){
-		return number;
-	}
-	
+    public CustomContact(String string, String string2) {
+        this.name = string;
+        this.number = string2;
+    }
+
+    public String name() {
+        return this.name;
+    }
+
+    public String number() {
+        return this.number;
+    }
 }

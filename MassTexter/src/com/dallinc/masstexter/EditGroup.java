@@ -1,16 +1,35 @@
 package com.dallinc.masstexter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.app.*;
-import android.content.*;
-import android.database.Cursor;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.QuickContactBadge;
+import android.widget.TextView;
+import com.dallinc.masstexter.CustomContact;
+import com.dallinc.masstexter.Group;
+import com.dallinc.masstexter.MainActivity;
+import com.dallinc.masstexter.URItools;
+import java.util.ArrayList;
 
 public class EditGroup extends Activity {
 	private static final int REQUEST_PICK_CONTACT = 1001;
@@ -18,189 +37,124 @@ public class EditGroup extends Activity {
 	private Group group;
 	String title;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.edit_group);
-		
-		title = getIntent().getStringExtra("title");
-		TextView groupName = (TextView) findViewById(R.id.groupName);
-		groupName.setText(title);
-		initializeContacts();
-		updateList();
-	}
-	
-	public void initializeContacts(){
-		for(int i=0; i< MainActivity.groups.size(); i++){
-			Group tempGroup = MainActivity.groups.get(i);
-			if(title.equals(tempGroup.name())){
-				group = tempGroup;
-				return;
-			}
-		}
-		group = new Group("New Group");
-	}
-	
-	public void updateList(){
-		LinearLayout list = (LinearLayout) findViewById(R.id.groupList);
-		list.removeAllViews();
-		
-		SharedPreferences.Editor editor = MainActivity.settings.edit();
-		LayoutInflater layoutInflator = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			
-		for(int i=0; i<group.size(); i++){
-			View view = layoutInflator.inflate(R.layout.edit_group_list, null);
-			QuickContactBadge qcb = (QuickContactBadge) view.findViewById(R.id.quickContactBadge1);
-			qcb.assignContactFromPhone(group.get(i).number(), true);
-			URItools uriTools = new URItools();
-			uriTools.setContactUri(group.get(i).number(), qcb, this);
-			TextView nameView = (TextView) view.findViewById(R.id.contact_name);
-			nameView.setText(group.get(i).name());
-			TextView numView = (TextView) view.findViewById(R.id.contact_number);
-			numView.setText(group.get(i).number());
-			Button deleteButton = (Button) view.findViewById(R.id.delete_contact);
-			final int pos = i;
-			deleteButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					deleteContact(pos);
-				}
-			});
-			list.addView(view);
-			editor.putString("group" + title + i, title + "\t" + group.get(i).name() + "\t" + group.get(i).number());
-			editor.commit();
-		}
-	}
+    public void addContact(View view) {
+        this.startActivityForResult(new Intent("android.intent.action.PICK", ContactsContract.CommonDataKinds.Phone.CONTENT_URI), 1001);
+    }
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.edit_group, menu);
-//		return true;
-//	}
+    public String[] contactsToArray() {
+        String[] arrstring = new String[this.group.size()];
+        int n = 0;
+        while (n < this.group.size()) {
+            arrstring[n] = this.group.get(n).name();
+            ++n;
+        }
+        return arrstring;
+    }
 
-	public void addContact(View v){		
-		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-		startActivityForResult(intent, REQUEST_PICK_CONTACT);
-	}
-	
-	public void deleteContact(final int i){
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Remove from group");
-		builder.setMessage("Do you really want to remove " + group.get(i).name() + "?");
-	    builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		    	SharedPreferences.Editor editor = MainActivity.settings.edit();
-	        	editor.remove("group" + title + (group.size()-1));
-	        	editor.commit();
-	        	group.remove(i);
-	        	updateList();
-		    }
-		});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
-		});
-		AlertDialog alert = builder.create();
-	    alert.show();
-	}
-	
-	public String[] contactsToArray(){
-		String[] temp = new String[group.size()];
-		for(int i=0; i<group.size(); i++){
-			temp[i] = group.get(i).name();
-		}
-		return temp;
-	}
-	
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		if(resultCode != Activity.RESULT_OK){
-			Log.v("onActivityResult", "the result was not RESULT_OK");
-			return;
-		}
-		
-		Uri result = data.getData();
-		Log.v(TAG, "Got a result: " + result.toString());
+    public void deleteContact(int n) {
+        AlertDialog.Builder builder = new AlertDialog.Builder((Context)(this));
+        builder.setTitle((CharSequence)("Remove from group"));
+        builder.setMessage((CharSequence)(("Do you really want to remove " + this.group.get(n).name() + "?")));
+        builder.setPositiveButton((CharSequence)("Remove"), (DialogInterface.OnClickListener)(new DialogInterface.OnClickListener(){
 
-		// get the phone number id from the Uri
-		String id = result.getLastPathSegment();
+            public void onClick(DialogInterface dialogInterface2, int dialogInterface2) {
+                SharedPreferences.Editor editor = MainActivity.settings.edit();
+                editor.remove(("group" + EditGroup.this.title + -1 + EditGroup.this.group.size()));
+                editor.commit();
+                EditGroup.this.group.remove(n);
+                EditGroup.this.updateList();
+            }
+        }));
+        builder.setNegativeButton((CharSequence)("Cancel"), (DialogInterface.OnClickListener)(new DialogInterface.OnClickListener(){
 
-		// query the phone numbers for the selected phone number id
-		Cursor c = getContentResolver().query(
-		    Phone.CONTENT_URI, null,
-		    Phone._ID + "=?",
-		    new String[]{id}, null);
+            public void onClick(DialogInterface dialogInterface, int n) {
+                dialogInterface.cancel();
+            }
+        }));
+        builder.create().show();
+    }
 
-		int phoneIdx = c.getColumnIndex(Phone.NUMBER);
-		int nameIdx = c.getColumnIndex(Phone.DISPLAY_NAME);
+    public void initializeContacts() {
+        int n = 0;
+        do {
+            Group group;
+            if (n >= MainActivity.groups.size()) {
+                this.group = new Group("New Group");
+                return;
+            }
+            if (this.title.equals((Object)((group = (Group)(MainActivity.groups.get(n))).name()))) {
+                this.group = group;
+                return;
+            }
+            ++n;
+        } while (true);
+    }
 
-		if(c.getCount() == 1) { // contact has a single phone number
-		    // get the only phone number
-		    if(c.moveToFirst()) {
-		        String phone = c.getString(phoneIdx);
-		        String contactName = c.getString(nameIdx);
-		        Log.v(TAG, "Got phone number: " + phone);
+    /*
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     */
+    protected void onActivityResult(int n, int n2, Intent intent) {
+        if (n2 != -1) {
+            Log.v((String)("onActivityResult"), (String)("the result was not RESULT_OK"));
+            return;
+        }
+        Uri uri = intent.getData();
+        Log.v((String)("My tag"), (String)(("Got a result: " + uri.toString())));
+        String string = uri.getLastPathSegment();
+        Cursor cursor = this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, (String[])(null), "_id=?", new String[]{string}, (String)(null));
+        int n3 = cursor.getColumnIndex("data1");
+        int n4 = cursor.getColumnIndex("display_name");
+        if (cursor.getCount() != 1) return;
+        if (cursor.moveToFirst()) {
+            String string2 = cursor.getString(n3);
+            String string3 = cursor.getString(n4);
+            Log.v((String)("My tag"), (String)(("Got phone number: " + string2)));
+            SharedPreferences.Editor editor = MainActivity.settings.edit();
+            editor.putString(("group" + this.title + this.group.size()), (String.valueOf((Object)(this.title)) + "\t" + string3 + "\t" + string2));
+            editor.commit();
+            this.group.add(string3, string2);
+            this.updateList();
+            return;
+        }
+        Log.w((String)("My tag"), (String)("No results"));
+    }
 
-		        // do something with the phone number
-		        SharedPreferences.Editor editor = MainActivity.settings.edit();
-	        	editor.putString("group" + title + group.size(), title + "\t" + contactName + "\t" + phone);
-	        	editor.commit();
-	        	group.add(contactName, phone);
-	        	updateList();
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        this.setContentView(2130903042);
+        this.title = this.getIntent().getStringExtra("title");
+        (TextView)(this.findViewById(2131296269)).setText((CharSequence)(this.title));
+        this.initializeContacts();
+        this.updateList();
+    }
 
-		    } else {
-		        Log.w(TAG, "No results");
-		    }
-		}
-	}
-	
-	
-	//working code on version 1.0
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
-//		
-//		if (resultCode == Activity.RESULT_OK) {  
-//	        Uri contactData = data.getData();  
-//	        @SuppressWarnings("deprecation")
-//			Cursor c =  managedQuery(contactData, null, null, null, null);  
-//	        String contactId = "";
-//	        String name = "";
-//	        String number = "";
-//	        if (c.moveToFirst()) {  
-//	            name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));  
-//	            contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
-//	        }  
-//	        if(name.length() < 1){
-//	        	Toast.makeText(this, "No name listed for contact", Toast.LENGTH_SHORT).show();
-//	        	return;
-//	        }
-//	        if (Integer.parseInt(c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-//		        Cursor c1 = getContentResolver().query(Data.CONTENT_URI, new String[] {Data._ID, Phone.NUMBER, Phone.TYPE, Phone.LABEL},
-//		        	    Data.CONTACT_ID + "=?" + " AND "
-//		        	    + Data.MIMETYPE + "='" + Phone.CONTENT_ITEM_TYPE + "'",
-//		        	    new String[] {String.valueOf(contactId)}, null);
-//		        c1.moveToFirst();
-//		        number = c1.getString(1);
-//		    }
-//	        
-//	        if(number.length() < 1){
-//	        	Toast.makeText(this, "No phone number listed for contact", Toast.LENGTH_SHORT).show();
-//	        	return;
-//	        }
-//	        else{
-//	        	//SharedPreferences.Editor editor = MainActivity.settings.edit();
-//	        	//editor.putString("group" + title + group.size(), title + "\t" + name + "\t" + number);
-//	        	//editor.commit();
-//	        	group.add(name, number);
-//	        	updateList();
-//	        }
-//	    } 
-//		else {  
-//	        // gracefully handle failure  
-//	        System.out.println("Warning: activity result not ok");  
-//	    }  
-//	} 
+    public void updateList() {
+        LinearLayout linearLayout = (LinearLayout)(this.findViewById(2131296270));
+        linearLayout.removeAllViews();
+        SharedPreferences.Editor editor = MainActivity.settings.edit();
+        LayoutInflater layoutInflater = (LayoutInflater)(this.getApplicationContext().getSystemService("layout_inflater"));
+        int n = 0;
+        while (n < this.group.size()) {
+            View view = layoutInflater.inflate(2130903043, (ViewGroup)(null));
+            QuickContactBadge quickContactBadge = (QuickContactBadge)(view.findViewById(2131296273));
+            quickContactBadge.assignContactFromPhone(this.group.get(n).number(), true);
+            new URItools().setContactUri(this.group.get(n).number(), quickContactBadge, (Context)(this));
+            (TextView)(view.findViewById(2131296274)).setText((CharSequence)(this.group.get(n).name()));
+            (TextView)(view.findViewById(2131296275)).setText((CharSequence)(this.group.get(n).number()));
+            (Button)(view.findViewById(2131296276)).setOnClickListener((View.OnClickListener)(new View.OnClickListener(){
+
+                public void onClick(View view) {
+                    EditGroup.this.deleteContact(n);
+                }
+            }));
+            linearLayout.addView(view);
+            editor.putString(("group" + this.title + n), (String.valueOf((Object)(this.title)) + "\t" + this.group.get(n).name() + "\t" + this.group.get(n).number()));
+            editor.commit();
+            ++n;
+        }
+        return;
+    }
+
 }
+

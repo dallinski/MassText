@@ -1,5 +1,6 @@
 package com.dallinc.masstexter;
 
+import com.dallinc.masstexter.CustomContact;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,73 +8,82 @@ import java.util.Comparator;
 import android.net.Uri;
 
 public class Group {
-	
-	String groupName;
-	ArrayList<CustomContact> contacts;
+    ArrayList<CustomContact> contacts;
+    String groupName;
 
-	public Group(String name){
-		groupName = name;
-		contacts = new ArrayList<CustomContact>();
-	}
-	
-	public void add(String name, String number){
-		contacts.add(new CustomContact(name, number));
-		Collections.sort(contacts, new customComparator());
-	}
-	
-	public void remove(String number){
-		int index = -1;
-		for(int i=0; i<contacts.size(); i++){
-			if(contacts.get(i).number().equals(number)){
-				index = i;
-				break;
-			}
-		}
-		contacts.remove(index);
-		Collections.sort(contacts, new customComparator());
-	}
-	
-	public void remove(int i){
-		contacts.remove(i);
-		Collections.sort(contacts, new customComparator());
-	}
-	
-	public void clear(){
-		contacts.clear();
-	}
-	
-	public int size(){
-		return contacts.size();
-	}
-	
-	public String name(){
-		return groupName;
-	}
-	
-	public String toString(){
-		String temp = "";
-		for(int i=0; i<contacts.size(); i++){
-			temp += contacts.get(i).number() + ", ";
-		}
-		return temp.substring(0, temp.length()-2);
-	}
-	
-	public String numberAt(int i){
-		return contacts.get(i).number();
-	}
-	
-	public String nameAt(int i){
-		return contacts.get(i).name();
-	}
-	
-	public CustomContact get(int i){
-		return contacts.get(i);
-	}
-	
-	class customComparator implements Comparator<CustomContact> {
-	    public int compare(CustomContact c1, CustomContact c2) {
-	    	return c1.name().compareTo(c2.name());
-	    }
-	}
+    public Group(String string) {
+        this.groupName = string;
+        this.contacts = new ArrayList();
+    }
+
+    public void add(String string, String string2) {
+        this.contacts.add((Object)(new CustomContact(string, string2)));
+        Collections.sort(this.contacts, (Comparator)(new customComparator()));
+    }
+
+    public void clear() {
+        this.contacts.clear();
+    }
+
+    public CustomContact get(int n) {
+        return (CustomContact)(this.contacts.get(n));
+    }
+
+    public String name() {
+        return this.groupName;
+    }
+
+    public String nameAt(int n) {
+        return (CustomContact)(this.contacts.get(n)).name();
+    }
+
+    public String numberAt(int n) {
+        return (CustomContact)(this.contacts.get(n)).number();
+    }
+
+    public void remove(int n) {
+        this.contacts.remove(n);
+        Collections.sort(this.contacts, (Comparator)(new customComparator()));
+    }
+
+    /*
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     */
+    public void remove(String string) {
+        int n = -1;
+        for (int i = 0; i < this.contacts.size(); ++i) {
+            if (!((CustomContact)(this.contacts.get(i)).number().equals((Object)(string)))) continue;
+            n = i;
+            break;
+        }
+        this.contacts.remove(n);
+        Collections.sort(this.contacts, (Comparator)(new customComparator()));
+    }
+
+    public int size() {
+        return this.contacts.size();
+    }
+
+    public String toString() {
+        String string = "";
+        int n = 0;
+        while (n < this.contacts.size()) {
+            string = (String.valueOf((Object)(string)) + (CustomContact)(this.contacts.get(n)).number() + ", ");
+            ++n;
+        }
+        return string.substring(0, (-2 + string.length()));
+    }
+
+    class customComparator
+    implements Comparator<CustomContact> {
+        customComparator() {
+        }
+
+        public int compare(CustomContact customContact, CustomContact customContact2) {
+            return customContact.name().compareTo(customContact2.name());
+        }
+    }
 
 }
+

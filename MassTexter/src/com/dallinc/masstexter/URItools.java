@@ -1,87 +1,69 @@
 package com.dallinc.masstexter;
 
-import java.io.InputStream;
-import android.content.*;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.database.Cursor;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
+import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.PhoneLookup;
 import android.util.Log;
 import android.widget.QuickContactBadge;
+import java.io.InputStream;
 
 public class URItools {
-	
-	Context context;
+    Context context;
 
-	public void setContactUri(String phoneNumber, QuickContactBadge qcb, Context c) {
-		context = c;
+    private String fetchContactIdFromPhoneNumber(String string) {
+        Uri uri = Uri.withAppendedPath((Uri)(ContactsContract.PhoneLookup.CONTENT_FILTER_URI), (String)(Uri.encode((String)(string))));
+        Cursor cursor = this.context.getContentResolver().query(uri, new String[]{"display_name", "_id"}, (String)(null), (String[])(null), (String)(null));
+        String string2 = "";
+        if (!(cursor.moveToFirst())) return string2;
+        do {
+            string2 = cursor.getString(cursor.getColumnIndex("_id"));
+        } while (cursor.moveToNext());
+        return string2;
+    }
 
-	    String contactId = fetchContactIdFromPhoneNumber(phoneNumber); 
-	    try {
-			Long photoUriLong = Long.parseLong(contactId);
-			Uri uri = getPhotoUri(photoUriLong);
-		    qcb.setImageBitmap(loadContactPhoto(context.getContentResolver(), photoUriLong));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-	}
+    private Uri getPhotoUri(long l) {
+        Cursor cursor;
+        ContentResolver contentResolver = this.context.getContentResolver();
+        try {
+            cursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, (String[])(null), ("contact_id=" + l + " AND " + "mimetype" + "='" + "vnd.android.cursor.item/photo" + "'"), (String[])(null), (String)(null));
+            if (cursor == null) return null;
+        }
+        catch (Exception var4_5) {
+            var4_5.printStackTrace();
+            return null;
+        }
+        boolean bl = cursor.moveToFirst();
+        if (bl) return Uri.withAppendedPath((Uri)(ContentUris.withAppendedId((Uri)(ContactsContract.Contacts.CONTENT_URI), (long)(l))), (String)("photo"));
+        return null;
+    }
 
-	private String fetchContactIdFromPhoneNumber(String phoneNumber) {
-	    Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
-	    Cursor cursor = context.getContentResolver().query(uri,
-	            new String[] { PhoneLookup.DISPLAY_NAME, PhoneLookup._ID },
-	            null, null, null);
+    private static Bitmap loadContactPhoto(ContentResolver contentResolver, long l) {
+        InputStream inputStream = ContactsContract.Contacts.openContactPhotoInputStream((ContentResolver)(contentResolver), (Uri)(ContentUris.withAppendedId((Uri)(ContactsContract.Contacts.CONTENT_URI), (long)(l))));
+        if (inputStream != null) return BitmapFactory.decodeStream((InputStream)(inputStream));
+        return null;
+    }
 
-	    String contactId = "";
-
-	    if (cursor.moveToFirst()) {
-	        do {
-	            contactId = cursor.getString(cursor.getColumnIndex(PhoneLookup._ID));
-	        } while (cursor.moveToNext());
-	    }
-
-	    return contactId;
-	}
-
-
-	private static Bitmap loadContactPhoto(ContentResolver cr, long  id) {
-	    Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
-	    InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(cr, uri);
-	    if (input == null) {
-	        return null;
-	    }
-	    return BitmapFactory.decodeStream(input);
-	}
-
-	private Uri getPhotoUri(long contactId) {
-	    ContentResolver contentResolver = context.getContentResolver();
-
-	    try {
-	        Cursor cursor = contentResolver.query(ContactsContract.Data.CONTENT_URI,
-	                        null, ContactsContract.Data.CONTACT_ID + "=" + contactId
-	                                + " AND " + ContactsContract.Data.MIMETYPE + "='"
-	                                + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE
-	                                + "'", null, null);
-
-	        if (cursor != null) {
-	            if (!cursor.moveToFirst()) {
-	                return null; // no photo
-	            }
-	        } else {
-	            return null; // error in cursor process
-	        }
-
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return null;
-	    }
-
-	    Uri person = ContentUris.withAppendedId(
-	            ContactsContract.Contacts.CONTENT_URI, contactId);
-	    return Uri.withAppendedPath(person,
-	            ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-	}
-	
-	
+    public void setContactUri(String string, QuickContactBadge quickContactBadge, Context context) {
+        this.context = context;
+        String string2 = this.fetchContactIdFromPhoneNumber(string);
+        try {
+            Long long_ = Long.parseLong((String)(string2));
+            this.getPhotoUri(long_);
+            quickContactBadge.setImageBitmap(URItools.loadContactPhoto(this.context.getContentResolver(), long_));
+            return;
+        }
+        catch (NumberFormatException var5_6) {
+            var5_6.printStackTrace();
+            return;
+        }
+    }
 }
+

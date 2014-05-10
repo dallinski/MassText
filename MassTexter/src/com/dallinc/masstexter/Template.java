@@ -1,21 +1,20 @@
 package com.dallinc.masstexter;
 
 public class Template {
-	
-	String groupName;
-	String message;
+    String groupName;
+    String message;
 
-	public Template(String name, String m){
-		groupName = name;
-		message = m;
-	}
-	
-	public String name(){
-		return groupName;
-	}
-	
-	public String message(){
-		return message;
-	}
+    public Template(String string, String string2) {
+        this.groupName = string;
+        this.message = string2;
+    }
 
+    public String message() {
+        return this.message;
+    }
+
+    public String name() {
+        return this.groupName;
+    }
 }
+
