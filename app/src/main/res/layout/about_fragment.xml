@@ -38,7 +38,7 @@
 
     <com.gc.materialdesign.views.ButtonRectangle
         android:id="@+id/buttonChangeLog"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:text="Show Change Log"
@@ -62,7 +62,7 @@
 
     <com.gc.materialdesign.views.ButtonRectangle
         android:id="@+id/buttonDonate"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:text="Donate"

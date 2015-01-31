@@ -1,10 +1,14 @@
 package com.dallinc.masstexter;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.gc.materialdesign.views.ButtonRectangle;
 
 /**
  * Created by dallin on 1/30/15.
@@ -35,6 +39,14 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.about_fragment, container, false);
+        ButtonRectangle b = (ButtonRectangle)rootView.findViewById(R.id.buttonDonate);
+        ButtonRectangle b2 = (ButtonRectangle)rootView.findViewById(R.id.buttonChangeLog);
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = rootView.getContext().getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        int color = typedValue.data;
+        b.setBackgroundColor(color);
+        b2.setBackgroundColor(color);
         return rootView;
     }
 }

@@ -5,8 +5,10 @@
         <!-- Customize your theme here. -->
 
         <!-- Colors -->
-        <item name="colorPrimary">#1E88E5</item>
-        <item name="colorPrimaryDark">#ff185896</item>
+        <item name="colorPrimary">#ff4CAF50</item>
+        <item name="colorPrimaryDark">#ff388E3C</item>
+        <!--<item name="colorPrimaryLight">#ffC8E6C9</item>-->
+        <item name="colorAccent">#ff448AFF</item>
     </style>
 
 </resources>

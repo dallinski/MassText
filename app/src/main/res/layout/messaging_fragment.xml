@@ -10,7 +10,7 @@
     tools:context=".MainActivity$MessagingFragment">
 
     <com.gc.materialdesign.views.ButtonFloat
-        android:id="@+id/buttonFloat"
+        android:id="@+id/buttonComposeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
