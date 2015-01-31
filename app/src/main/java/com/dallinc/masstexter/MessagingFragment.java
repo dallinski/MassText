@@ -40,12 +40,6 @@ public class MessagingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.messaging_fragment, container, false);
-        ButtonFloat b = (ButtonFloat)rootView.findViewById(R.id.buttonComposeMessage);
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = rootView.getContext().getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        int color = typedValue.data;
-        b.setBackgroundColor(color);
         return rootView;
     }
 }

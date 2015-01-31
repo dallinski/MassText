@@ -26,4 +26,5 @@ dependencies {
     compile 'de.greenrobot:DaoGenerator:1.3.0'
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.getbase:floatingactionbutton:1.6.0'
 }
