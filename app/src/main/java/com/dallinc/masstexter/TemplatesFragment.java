@@ -1,14 +1,13 @@
 package com.dallinc.masstexter;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.gc.materialdesign.views.ButtonFloat;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 /**
  * Created by dallin on 1/30/15.
@@ -39,6 +38,16 @@ public class TemplatesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.templates_fragment, container, false);
+
+        FloatingActionButton clickButton = (FloatingActionButton) rootView.findViewById(R.id.buttonCreateTemplate);
+        clickButton.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Stub: Create a new template", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return rootView;
     }
 }
