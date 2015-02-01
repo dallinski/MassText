@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/templateEditLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.dallinc.masstexter.EditTemplate">
+
+    <com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+        android:id="@+id/templateTitleInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        app:flw_labelTextColor="@color/colorPrimaryDark"
+        app:flw_labelTextSize="18sp"
+        app:flw_inputWidgetTextSize="26sp"
+        app:flw_labelText="Title" />
+
+    <ScrollView
+        android:id="@+id/bodyInputScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/templateTitleInput" >
+
+        <com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText
+            android:id="@+id/templateBodyInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine|textCapSentences"
+            app:flw_labelTextColor="@color/colorPrimaryDark"
+            app:flw_labelText="Body"
+            app:flw_labelTextSize="18sp"
+            app:flw_inputWidgetTextSize="20sp" />
+    </ScrollView>
+
+</RelativeLayout>

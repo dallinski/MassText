@@ -1,5 +1,6 @@
 package com.dallinc.masstexter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,14 +38,15 @@ public class TemplatesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.templates_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.templates_fragment, container, false);
 
         FloatingActionButton clickButton = (FloatingActionButton) rootView.findViewById(R.id.buttonCreateTemplate);
         clickButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Stub: Create a new template", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(rootView.getContext(), EditTemplate.class);
+                startActivity(intent);
             }
         });
 

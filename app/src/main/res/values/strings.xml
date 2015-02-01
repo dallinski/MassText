@@ -6,5 +6,9 @@
     <string name="title_section2">Templates</string>
     <string name="title_section3">About</string>
     <string name="action_settings">Settings</string>
+    <string name="action_save">Save</string>
+    <string name="action_insert_variable">Insert Variable</string>
+    <string name="action_insert_variable_short">Insert</string>
+    <string name="title_activity_edit_template">Edit Template</string>
 
 </resources>
