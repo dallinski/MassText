@@ -14,6 +14,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +28,7 @@ import java.util.regex.Pattern;
 
 public class EditTemplate extends ActionBarActivity {
 
-//    Boolean disableInsertVariable = true; TODO: use this once setOnFocusChangeListener is implemented
-    Boolean disableInsertVariable = false;
+    Boolean disableInsertVariable = true;
 
     int cursor_position = 0;
     final String[] variables = new String[]{"date", "time", "first name", "last name", "full name", "custom variable"};
@@ -38,14 +38,14 @@ public class EditTemplate extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_template);
 
-//        FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
-//        bodyInputField.setOnFocusChangeListener(new FloatingLabelEditText.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                disableInsertVariable = !hasFocus;
-//                invalidateOptionsMenu();
-//            }
-//        });
+        FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
+        bodyInputField.getInputWidget().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                disableInsertVariable = !hasFocus;
+                invalidateOptionsMenu();
+            }
+        });
     }
 
 
