@@ -10,5 +10,7 @@
     <string name="action_insert_variable">Insert Variable</string>
     <string name="action_insert_variable_short">Insert</string>
     <string name="title_activity_edit_template">Edit Template</string>
+    <string name="select_color_primary">Primary Color</string>
+    <string name="select_color_accent">Accent Color</string>
 
 </resources>

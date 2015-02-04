@@ -30,4 +30,14 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
 
+    <Preference
+        android:key="primary_color"
+        android:title="@string/select_color_primary"
+        android:enabled="true" />
+
+    <Preference
+        android:key="accent_color"
+        android:title="@string/select_color_accent"
+        android:enabled="true" />
+
 </PreferenceScreen>

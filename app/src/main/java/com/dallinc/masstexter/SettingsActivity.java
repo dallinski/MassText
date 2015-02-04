@@ -1,7 +1,9 @@
 package com.dallinc.masstexter;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -23,6 +25,8 @@ import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
+
+import com.gc.materialdesign.widgets.ColorSelector;
 
 import java.util.List;
 
@@ -102,6 +106,43 @@ public class SettingsActivity extends PreferenceActivity {
         // Add 'general' preferences.
         addPreferencesFromResource(R.xml.pref_general);
 
+        final SharedPreferences customSharedPreference = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        final SharedPreferences.Editor editor = customSharedPreference.edit();
+
+        final Preference primary_color = findPreference("primary_color");
+        primary_color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ColorSelector colorSelector = new ColorSelector(primary_color.getContext(), customSharedPreference.getInt("primary_color", getResources().getColor(R.color.colorPrimary)), new ColorSelector.OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int i) {
+                        editor.putInt("primary_color", i);
+                        editor.commit();
+                        primary_color.setSummary(Integer.toHexString(i));
+                    }
+                });
+                colorSelector.show();
+                return false;
+            }
+        });
+
+        final Preference accent_color = findPreference("accent_color");
+        accent_color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ColorSelector colorSelector = new ColorSelector(accent_color.getContext(), customSharedPreference.getInt("accent_color", getResources().getColor(R.color.colorAccent)), new ColorSelector.OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int i) {
+                        editor.putInt("accent_color", i);
+                        editor.commit();
+                        accent_color.setSummary(Integer.toHexString(i));
+                    }
+                });
+                colorSelector.show();
+                return false;
+            }
+        });
+
         // Add 'notifications' preferences, and a corresponding header.
         PreferenceCategory fakeHeader = new PreferenceCategory(this);
         fakeHeader.setTitle(R.string.pref_header_notifications);
@@ -119,6 +160,8 @@ public class SettingsActivity extends PreferenceActivity {
         // to reflect the new value, per the Android Design guidelines.
         bindPreferenceSummaryToValue(findPreference("example_text"));
         bindPreferenceSummaryToValue(findPreference("example_list"));
+        bindPreferenceSummaryToInt(findPreference("primary_color"));
+        bindPreferenceSummaryToInt(findPreference("accent_color"));
         bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         bindPreferenceSummaryToValue(findPreference("sync_frequency"));
     }
@@ -235,6 +278,18 @@ public class SettingsActivity extends PreferenceActivity {
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
+    }
+
+    private static void bindPreferenceSummaryToInt(Preference preference) {
+        // Set the listener to watch for value changes.
+        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+
+        // Trigger the listener immediately with the preference's
+        // current value.
+        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                        Integer.toHexString(PreferenceManager
+                        .getDefaultSharedPreferences(preference.getContext())
+                        .getInt(preference.getKey(), -1)));
     }
 
     /**
