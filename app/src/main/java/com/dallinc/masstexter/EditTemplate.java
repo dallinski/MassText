@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.method.KeyListener;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,12 +40,36 @@ public class EditTemplate extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_template);
 
-        FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
+        final FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
         bodyInputField.getInputWidget().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 disableInsertVariable = !hasFocus;
                 invalidateOptionsMenu();
+            }
+        });
+
+        bodyInputField.getInputWidget().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                ArrayList<Integer[]> variable_indices = getVariableIndices(s.toString());
+                if(cursorInVariable(start, variable_indices)) {
+                    if(after > count) { // adding characters to the variable name
+                        Toast.makeText(getBaseContext(), "You cannot modify a variable!", Toast.LENGTH_SHORT).show();
+                    } else if(after < count) { // removing characters from the variable name
+                        Toast.makeText(getBaseContext(), "Variable removed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -89,6 +115,8 @@ public class EditTemplate extends ActionBarActivity {
         variable = "~!@" + variable + "_" + counter + "%&$";
 
         String new_editable_body = bodyInputField.getInputWidgetText().replace(cursor_position, cursor_position, variable, 0, variable.length()).toString();
+        System.out.println("variable start position: " + cursor_position);
+        System.out.println("variable end position: " + (cursor_position+variable.length()));
         bodyInputField.setInputWidgetText(new_editable_body);
         cursor_position += variable.length();
         bodyInputField.getInputWidget().setSelection(cursor_position);
@@ -110,7 +138,12 @@ public class EditTemplate extends ActionBarActivity {
         }
 
         bodyInputField.setInputWidgetText(spanText, TextView.BufferType.SPANNABLE);
-        bodyInputField.getInputWidget().setSelection(cursor_position);
+        try{
+            bodyInputField.getInputWidget().setSelection(cursor_position);
+        } catch(IndexOutOfBoundsException e) {
+            bodyInputField.getInputWidget().setSelection(bodyInputField.getInputWidgetText().length());
+        }
+
     }
 
     private ArrayList<Integer[]> getVariableIndices(String text) {
@@ -123,6 +156,15 @@ public class EditTemplate extends ActionBarActivity {
         }
 
         return indicesList;
+    }
+
+    private boolean cursorInVariable(int cursor_position, ArrayList<Integer[]> variable_indices) {
+        for(Integer[] indices : variable_indices) {
+            if(cursor_position >= indices[0] && cursor_position < indices[1]) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void selectVariable(final Context context) {
