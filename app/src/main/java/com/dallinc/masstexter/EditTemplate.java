@@ -3,17 +3,16 @@ package com.dallinc.masstexter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.method.KeyListener;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.view.KeyEvent;
+import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,17 +22,17 @@ import android.widget.Toast;
 
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class EditTemplate extends ActionBarActivity {
 
     Boolean disableInsertVariable = true;
+    ArrayList<String> variables = new ArrayList<String>();
 
     int cursor_position = 0;
-    final String[] variables = new String[]{"date", "time", "first name", "last name", "full name", "custom variable"};
+    final String[] VARIABLE_OPTIONS = new String[]{"date", "time", "first name", "last name", "full name", "custom variable"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,22 +48,24 @@ public class EditTemplate extends ActionBarActivity {
             }
         });
 
-        bodyInputField.getInputWidget().addTextChangedListener(new TextWatcher() {
+        bodyInputField.addInputWidgetTextChangedListener(new TextWatcher() {
+            String before_text = "";
+            int before_variable_count = 0;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ArrayList<Integer[]> variable_indices = getVariableIndices(s.toString());
-                if(cursorInVariable(start, variable_indices)) {
-                    if(after > count) { // adding characters to the variable name
-                        Toast.makeText(getBaseContext(), "You cannot modify a variable!", Toast.LENGTH_SHORT).show();
-                    } else if(after < count) { // removing characters from the variable name
-                        Toast.makeText(getBaseContext(), "Variable removed", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                before_text = s.toString();
+                before_variable_count = variableInstances(s.toString(), start+count);
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                int after_variable_count = variableInstances(s.toString(), start+count);
+                while(after_variable_count < before_variable_count) {
+                    // Remove the appropriate variable(s)
+                    variables.remove(before_variable_count-1);
+                    before_variable_count--;
+                }
             }
 
             @Override
@@ -73,7 +74,6 @@ public class EditTemplate extends ActionBarActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,36 +105,56 @@ public class EditTemplate extends ActionBarActivity {
 
     private void insertVariable(String variable) {
         FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
-
-        // variables are inserted with the unique identifying tag: "~!@variable_count%&$"
-        // This character sequence was chosen arbitrarily in the hope that no one will ever manually enter it.
-        int counter = 0;
-        while(bodyInputField.getInputWidgetText().toString().contains("~!@" + variable + "_" + counter + "%&$")) {
-            counter++;
-        }
-        variable = "~!@" + variable + "_" + counter + "%&$";
-
-        String new_editable_body = bodyInputField.getInputWidgetText().replace(cursor_position, cursor_position, variable, 0, variable.length()).toString();
-        System.out.println("variable start position: " + cursor_position);
-        System.out.println("variable end position: " + (cursor_position+variable.length()));
+        int variable_position = variableInstances(bodyInputField.getInputWidgetText().toString(), cursor_position);
+        String new_editable_body = bodyInputField.getInputWidgetText().replace(cursor_position, cursor_position, "¬", 0, 1).toString();
+        variables.add(variable_position, variable);
         bodyInputField.setInputWidgetText(new_editable_body);
-        cursor_position += variable.length();
+        cursor_position += 1;
         bodyInputField.getInputWidget().setSelection(cursor_position);
 
         styleEditText();
     }
 
+    private int variableInstances(String s, int end_position) {
+        int count = 0;
+        for(int i=0; i<end_position; i++ ) {
+            if(s.charAt(i) == '¬') {
+                count++;
+            }
+        }
+        return count;
+    }
+
     private void styleEditText() {
         FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
         String template_text = bodyInputField.getInputWidgetText().toString();
-        ArrayList<Integer[]> variable_indices = getVariableIndices(template_text);
         SpannableString spanText = new SpannableString(template_text);
 
-        for(Integer[] indices : variable_indices) {
-            spanText.setSpan(new AbsoluteSizeSpan(0), indices[0], indices[0] + 3, 0);
-            spanText.setSpan(new AbsoluteSizeSpan(0), indices[1]-3, indices[1], 0);
-            spanText.setSpan(new BackgroundColorSpan(getResources().getColor(R.color.colorPrimaryDark)), indices[0]+3, indices[1]-3, 0);
-            spanText.setSpan(new ForegroundColorSpan(Color.WHITE), indices[0]+3, indices[1]-3, 0);
+        int starting_pos = 0;
+        int variable_idx = 0;
+        while(starting_pos != -1) {
+            int idx = template_text.indexOf("¬", starting_pos);
+            if(idx == -1) {
+                break;
+            }
+
+            String variable = variables.get(variable_idx);
+
+            Rect bounds = new Rect();
+            Paint textPaint = bodyInputField.getInputWidget().getPaint();
+            textPaint.getTextBounds(variable, 0, variable.length(), bounds);
+            int width = bounds.width();
+
+            TextDrawable d = new TextDrawable(this);
+            d.setText(variable);
+            d.setTextColor(getResources().getColor(R.color.colorAccent));
+            d.setTextSize(20);
+            d.setTextAlign(Layout.Alignment.ALIGN_CENTER);
+            d.setBounds(3, 0, width+6, (int)(bodyInputField.getInputWidget().getTextSize()));
+
+            spanText.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BASELINE), idx, idx+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            starting_pos = idx+1;
+            variable_idx++;
         }
 
         bodyInputField.setInputWidgetText(spanText, TextView.BufferType.SPANNABLE);
@@ -146,38 +166,17 @@ public class EditTemplate extends ActionBarActivity {
 
     }
 
-    private ArrayList<Integer[]> getVariableIndices(String text) {
-        ArrayList<Integer[]> indicesList = new ArrayList<Integer[]>();
-
-        Pattern p = Pattern.compile("~!@[a-zA-Z0-9 ]*_\\d+%&\\$");
-        Matcher m = p.matcher(text);
-        while (m.find()) {
-            indicesList.add(new Integer[]{text.indexOf(m.group()), text.indexOf(m.group()) + m.group().length()});
-        }
-
-        return indicesList;
-    }
-
-    private boolean cursorInVariable(int cursor_position, ArrayList<Integer[]> variable_indices) {
-        for(Integer[] indices : variable_indices) {
-            if(cursor_position >= indices[0] && cursor_position < indices[1]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void selectVariable(final Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Insert Variable");
 
-        builder.setItems(variables, new DialogInterface.OnClickListener(){
+        builder.setItems(VARIABLE_OPTIONS, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialogInterface, int n) {
-                if(variables[n].equals("custom variable")) {
+                if(VARIABLE_OPTIONS[n].equals("custom variable")) {
                     inputCustomVariable(context);
                     return;
                 }
-                insertVariable(variables[n]);
+                insertVariable(VARIABLE_OPTIONS[n]);
                 return;
             }
         });
@@ -203,7 +202,7 @@ public class EditTemplate extends ActionBarActivity {
                     return;
                 }
                 String var_text = customVariable.getInputWidgetText().toString().replaceAll("[^a-zA-Z0-9 ]","");
-                if(contains(variables, var_text)) {
+                if(contains(VARIABLE_OPTIONS, var_text)) {
                     Toast.makeText(context, "Input variable cannot be defined as a custom variable", Toast.LENGTH_SHORT).show();
                     return;
                 }

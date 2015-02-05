@@ -28,7 +28,8 @@
         <activity
             android:name=".EditTemplate"
             android:label="@string/title_activity_edit_template"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
