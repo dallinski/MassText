@@ -3,8 +3,10 @@ package com.dallinc.masstexter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,7 +24,6 @@ import android.widget.Toast;
 
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -92,7 +93,7 @@ public class EditTemplate extends ActionBarActivity {
 
         switch (id) {
             case R.id.action_save:
-                return true;
+                return saveTemplate();
             case R.id.action_insert_variable:
                 FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
                 cursor_position = bodyInputField.getInputWidget().getSelectionEnd();
@@ -101,6 +102,27 @@ public class EditTemplate extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean saveTemplate() {
+        FloatingLabelEditText title = (FloatingLabelEditText) findViewById(R.id.templateTitleInput);
+        FloatingLabelEditText body = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
+        String title_text = title.getInputWidgetText().toString();
+        if(title_text.length() < 1) {
+            Toast.makeText(getBaseContext(), "You cannot save without a title.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        String body_text = body.getInputWidgetText().toString();
+        if(body_text.length() < 1) {
+            Toast.makeText(getBaseContext(), "You cannot save without body text.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Template template = new Template(title_text, body_text, variables);
+        template.save();
+        Intent upIntent = NavUtils.getParentActivityIntent(this);
+        upIntent.putExtra("opened_tab", 1);
+        NavUtils.navigateUpTo(this, upIntent);
+        return true;
     }
 
     private void insertVariable(String variable) {

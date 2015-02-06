@@ -44,6 +44,11 @@ public class MainActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            int current_tab = bundle.getInt("opened_tab", 0);
+            mViewPager.setCurrentItem(current_tab);
+        }
     }
 
 
