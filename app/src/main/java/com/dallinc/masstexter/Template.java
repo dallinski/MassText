@@ -17,26 +17,26 @@ public class Template extends SugarRecord<Template> {
     }
 
     public Template(String t, String b, ArrayList<String> v) {
-        this.title = t;
-        this.body = b;
-        this.variables = v;
+        title = t;
+        body = b;
+        variables = v;
     }
 
     public void buildArrayListFromString() {
-        this.variables = new ArrayList<String>();
-        for(String variable: this.variable_string.split(", ")) {
-            this.variables.add(variable);
+        variables = new ArrayList<String>();
+        for(String variable: variable_string.split(", ")) {
+            variables.add(variable);
         }
     }
 
     public void saveVariablesAsJson() {
-        if(this.variables.size() < 1) {
-            this.variable_string = "";
+        if(variables.size() < 1) {
+            variable_string = "";
             return;
         }
-        this.variable_string = this.variables.get(0);
+        variable_string = variables.get(0);
         for(String variable: variables.subList(1, variables.size())) {
-            this.variable_string += ", " + variable;
+            variable_string += ", " + variable;
         }
     }
 
