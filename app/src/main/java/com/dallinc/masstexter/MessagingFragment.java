@@ -1,5 +1,7 @@
 package com.dallinc.masstexter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
+import java.util.List;
 
 /**
  * Created by dallin on 1/30/15.
@@ -38,7 +42,7 @@ public class MessagingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.messaging_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.messaging_fragment, container, false);
 
         final FloatingActionsMenu composeButton = (FloatingActionsMenu) rootView.findViewById(R.id.buttonComposeMessage);
         FloatingActionButton usingTemplateButton = (FloatingActionButton) rootView.findViewById(R.id.buttonComposeUsingTemplate);
@@ -47,7 +51,21 @@ public class MessagingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 composeButton.collapse();
-                Toast.makeText(v.getContext(), "Stub: Create message using Template", Toast.LENGTH_SHORT).show();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
+                builder.setTitle("Select Template");
+                List<Template> _templates = Template.listAll(Template.class);
+                Template[] templates = _templates.toArray(new Template[_templates.size()]);
+                final String[] template_titles = new String[templates.length];
+                for(int i=0; i<templates.length; i++) {
+                    template_titles[i] = templates[i].title;
+                }
+                builder.setItems(template_titles, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(rootView.getContext(), "Stub: Create message (template): " + template_titles[which], Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.create().show();
             }
         });
 
