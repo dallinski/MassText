@@ -2,8 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-
         <!-- Colors -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -19,6 +17,13 @@
 
     <style name="CardViewStyle.Light" parent="CardView.Light">
         <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="EditTextStyle" parent="android:style/Widget.EditText">
+        <item name="android:background">@drawable/edit_text_selector</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColorPrimaryInverse">#000000</item>
     </style>
 
 </resources>

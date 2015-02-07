@@ -13,5 +13,26 @@
     <string name="select_color_primary">Primary Color</string>
     <string name="select_color_accent">Accent Color</string>
     <string name="title_activity_compose">Compose</string>
+    <string name="action_select_recipients">Select Recipients</string>
+
+    <!--ContactPicker string values-->
+    <string name="selectAccountLabel">Select</string>
+    <string name="selectLabel">Select label</string>
+    <string name="targetAccountLabel">Target Account</string>
+    <string name="undefinedTypeLabel">(Undefined)</string>
+    <string name="allAccounts">All Accounts</string>
+    <string name="contactCreationFailure">Contact creation failed, check logs.</string>
+    <string name="contactEmailLabel">Contact Email</string>
+    <string name="contactNameLabel">Contact Name</string>
+    <string name="contactPhoneLabel">Contact Phone</string>
+    <string name="contactImageLabel">Contact Image</string>
+    <string name="save">Save</string>
+    <string name="toggle_groups_label">Groups</string>
+    <string name="select_all">Select All</string>
+    <string name="clear_search_description">Clear search button</string>
+    <string name="action_toggle_views">Toggle Group View</string>
+    <string name="action_toggle_views_short">Toggle</string>
+
+    <!--TODO: refactor contactpicker strings to be underscore-->
 
 </resources>

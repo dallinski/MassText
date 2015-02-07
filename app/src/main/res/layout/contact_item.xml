@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:onClick="toggleCheckbox"
+    android:clickable="true"
+    android:background="@drawable/layout_selector">
+
+    <ImageView
+        android:id="@+id/thumb"
+        android:layout_marginLeft="5dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_action_person"
+        android:src="@drawable/image_border"
+        android:contentDescription="@string/contactImageLabel" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/checkBox"
+        android:layout_toRightOf="@+id/thumb"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/contactNameLabel"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/numberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:padding="2dp"
+            android:singleLine="true"
+            android:textColor="#7F7F7F"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/numberLabel"
+            android:layout_toRightOf="@+id/numberLabel"
+            android:padding="2dp"
+            android:textColor="#7F7F7F"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/groupLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/numberLabel"
+            android:layout_toRightOf="@+id/number"
+            android:padding="2dp"
+            android:textColor="#7F7F7F"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/groups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/numberLabel"
+            android:layout_toRightOf="@+id/groupLabel"
+            android:ellipsize="end"
+            android:padding="2dp"
+            android:singleLine="true"
+            android:textColor="#7F7F7F"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <com.gc.materialdesign.views.CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:background="@color/colorAccent" />
+
+</RelativeLayout>

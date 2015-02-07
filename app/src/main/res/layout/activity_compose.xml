@@ -6,6 +6,31 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.dallinc.masstexter.Compose">
 
-    
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="To:"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <contactpicker.FlowLayout
+                android:id="@+id/chips_box_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                >
+            </contactpicker.FlowLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

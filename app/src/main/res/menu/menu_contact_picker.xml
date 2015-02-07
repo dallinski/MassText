@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.dallinc.masstexter.EditTemplate">
+
+    <item
+        android:id="@+id/action_toggle_views"
+        android:title="@string/action_toggle_views"
+        android:titleCondensed="@string/action_toggle_views_short"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/flip_group_white" />
+
+    <item
+        android:id="@+id/action_select_all"
+        android:title="@string/select_all"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.CheckBox"/>
+
+    <item android:id="@+id/action_save"
+        android:title="@string/action_save"
+        android:orderInCategory="102"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_action_save" />
+</menu>

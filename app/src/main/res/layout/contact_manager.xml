@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/viewSwitcher">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:id="@+id/normalContactListView">
+
+        <LinearLayout
+            android:id="@+id/search_txt_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            >
+            <EditText
+                android:id="@+id/search_txt"
+                style="@style/EditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="2dp"
+                android:drawableLeft="@drawable/ic_action_search"
+                android:inputType="textNoSuggestions"
+                android:singleLine="true"
+                android:layout_weight="9"
+                android:layout_marginRight="-10dp" />
+
+            <com.gc.materialdesign.views.ButtonIcon
+                android:id="@+id/clear_srch_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#22000000"
+                materialdesign:iconDrawable="@drawable/ic_action_cancel" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/contactList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/search_txt_layout"
+            android:background="#00000000"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/list_divider"
+            android:dividerHeight="1dp"
+            android:fastScrollEnabled="true" />
+
+        <include layout="@layout/progress_dialog_custom" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/groupView">
+
+        <ListView
+            android:id="@+id/groupList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/list_divider"
+            android:dividerHeight="1dp"
+            android:fastScrollEnabled="true" />
+
+    </RelativeLayout>
+
+</ViewSwitcher>
