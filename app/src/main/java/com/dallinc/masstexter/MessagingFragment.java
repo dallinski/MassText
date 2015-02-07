@@ -54,6 +54,10 @@ public class MessagingFragment extends Fragment {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
                 builder.setTitle("Select Template");
                 List<Template> _templates = Template.listAll(Template.class);
+                if(_templates.size() < 1) {
+                    Toast.makeText(rootView.getContext(), "You do not have any templates saved!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Template[] templates = _templates.toArray(new Template[_templates.size()]);
                 final String[] template_titles = new String[templates.length];
                 for(int i=0; i<templates.length; i++) {
