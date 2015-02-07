@@ -1,5 +1,7 @@
 package com.dallinc.masstexter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -96,6 +98,31 @@ public class TemplatesFragment extends Fragment {
                     Intent intent = new Intent(TemplateViewHolder.itemView.getContext(), EditTemplate.class);
                     intent.putExtra("template_id", template.getId());
                     startActivity(intent);
+                }
+            });
+            TemplateViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(TemplateViewHolder.itemView.getContext());
+                    builder.setTitle("Delete Template?");
+                    builder.setMessage("Do you want to delete the template \"" + template.title + "\"?");
+                    builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            template.delete();
+                            templateList = templates = Template.listAll(Template.class);
+                            notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                    return false;
                 }
             });
         }
