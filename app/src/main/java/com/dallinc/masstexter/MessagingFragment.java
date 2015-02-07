@@ -2,6 +2,7 @@ package com.dallinc.masstexter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -58,7 +59,7 @@ public class MessagingFragment extends Fragment {
                     Toast.makeText(rootView.getContext(), "You do not have any templates saved!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                Template[] templates = _templates.toArray(new Template[_templates.size()]);
+                final Template[] templates = _templates.toArray(new Template[_templates.size()]);
                 final String[] template_titles = new String[templates.length];
                 for(int i=0; i<templates.length; i++) {
                     template_titles[i] = templates[i].title;
@@ -66,7 +67,9 @@ public class MessagingFragment extends Fragment {
                 builder.setItems(template_titles, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(rootView.getContext(), "Stub: Create message (template): " + template_titles[which], Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(rootView.getContext(), Compose.class);
+                        intent.putExtra("template_id", templates[which].getId());
+                        startActivity(intent);
                     }
                 });
                 builder.create().show();
@@ -79,7 +82,8 @@ public class MessagingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 composeButton.collapse();
-                Toast.makeText(v.getContext(), "Stub: Create message (quick compose)", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(rootView.getContext(), Compose.class);
+                startActivity(intent);
             }
         });
 

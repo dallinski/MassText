@@ -12,5 +12,6 @@
     <string name="title_activity_edit_template">Edit Template</string>
     <string name="select_color_primary">Primary Color</string>
     <string name="select_color_accent">Accent Color</string>
+    <string name="title_activity_compose">Compose</string>
 
 </resources>
