@@ -530,7 +530,7 @@ public final class ContactManager extends FragmentActivity {
                     thumb.setImageResource(R.drawable.image_border);
                 }
 
-                final com.gc.materialdesign.views.CheckBox nameCheckBox = (com.gc.materialdesign.views.CheckBox) view.findViewById(R.id.checkBox);
+                final CheckBox nameCheckBox = (CheckBox) view.findViewById(R.id.checkBox);
 
                 name.setText(contact.getContactName());
 
@@ -542,15 +542,15 @@ public final class ContactManager extends FragmentActivity {
 
                 number.setText(contact.getContactNumber());
 
-                nameCheckBox.setOncheckListener(new com.gc.materialdesign.views.CheckBox.OnCheckListener() {
+                nameCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
-                    public void onCheck(boolean isChecked) {
-                        contact.setSelected(nameCheckBox.isCheck());
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        contact.setSelected(nameCheckBox.isChecked());
 
                         if (!isChecked)
                             check_all.setChecked(false);
 
-                        for(ContactGroup cg: groups)
+                        for (ContactGroup cg : groups)
                             cg.selected = allContactsInGroupAreSelected(cg);
 
                         GroupAdapter gaa = (GroupAdapter) groupLV.getAdapter();
@@ -652,15 +652,15 @@ public final class ContactManager extends FragmentActivity {
                 TextView number = (TextView) view.findViewById(R.id.number);
                 TextView numberLabel = (TextView) view.findViewById(R.id.numberLabel);
                 thumb.setBackgroundResource(R.drawable.ic_action_group);
-                final com.gc.materialdesign.views.CheckBox groupCheckBox = (com.gc.materialdesign.views.CheckBox) view.findViewById(R.id.checkBox);
+                final CheckBox groupCheckBox = (CheckBox) view.findViewById(R.id.checkBox);
                 name.setText(group.getGroupName());
                 number.setText("" + numContactsInGroup(group));
                 numberLabel.setText("# of contacts:");
 
-                groupCheckBox.setOncheckListener(new com.gc.materialdesign.views.CheckBox.OnCheckListener() {
+                groupCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
-                    public void onCheck(boolean isChecked) {
-                        assert (groupCheckBox.isCheck() == isChecked);
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        assert (groupCheckBox.isChecked() == isChecked);
                         group.setSelected(isChecked);
 
                         if (!isChecked)
@@ -676,7 +676,7 @@ public final class ContactManager extends FragmentActivity {
                 groupCheckBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        selectAllContactsInGroup(group, groupCheckBox.isCheck());
+                        selectAllContactsInGroup(group, groupCheckBox.isChecked());
 
                         for(ContactGroup cg: groups) {
                             if(cg.getGroupId() == group.getGroupId())
@@ -690,11 +690,12 @@ public final class ContactManager extends FragmentActivity {
                         gaa.notifyDataSetChanged();
                     }
                 });
+
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        groupCheckBox.setChecked(!groupCheckBox.isCheck());
-                        selectAllContactsInGroup(group, groupCheckBox.isCheck());
+                        groupCheckBox.setChecked(!groupCheckBox.isChecked());
+                        selectAllContactsInGroup(group, groupCheckBox.isChecked());
 
                         for(ContactGroup cg: groups) {
                             if(cg.getGroupId() == group.getGroupId())
@@ -739,8 +740,8 @@ public final class ContactManager extends FragmentActivity {
     }
 
     public void toggleCheckbox(View view) {
-        final com.gc.materialdesign.views.CheckBox nameCheckBox = (com.gc.materialdesign.views.CheckBox) view.findViewById(R.id.checkBox);
-        nameCheckBox.setChecked(!nameCheckBox.isCheck());
+        final CheckBox nameCheckBox = (CheckBox) view.findViewById(R.id.checkBox);
+        nameCheckBox.setChecked(!nameCheckBox.isChecked());
     }
 
     public ContactGroup getGroup(String id) {

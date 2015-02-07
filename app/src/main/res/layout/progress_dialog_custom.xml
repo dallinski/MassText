@@ -17,7 +17,7 @@
             android:id="@+id/progress"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="#1E88E5" />
+            android:background="@color/colorAccent" />
 
     </RelativeLayout>
 
