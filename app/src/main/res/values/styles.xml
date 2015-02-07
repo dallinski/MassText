@@ -17,4 +17,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="CardViewStyle.Light" parent="CardView.Light">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
 </resources>

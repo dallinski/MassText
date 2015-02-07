@@ -31,6 +31,7 @@ public class EditTemplate extends ActionBarActivity {
 
     Boolean disableInsertVariable = true;
     ArrayList<String> variables = new ArrayList<String>();
+    Template existingTemplate;
 
     int cursor_position = 0;
     final String[] VARIABLE_OPTIONS = new String[]{"date", "time", "first name", "last name", "full name", "custom variable"};
@@ -74,6 +75,22 @@ public class EditTemplate extends ActionBarActivity {
 
             }
         });
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            long template_id = bundle.getLong("template_id");
+            existingTemplate = Template.findById(Template.class, template_id);
+            existingTemplate.buildArrayListFromString();
+            FloatingLabelEditText titleInputField = (FloatingLabelEditText) findViewById(R.id.templateTitleInput);
+            titleInputField.setInputWidgetText(existingTemplate.title);
+            bodyInputField.setInputWidgetText(existingTemplate.body);
+            variables = existingTemplate.variables;
+            styleEditText();
+        } else {
+            // A new template.
+            // automatically focus on the title and show keyboard for quick entry
+            findViewById(R.id.templateTitleInput).requestFocus();
+        }
     }
 
     @Override
@@ -99,6 +116,11 @@ public class EditTemplate extends ActionBarActivity {
                 cursor_position = bodyInputField.getInputWidget().getSelectionEnd();
                 selectVariable(bodyInputField.getContext());
                 return true;
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                upIntent.putExtra("opened_tab", Constants.TEMPLATES_FRAGMENT_POS);
+                NavUtils.navigateUpTo(this, upIntent);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -117,10 +139,17 @@ public class EditTemplate extends ActionBarActivity {
             Toast.makeText(getBaseContext(), "You cannot save without body text.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        Template template = new Template(title_text, body_text, variables);
-        template.save();
+        if(existingTemplate != null) {
+            existingTemplate.title = title_text;
+            existingTemplate.body = body_text;
+            existingTemplate.variables = variables;
+            existingTemplate.save();
+        } else {
+            Template template = new Template(title_text, body_text, variables);
+            template.save();
+        }
         Intent upIntent = NavUtils.getParentActivityIntent(this);
-        upIntent.putExtra("opened_tab", 1);
+        upIntent.putExtra("opened_tab", Constants.TEMPLATES_FRAGMENT_POS);
         NavUtils.navigateUpTo(this, upIntent);
         return true;
     }

@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
-            int current_tab = bundle.getInt("opened_tab", 0);
+            int current_tab = bundle.getInt("opened_tab", Constants.MESSAGING_FRAGMENT_POS);
             mViewPager.setCurrentItem(current_tab);
         }
     }
@@ -91,11 +91,11 @@ public class MainActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             // instantiate the fragment for the given page.
             switch (position) {
-                case 0:
+                case Constants.MESSAGING_FRAGMENT_POS:
                     return MessagingFragment.newInstance(position + 1);
-                case 1:
+                case Constants.TEMPLATES_FRAGMENT_POS:
                     return TemplatesFragment.newInstance(position + 1);
-                case 2:
+                case Constants.ABOUT_FRAGMENT_POS:
                     return AboutFragment.newInstance(position + 1);
             }
             return null;
@@ -111,11 +111,11 @@ public class MainActivity extends ActionBarActivity {
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
             switch (position) {
-                case 0:
+                case Constants.MESSAGING_FRAGMENT_POS:
                     return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
+                case Constants.TEMPLATES_FRAGMENT_POS:
                     return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
+                case Constants.ABOUT_FRAGMENT_POS:
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;

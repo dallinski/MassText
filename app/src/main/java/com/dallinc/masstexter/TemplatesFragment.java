@@ -81,16 +81,23 @@ public class TemplatesFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(TemplateViewHolder TemplateViewHolder, int i) {
-            Template template = templateList.get(i);
+        public void onBindViewHolder(final TemplateViewHolder TemplateViewHolder, int i) {
+            final Template template = templateList.get(i);
             TemplateViewHolder.vTitle.setText(template.title);
             String body = template.body;
             template.buildArrayListFromString();
             for(String variable: template.variables) {
                 body = body.replaceFirst("¬", variable);
-                System.out.println("variable: " + variable);
             }
             TemplateViewHolder.vBody.setText(body);
+            TemplateViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(TemplateViewHolder.itemView.getContext(), EditTemplate.class);
+                    intent.putExtra("template_id", template.getId());
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override
