@@ -91,7 +91,7 @@ public final class ContactManager extends FragmentActivity {
 
         // Hide the search bar until everything has loaded
         searchLayout = (LinearLayout) findViewById(R.id.search_txt_layout);
-        searchLayout.setVisibility(View.GONE);
+        searchLayout.setVisibility(View.INVISIBLE);
 
         // Init UI elements
         contactLV = (ListView) findViewById(R.id.contactList);
@@ -219,6 +219,7 @@ public final class ContactManager extends FragmentActivity {
             check_all.setVisibility(View.VISIBLE);
             btnToggle.setEnabled(true);
             btnToggle.setVisibility(View.VISIBLE);
+            searchLayout.setVisibility(View.VISIBLE);
         }
     }
 
