@@ -3,12 +3,22 @@ package com.dallinc.masstexter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,7 +32,6 @@ public class Compose extends ActionBarActivity {
     final int REQUEST_CODE = 100;
     boolean repeatCheck = false;
     int i = 0;
-    FlowLayout chipsBoxLayout;
     ArrayList<Contact> contactsShareDetail;
     ArrayList<String> contactsSharePhone;
 
@@ -31,22 +40,107 @@ public class Compose extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            Template template = Template.findById(Template.class, bundle.getLong("template_id"));
-            Toast.makeText(getBaseContext(), "Stub: Create message (template): " + template.title, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getBaseContext(), "Stub: Create message (quick compose)", Toast.LENGTH_SHORT).show();
-        }
+        ButtonRectangle sendMessageBtn = (ButtonRectangle) findViewById(R.id.sendMessage);
+        sendMessageBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
-        chipsBoxLayout = (FlowLayout)findViewById(R.id.chips_box_layout);
         contactsShareDetail = new ArrayList<Contact>();
         contactsSharePhone = new ArrayList<String>();
+        ScrollViewWithMaxHeight maxHeightScrollView = (ScrollViewWithMaxHeight) findViewById(R.id.maxHeightScrollView);
+        maxHeightScrollView.setMaxHeight(180);
+
+        FloatingLabelEditText editText = (FloatingLabelEditText) findViewById(R.id.composeBody);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            final Template template = Template.findById(Template.class, bundle.getLong("template_id"));
+            template.buildArrayListFromString();
+            editText.setInputWidgetText(template.body);
+            styleEditText(template.variables);
+
+            editText.addInputWidgetTextChangedListener(new TextWatcher() {
+                String before_text = "";
+                int before_variable_count = 0;
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    before_text = s.toString();
+                    before_variable_count = variableInstances(s.toString(), start+count);
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    int after_variable_count = variableInstances(s.toString(), start+count);
+                    while(after_variable_count < before_variable_count) {
+                        // Remove the appropriate variable(s)
+                        template.variables.remove(before_variable_count - 1);
+                        before_variable_count--;
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        }
+    }
+
+    private int variableInstances(String s, int end_position) {
+        int count = 0;
+        for(int i=0; i<end_position; i++ ) {
+            if(s.charAt(i) == '¬') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private void styleEditText(ArrayList<String> variables) {
+        FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.composeBody);
+        String template_text = bodyInputField.getInputWidgetText().toString();
+        SpannableString spanText = new SpannableString(template_text);
+
+        int starting_pos = 0;
+        int variable_idx = 0;
+        while(starting_pos != -1) {
+            int idx = template_text.indexOf("¬", starting_pos);
+            if(idx == -1) {
+                break;
+            }
+
+            String variable = variables.get(variable_idx);
+
+            Rect bounds = new Rect();
+            Paint textPaint = bodyInputField.getInputWidget().getPaint();
+            textPaint.getTextBounds(variable, 0, variable.length(), bounds);
+            int width = bounds.width();
+
+            TextDrawable d = new TextDrawable(this);
+            d.setText(variable);
+            d.setTextColor(getResources().getColor(R.color.colorAccent));
+            d.setTextSize(20);
+            d.setTextAlign(Layout.Alignment.ALIGN_CENTER);
+            d.setBounds(3, 0, width+6, (int)(bodyInputField.getInputWidget().getTextSize()));
+
+            spanText.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BASELINE), idx, idx+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            starting_pos = idx+1;
+            variable_idx++;
+        }
+
+        bodyInputField.setInputWidgetText(spanText, TextView.BufferType.SPANNABLE);
+        try{
+            bodyInputField.getInputWidget().setSelection(bodyInputField.getInputWidget().getSelectionEnd());
+        } catch(IndexOutOfBoundsException e) {
+            bodyInputField.getInputWidget().setSelection(bodyInputField.getInputWidgetText().length());
+        }
+
     }
 
     public void clear() {
         contactsShareDetail = new ArrayList<Contact>();
         contactsSharePhone = new ArrayList<String>();
+
+        FlowLayout chipsBoxLayout = (FlowLayout)findViewById(R.id.chips_box_layout);
         chipsBoxLayout.removeAllViews();
     }
 
@@ -107,6 +201,8 @@ public class Compose extends ActionBarActivity {
                                 t.setTextColor(Color.WHITE);
                                 // t.setBackgroundColor(Color.BLUE);
                                 t.setBackgroundResource(R.drawable.chips_bg);
+
+                                FlowLayout chipsBoxLayout = (FlowLayout)findViewById(R.id.chips_box_layout);
                                 chipsBoxLayout.addView(t);
                             }
                             else if(repeatCheck && !contactsSharePhone.contains(contact.getContactNumber()))
@@ -121,6 +217,8 @@ public class Compose extends ActionBarActivity {
                                 t.setTextColor(Color.WHITE);
                                 // t.setBackgroundColor(Color.BLUE);
                                 t.setBackgroundResource(R.drawable.chips_bg);
+
+                                FlowLayout chipsBoxLayout = (FlowLayout)findViewById(R.id.chips_box_layout);
                                 chipsBoxLayout.addView(t);
                             }
 

@@ -62,11 +62,9 @@ public final class ContactManager extends FragmentActivity {
     private GroupAdapter groupAdapter = null;
     private ListView contactLV, groupLV;
     private ViewSwitcher viewSwitcher;
-    Animation a1;
-    Animation a2;
-    private boolean isBackOfCardShowing = true;
+    Animation a1, a2;
     CheckBox check_all;
-    ActionMenuItemView btnDone;
+    ActionMenuItemView btnDone, btnToggle;
     RelativeLayout progressLayout;
     LinearLayout searchLayout;
     EditText myFilter;
@@ -193,10 +191,15 @@ public final class ContactManager extends FragmentActivity {
             }
         });
         btnDone = (ActionMenuItemView) findViewById(R.id.action_save);
+        btnToggle = (ActionMenuItemView) findViewById(R.id.action_toggle_views);
 
         // disable the actionbar buttons and checkbox until the contacts have loaded
         btnDone.setEnabled(false);
+        btnDone.setVisibility(View.INVISIBLE);
         check_all.setClickable(false);
+        check_all.setVisibility(View.INVISIBLE);
+        btnToggle.setEnabled(false);
+        btnToggle.setVisibility(View.INVISIBLE);
 
         if (contacts == null) {
             contacts = new ArrayList<Contact>();
@@ -209,9 +212,13 @@ public final class ContactManager extends FragmentActivity {
             groupAdapter = new GroupAdapter(this, R.id.groupList, groups);
             groupLV.setAdapter(groupAdapter);
             btnDone.setEnabled(true);
+            btnDone.setVisibility(View.VISIBLE);
             check_all.setClickable(true);
             if (allSelected())
                 check_all.setChecked(true);
+            check_all.setVisibility(View.VISIBLE);
+            btnToggle.setEnabled(true);
+            btnToggle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -445,7 +452,11 @@ public final class ContactManager extends FragmentActivity {
 
             // enable the actionbar buttons and checkbox
             btnDone.setEnabled(true);
+            btnDone.setVisibility(View.VISIBLE);
             check_all.setClickable(true);
+            check_all.setVisibility(View.VISIBLE);
+            btnToggle.setEnabled(true);
+            btnToggle.setVisibility(View.VISIBLE);
             searchLayout.setVisibility(View.VISIBLE);
         }
 

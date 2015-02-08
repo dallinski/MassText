@@ -41,12 +41,8 @@ public class AboutFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.about_fragment, container, false);
         ButtonRectangle b = (ButtonRectangle)rootView.findViewById(R.id.buttonDonate);
         ButtonRectangle b2 = (ButtonRectangle)rootView.findViewById(R.id.buttonChangeLog);
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = rootView.getContext().getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        int color = typedValue.data;
-        b.setBackgroundColor(color);
-        b2.setBackgroundColor(color);
+        b.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        b2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         return rootView;
     }
 }
