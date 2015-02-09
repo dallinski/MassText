@@ -34,7 +34,6 @@ public class EditTemplate extends ActionBarActivity {
     Template existingTemplate;
 
     int cursor_position = 0;
-    final String[] VARIABLE_OPTIONS = new String[]{"date", "time", "first name", "last name", "full name", "custom variable"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,13 +220,13 @@ public class EditTemplate extends ActionBarActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Insert Variable");
 
-        builder.setItems(VARIABLE_OPTIONS, new DialogInterface.OnClickListener(){
+        builder.setItems(Constants.VARIABLE_OPTIONS, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialogInterface, int n) {
-                if(VARIABLE_OPTIONS[n].equals("custom variable")) {
+                if(Constants.VARIABLE_OPTIONS[n].equals("custom variable")) {
                     inputCustomVariable(context);
                     return;
                 }
-                insertVariable(VARIABLE_OPTIONS[n]);
+                insertVariable(Constants.VARIABLE_OPTIONS[n]);
                 return;
             }
         });
@@ -253,7 +252,7 @@ public class EditTemplate extends ActionBarActivity {
                     return;
                 }
                 String var_text = customVariable.getInputWidgetText().toString().replaceAll("[^a-zA-Z0-9 ]","");
-                if(contains(VARIABLE_OPTIONS, var_text)) {
+                if(contains(Constants.VARIABLE_OPTIONS, var_text)) {
                     Toast.makeText(context, "Input variable cannot be defined as a custom variable", Toast.LENGTH_SHORT).show();
                     return;
                 }
