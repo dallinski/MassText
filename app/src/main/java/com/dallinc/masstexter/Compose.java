@@ -15,7 +15,9 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
@@ -34,6 +36,7 @@ public class Compose extends ActionBarActivity {
     int i = 0;
     ArrayList<Contact> contactsShareDetail;
     ArrayList<String> contactsSharePhone;
+    ArrayList<String> variables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +48,19 @@ public class Compose extends ActionBarActivity {
 
         contactsShareDetail = new ArrayList<Contact>();
         contactsSharePhone = new ArrayList<String>();
+        variables = new ArrayList<String>();
         ScrollViewWithMaxHeight maxHeightScrollView = (ScrollViewWithMaxHeight) findViewById(R.id.maxHeightScrollView);
-        maxHeightScrollView.setMaxHeight(180);
+        maxHeightScrollView.setMaxHeight((int) (90 * getResources().getDisplayMetrics().density));
 
-        FloatingLabelEditText editText = (FloatingLabelEditText) findViewById(R.id.composeBody);
+        final FloatingLabelEditText editText = (FloatingLabelEditText) findViewById(R.id.composeBody);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
             final Template template = Template.findById(Template.class, bundle.getLong("template_id"));
             template.buildArrayListFromString();
+            variables = template.variables;
             editText.setInputWidgetText(template.body);
-            styleEditText(template.variables);
+            styleEditText();
 
             editText.addInputWidgetTextChangedListener(new TextWatcher() {
                 String before_text = "";
@@ -72,7 +77,7 @@ public class Compose extends ActionBarActivity {
                     int after_variable_count = variableInstances(s.toString(), start+count);
                     while(after_variable_count < before_variable_count) {
                         // Remove the appropriate variable(s)
-                        template.variables.remove(before_variable_count - 1);
+                        variables.remove(before_variable_count - 1);
                         before_variable_count--;
                     }
                 }
@@ -83,6 +88,26 @@ public class Compose extends ActionBarActivity {
                 }
             });
         }
+
+        sendMessageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(editText.getInputWidgetText().toString().length() < 1) {
+                    Toast.makeText(getBaseContext(), "You cannot send an empty message", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (contactsSharePhone.size() < 1) {
+                    Toast.makeText(getBaseContext(), "You must specify at least one recipient", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                System.out.println("body: " + editText.getInputWidgetText().toString());
+                System.out.println("variables: " + variables.toString());
+                System.out.println("recipients: " + contactsSharePhone);
+            }
+        });
+    }
+
+    private void fillInVariables() {
+
     }
 
     private int variableInstances(String s, int end_position) {
@@ -95,7 +120,7 @@ public class Compose extends ActionBarActivity {
         return count;
     }
 
-    private void styleEditText(ArrayList<String> variables) {
+    private void styleEditText() {
         FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.composeBody);
         String template_text = bodyInputField.getInputWidgetText().toString();
         SpannableString spanText = new SpannableString(template_text);
