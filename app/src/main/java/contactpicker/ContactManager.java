@@ -139,6 +139,8 @@ public final class ContactManager extends FragmentActivity {
         Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.contact_picker_toolbar, root, false);
         bar.inflateMenu(R.menu.menu_contact_picker);
         root.addView(bar, 0); // insert at top
+        CheckBox selectAllCheckbox = (CheckBox) root.findViewById(R.id.action_select_all);
+        selectAllCheckbox.setButtonDrawable(getResources().getDrawable(R.drawable.select_all_checkbox));
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

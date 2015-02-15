@@ -11,5 +11,4 @@
     android:background="?attr/colorPrimary"
     app:navigationIcon="?attr/homeAsUpIndicator" >
 
-
 </android.support.v7.widget.Toolbar>
