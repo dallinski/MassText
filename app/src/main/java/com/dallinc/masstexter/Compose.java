@@ -1,6 +1,8 @@
 package com.dallinc.masstexter;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,11 +18,18 @@ import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,6 +42,7 @@ import contactpicker.FlowLayout;
 public class Compose extends ActionBarActivity {
     final int REQUEST_CODE = 100;
     boolean repeatCheck = false;
+    boolean unsetVariableExists = false;
     int i = 0;
     ArrayList<Contact> contactsShareDetail;
     ArrayList<String> contactsSharePhone;
@@ -43,8 +53,10 @@ public class Compose extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
-        ButtonRectangle sendMessageBtn = (ButtonRectangle) findViewById(R.id.sendMessage);
+        final ButtonRectangle sendMessageBtn = (ButtonRectangle) findViewById(R.id.sendMessage);
         sendMessageBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        final ButtonRectangle finalizeBtn = (ButtonRectangle) findViewById(R.id.finalizeMessage);
+        finalizeBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
         contactsShareDetail = new ArrayList<Contact>();
         contactsSharePhone = new ArrayList<String>();
@@ -84,7 +96,14 @@ public class Compose extends ActionBarActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-
+                    unsetVariableExists = false;
+                    for(String var : variables) {
+                        if(!Constants.contains(Constants.AUTO_VARIABLES, var)) {
+                            unsetVariableExists = true;
+                        }
+                    }
+                    sendMessageBtn.setVisibility(unsetVariableExists ? View.GONE : View.VISIBLE);
+                    finalizeBtn.setVisibility(unsetVariableExists ? View.VISIBLE : View.GONE);
                 }
             });
         }
@@ -104,10 +123,86 @@ public class Compose extends ActionBarActivity {
                 System.out.println("recipients: " + contactsSharePhone);
             }
         });
+
+        finalizeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fillInVariables();
+            }
+        });
     }
 
     private void fillInVariables() {
+        for(String var : variables) {
+            if(!Constants.contains(Constants.AUTO_VARIABLES, var)) {
+                switch (var) {
+                    case "time":
+                        showTimePickerDialog();
+                        return;
+                    case "date":
+                        showDatePickerDialog();
+                        return;
+                    case "day of the week":
+                        return;
+                    default:
+//                        variablePickerDialog(view, string);
+                        Toast.makeText(getBaseContext(), var, Toast.LENGTH_SHORT).show();
+                        return;
+                }
+            }
+        }
+    }
 
+    private void replaceVariable(String replacement) {
+        final FloatingLabelEditText editText = (FloatingLabelEditText) findViewById(R.id.composeBody);
+        for(int i=0; i<variables.size(); i++) {
+            if(!Constants.contains(Constants.AUTO_VARIABLES, variables.get(i))) {
+                String original = editText.getInputWidgetText().toString();
+                int var_pos = nthOccurrence(original, '¬', i);
+                Editable widgetText = editText.getInputWidgetText();
+                widgetText.replace(var_pos, var_pos+1, replacement);
+                editText.setInputWidgetText(widgetText.toString());
+                styleEditText();
+                fillInVariables();
+                return;
+            }
+        }
+    }
+
+    public static int nthOccurrence(String str, char c, int n) {
+        int pos = str.indexOf(c, 0);
+        while (n-- > 0 && pos != -1)
+            pos = str.indexOf(c, pos+1);
+        return pos;
+    }
+
+    private void showTimePickerDialog() {
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                LocalTime localTime = new LocalTime().withHourOfDay(hourOfDay).withMinuteOfHour(minute);
+                DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm a");
+                String str = localTime.toString(fmt);
+                replaceVariable(str);
+            }
+        };
+        TimePickerFragment timePickerFragment = TimePickerFragment.withCustomListener(timeSetListener);
+        timePickerFragment.show(this.getSupportFragmentManager(), "timePicker");
+    }
+
+    private void showDatePickerDialog() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear = monthOfYear + 1; // make it one-indexed instead of zero-indexed
+                LocalDate date = new LocalDate().withYear(year).withMonthOfYear(monthOfYear).withDayOfMonth(dayOfMonth);
+                DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM d, yyyy");
+                String str = date.toString(fmt);
+                replaceVariable(str);
+            }
+        };
+        DatePickerFragment datePickerFragment = DatePickerFragment.withCustomListener(dateSetListener);
+        datePickerFragment.show(this.getSupportFragmentManager(), "datePicker");
     }
 
     private int variableInstances(String s, int end_position) {

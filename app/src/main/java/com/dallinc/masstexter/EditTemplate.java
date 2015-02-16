@@ -252,7 +252,7 @@ public class EditTemplate extends ActionBarActivity {
                     return;
                 }
                 String var_text = customVariable.getInputWidgetText().toString().replaceAll("[^a-zA-Z0-9 ]","");
-                if(contains(Constants.VARIABLE_OPTIONS, var_text)) {
+                if(Constants.contains(Constants.VARIABLE_OPTIONS, var_text)) {
                     Toast.makeText(context, "Input variable cannot be defined as a custom variable", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -289,14 +289,5 @@ public class EditTemplate extends ActionBarActivity {
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(s.length() > 0);
             }
         });
-    }
-
-    private boolean contains(String[] vars, String var) {
-        for(String v : vars) {
-            if(var.equals(v)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

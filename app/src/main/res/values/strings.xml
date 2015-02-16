@@ -14,6 +14,8 @@
     <string name="select_color_accent">Accent Color</string>
     <string name="title_activity_compose">Compose</string>
     <string name="action_select_recipients">Select Recipients</string>
+    <string name="send">Send</string>
+    <string name="finalize">Finalize</string>
 
     <!--ContactPicker string values-->
     <string name="selectAccountLabel">Select</string>
