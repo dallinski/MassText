@@ -158,6 +158,7 @@ public class Compose extends ActionBarActivity {
                         showDatePickerDialog();
                         return;
                     case "day of the week":
+                        showDayOfTheWeekPickerDialog();
                         return;
                     default:
                         showCustomVariablePickerDialog(var);
@@ -183,7 +184,7 @@ public class Compose extends ActionBarActivity {
         }
     }
 
-    public static int nthOccurrence(String str, char c, int n) {
+    private static int nthOccurrence(String str, char c, int n) {
         int pos = str.indexOf(c, 0);
         while (n-- > 0 && pos != -1)
             pos = str.indexOf(c, pos+1);
@@ -229,7 +230,7 @@ public class Compose extends ActionBarActivity {
         return count;
     }
 
-    public void showCustomVariablePickerDialog(String var_name) {
+    private void showCustomVariablePickerDialog(String var_name) {
         CustomVariablePickerFragment.OnMyDialogResult onMyDialogResult = new CustomVariablePickerFragment.OnMyDialogResult() {
             @Override
             public void finish(String result) {
@@ -238,6 +239,17 @@ public class Compose extends ActionBarActivity {
         };
         CustomVariablePickerFragment customVariablePickerFragment = CustomVariablePickerFragment.withCustomListener(onMyDialogResult, var_name);
         customVariablePickerFragment.show(this.getSupportFragmentManager(), "customPicker");
+    }
+
+    private void showDayOfTheWeekPickerDialog() {
+        DayOfWeekPickerFragment.OnMyDialogResult onMyDialogResult = new DayOfWeekPickerFragment.OnMyDialogResult() {
+            @Override
+            public void finish(String result) {
+                replaceVariable(result);
+            }
+        };
+        DayOfWeekPickerFragment dayOfWeekPickerFragment = DayOfWeekPickerFragment.withCustomListener(onMyDialogResult);
+        dayOfWeekPickerFragment.show(this.getSupportFragmentManager(), "dayOfWeekPicker");
     }
 
     private void styleEditText() {
@@ -281,7 +293,7 @@ public class Compose extends ActionBarActivity {
 
     }
 
-    public void clear() {
+    private void clear() {
         contactsShareDetail = new ArrayList<Contact>();
         contactsSharePhone = new ArrayList<String>();
 
