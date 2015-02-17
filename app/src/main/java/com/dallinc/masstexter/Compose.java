@@ -42,7 +42,6 @@ import contactpicker.FlowLayout;
 public class Compose extends ActionBarActivity {
     final int REQUEST_CODE = 100;
     boolean repeatCheck = false;
-    boolean unsetVariableExists = false;
     int i = 0;
     ArrayList<Contact> contactsShareDetail;
     ArrayList<String> contactsSharePhone;
@@ -71,6 +70,7 @@ public class Compose extends ActionBarActivity {
             final Template template = Template.findById(Template.class, bundle.getLong("template_id"));
             template.buildArrayListFromString();
             variables = template.variables;
+            setSendButtonVisibility();
             editText.setInputWidgetText(template.body);
             styleEditText();
 
@@ -96,14 +96,7 @@ public class Compose extends ActionBarActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    unsetVariableExists = false;
-                    for(String var : variables) {
-                        if(!Constants.contains(Constants.AUTO_VARIABLES, var)) {
-                            unsetVariableExists = true;
-                        }
-                    }
-                    sendMessageBtn.setVisibility(unsetVariableExists ? View.GONE : View.VISIBLE);
-                    finalizeBtn.setVisibility(unsetVariableExists ? View.VISIBLE : View.GONE);
+                    setSendButtonVisibility();
                 }
             });
         }
@@ -130,6 +123,28 @@ public class Compose extends ActionBarActivity {
                 fillInVariables();
             }
         });
+
+        setSendButtonVisibility();
+    }
+
+    private void setSendButtonVisibility() {
+        ButtonRectangle sendMessageBtn = (ButtonRectangle) findViewById(R.id.sendMessage);
+        ButtonRectangle finalizeBtn = (ButtonRectangle) findViewById(R.id.finalizeMessage);
+
+        sendMessageBtn.setVisibility(unsetVariableExists() ? View.GONE : View.VISIBLE);
+        finalizeBtn.setVisibility(unsetVariableExists() ? View.VISIBLE : View.GONE);
+    }
+
+    private boolean unsetVariableExists() {
+        for(String var : variables) {
+            if(var.length() == 0) {
+                continue; // I don't know why, but there is sometimes a blank variable
+            }
+            if(!Constants.contains(Constants.AUTO_VARIABLES, var)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void fillInVariables() {
@@ -145,8 +160,7 @@ public class Compose extends ActionBarActivity {
                     case "day of the week":
                         return;
                     default:
-//                        variablePickerDialog(view, string);
-                        Toast.makeText(getBaseContext(), var, Toast.LENGTH_SHORT).show();
+                        showCustomVariablePickerDialog(var);
                         return;
                 }
             }
@@ -181,7 +195,7 @@ public class Compose extends ActionBarActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 LocalTime localTime = new LocalTime().withHourOfDay(hourOfDay).withMinuteOfHour(minute);
-                DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm a");
+                DateTimeFormatter fmt = DateTimeFormat.forPattern("h:mm a");
                 String str = localTime.toString(fmt);
                 replaceVariable(str);
             }
@@ -213,6 +227,17 @@ public class Compose extends ActionBarActivity {
             }
         }
         return count;
+    }
+
+    public void showCustomVariablePickerDialog(String var_name) {
+        CustomVariablePickerFragment.OnMyDialogResult onMyDialogResult = new CustomVariablePickerFragment.OnMyDialogResult() {
+            @Override
+            public void finish(String result) {
+                replaceVariable(result);
+            }
+        };
+        CustomVariablePickerFragment customVariablePickerFragment = CustomVariablePickerFragment.withCustomListener(onMyDialogResult, var_name);
+        customVariablePickerFragment.show(this.getSupportFragmentManager(), "customPicker");
     }
 
     private void styleEditText() {
