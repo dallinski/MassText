@@ -66,6 +66,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
+
+        <service
+            android:name=".SendSMS"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

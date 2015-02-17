@@ -111,9 +111,9 @@ public class Compose extends ActionBarActivity {
                     Toast.makeText(getBaseContext(), "You must specify at least one recipient", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                System.out.println("body: " + editText.getInputWidgetText().toString());
-                System.out.println("variables: " + variables.toString());
-                System.out.println("recipients: " + contactsSharePhone);
+                SMSManager.sendGroupMessage(getBaseContext(), contactsSharePhone, contactsShareDetail, editText.getInputWidgetText().toString(), variables);
+
+                // TODO: return to main activity (Messages fragment)
             }
         });
 
