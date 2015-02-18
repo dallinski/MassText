@@ -3,7 +3,6 @@ package com.dallinc.masstexter.models;
 import com.orm.SugarRecord;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 

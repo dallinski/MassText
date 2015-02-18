@@ -24,7 +24,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.dallinc.masstexter.MainActivity;
-import com.dallinc.masstexter.SettingsActivity;
 import com.dallinc.masstexter.helpers.Constants;
 import com.dallinc.masstexter.R;
 import com.dallinc.masstexter.helpers.ScrollViewWithMaxHeight;

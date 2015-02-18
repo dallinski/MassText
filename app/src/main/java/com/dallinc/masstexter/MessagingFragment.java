@@ -16,13 +16,8 @@ import android.widget.Toast;
 import com.dallinc.masstexter.messaging.Compose;
 import com.dallinc.masstexter.models.GroupMessage;
 import com.dallinc.masstexter.models.Template;
-import com.dallinc.masstexter.templates.EditTemplate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
