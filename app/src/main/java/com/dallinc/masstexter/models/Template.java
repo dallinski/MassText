@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.models;
 
 import com.orm.SugarRecord;
 
@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * Created by dallin on 1/31/15.
  */
 public class Template extends SugarRecord<Template> {
-    String title;
-    String body;
-    ArrayList<String> variables;
-    String variable_string;
+    public String title;
+    public String body;
+    public ArrayList<String> variables;
+    public String variable_string;
 
     public Template() {
     }

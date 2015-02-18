@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.pickers;
 
 import android.app.TimePickerDialog;
 import android.app.Dialog;
@@ -13,7 +13,7 @@ import org.joda.time.LocalTime;
 public class TimePickerFragment extends DialogFragment {
     private TimePickerDialog.OnTimeSetListener onTimeSetListener;
 
-    static TimePickerFragment withCustomListener(TimePickerDialog.OnTimeSetListener onTimeSetListener) {
+    public static TimePickerFragment withCustomListener(TimePickerDialog.OnTimeSetListener onTimeSetListener) {
         TimePickerFragment pickerFragment = new TimePickerFragment();
         pickerFragment.setOnTimeSetListener(onTimeSetListener);
         return pickerFragment;

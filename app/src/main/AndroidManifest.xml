@@ -43,7 +43,7 @@
                 android:value="com.dallinc.masstexter.MainActivity" />
         </activity>
         <activity
-            android:name=".EditTemplate"
+            android:name=".templates.EditTemplate"
             android:label="@string/title_activity_edit_template"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" >
@@ -52,7 +52,7 @@
                 android:value="com.dallinc.masstexter.MainActivity" />
         </activity>
         <activity
-            android:name=".Compose"
+            android:name=".messaging.Compose"
             android:label="@string/title_activity_compose"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -68,7 +68,7 @@
         </activity>
 
         <service
-            android:name=".SendSMS"
+            android:name=".messaging.SendSMS"
             android:exported="false" >
         </service>
     </application>

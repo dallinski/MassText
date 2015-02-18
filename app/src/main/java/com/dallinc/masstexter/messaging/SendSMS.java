@@ -1,10 +1,9 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.messaging;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.os.SystemClock;
-import android.widget.Toast;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

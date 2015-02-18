@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.helpers;
 
 /**
  * Copyright (c) 2012 Wireless Designs, LLC

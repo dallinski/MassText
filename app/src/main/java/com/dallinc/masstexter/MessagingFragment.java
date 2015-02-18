@@ -5,13 +5,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dallinc.masstexter.messaging.Compose;
+import com.dallinc.masstexter.models.GroupMessage;
+import com.dallinc.masstexter.models.Template;
+import com.dallinc.masstexter.templates.EditTemplate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -19,6 +30,7 @@ import java.util.List;
  * Created by dallin on 1/30/15.
  */
 public class MessagingFragment extends Fragment {
+    List<GroupMessage> sentMessages = GroupMessage.listAll(GroupMessage.class);
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -87,6 +99,92 @@ public class MessagingFragment extends Fragment {
             }
         });
 
+        RecyclerView recList = (RecyclerView) rootView.findViewById(R.id.sentMessagesCardList);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+
+        GroupMessageAdapter ca = new GroupMessageAdapter(sentMessages);
+        recList.setAdapter(ca);
+
         return rootView;
+    }
+
+    public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapter.GroupMessageViewHolder> {
+
+        private List<GroupMessage> sentMessageList;
+
+        public GroupMessageAdapter(List<GroupMessage> sentMessageList) {
+            this.sentMessageList = sentMessageList;
+        }
+
+        @Override
+        public int getItemCount() {
+            return sentMessageList.size();
+        }
+
+        @Override
+        public void onBindViewHolder(final GroupMessageViewHolder GroupMessageViewHolder, int i) {
+            final GroupMessage sentMessage = sentMessageList.get(i);
+            GroupMessageViewHolder.vTitle.setText(sentMessage.sentAt);
+            String body = sentMessage.messageBody;
+            sentMessage.buildArrayListFromString();
+            for(String variable: sentMessage.variables) {
+                body = body.replaceFirst("¬", variable);
+            }
+            GroupMessageViewHolder.vBody.setText(body);
+            GroupMessageViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: navigate to detail view
+//                    Intent intent = new Intent(GroupMessageViewHolder.itemView.getContext(), SentMessageDetails.class);
+//                    intent.putExtra("message_id", sentMessage.getId());
+//                    startActivity(intent);
+                }
+            });
+            GroupMessageViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(GroupMessageViewHolder.itemView.getContext());
+                    builder.setTitle("Delete Message?");
+                    builder.setMessage("Do you want to delete this message from the list?");
+                    builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sentMessage.delete();
+                            sentMessageList = sentMessages = GroupMessage.listAll(GroupMessage.class);
+                            notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                    return false;
+                }
+            });
+        }
+
+        @Override
+        public GroupMessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.template_card_layout, viewGroup, false);
+            return new GroupMessageViewHolder(itemView);
+        }
+
+        public class GroupMessageViewHolder extends RecyclerView.ViewHolder {
+            protected TextView vTitle;
+            protected TextView vBody;
+
+            public GroupMessageViewHolder(View v) {
+                super(v);
+                vTitle =  (TextView) v.findViewById(R.id.templateCardTitle);
+                vBody = (TextView)  v.findViewById(R.id.templateCardBody);
+            }
+        }
     }
 }

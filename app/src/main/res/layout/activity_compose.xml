@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.dallinc.masstexter.Compose">
+    tools:context="com.dallinc.masstexter.messaging.Compose">
 
     <LinearLayout
         android:id="@+id/recipientsListContainer"
@@ -22,7 +22,7 @@
             android:text="To:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <com.dallinc.masstexter.ScrollViewWithMaxHeight
+        <com.dallinc.masstexter.helpers.ScrollViewWithMaxHeight
             android:id="@+id/maxHeightScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -34,7 +34,7 @@
                 android:gravity="start"
                 >
             </contactpicker.FlowLayout>
-        </com.dallinc.masstexter.ScrollViewWithMaxHeight>
+        </com.dallinc.masstexter.helpers.ScrollViewWithMaxHeight>
 
     </LinearLayout>
 

@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.dallinc.masstexter.models.Template;
+import com.dallinc.masstexter.templates.EditTemplate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.pickers;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.dallinc.masstexter.R;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
 /**
@@ -19,7 +20,7 @@ public class CustomVariablePickerFragment extends DialogFragment {
     private static String variableName;
     private static OnMyDialogResult mDialogResult; // the callback
 
-    static CustomVariablePickerFragment withCustomListener(OnMyDialogResult dialogResult, String var_name) {
+    public static CustomVariablePickerFragment withCustomListener(OnMyDialogResult dialogResult, String var_name) {
         CustomVariablePickerFragment pickerFragment = new CustomVariablePickerFragment();
         mDialogResult = dialogResult;
         variableName = var_name;

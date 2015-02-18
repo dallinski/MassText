@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.pickers;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -13,7 +13,7 @@ import org.joda.time.LocalDate;
 public class DatePickerFragment extends DialogFragment {
     private DatePickerDialog.OnDateSetListener onDateSetListener;
 
-    static DatePickerFragment withCustomListener(DatePickerDialog.OnDateSetListener onDateSetListener) {
+    public static DatePickerFragment withCustomListener(DatePickerDialog.OnDateSetListener onDateSetListener) {
         DatePickerFragment pickerFragment = new DatePickerFragment();
         pickerFragment.setOnDateSetListener(onDateSetListener);
         return pickerFragment;

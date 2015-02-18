@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity$MessagingFragment">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sentMessagesCardList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/buttonComposeMessage"
         android:layout_width="wrap_content"
@@ -39,12 +45,5 @@
             fab:fab_colorPressed="@color/white_pressed"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-    </LinearLayout>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.helpers;
 
 /**
  * Created by dallin on 2/6/15.

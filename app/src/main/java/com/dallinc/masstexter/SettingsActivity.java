@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
+import com.dallinc.masstexter.R;
 import com.gc.materialdesign.widgets.ColorSelector;
 
 import java.util.List;

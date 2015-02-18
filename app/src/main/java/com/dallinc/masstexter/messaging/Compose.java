@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstexter.messaging;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -23,6 +23,19 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.dallinc.masstexter.MainActivity;
+import com.dallinc.masstexter.SettingsActivity;
+import com.dallinc.masstexter.helpers.Constants;
+import com.dallinc.masstexter.R;
+import com.dallinc.masstexter.helpers.ScrollViewWithMaxHeight;
+import com.dallinc.masstexter.helpers.TextDrawable;
+import com.dallinc.masstexter.models.GroupMessage;
+import com.dallinc.masstexter.models.SingleMessage;
+import com.dallinc.masstexter.models.Template;
+import com.dallinc.masstexter.pickers.CustomVariablePickerFragment;
+import com.dallinc.masstexter.pickers.DatePickerFragment;
+import com.dallinc.masstexter.pickers.DayOfWeekPickerFragment;
+import com.dallinc.masstexter.pickers.TimePickerFragment;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
@@ -111,9 +124,23 @@ public class Compose extends ActionBarActivity {
                     Toast.makeText(getBaseContext(), "You must specify at least one recipient", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                SMSManager.sendGroupMessage(getBaseContext(), contactsSharePhone, contactsShareDetail, editText.getInputWidgetText().toString(), variables);
 
-                // TODO: return to main activity (Messages fragment)
+                System.out.println("body: " + editText.getInputWidgetText().toString());
+                System.out.println("variables: " + variables.toString());
+                System.out.println("recipients: " + contactsSharePhone);
+
+                GroupMessage masterGroup = new GroupMessage(editText.getInputWidgetText().toString(), variables);
+                masterGroup.save();
+
+                for(int i=0; i<contactsSharePhone.size(); i++) {
+                    SingleMessage singleMessage = new SingleMessage(contactsSharePhone.get(i), contactsShareDetail.get(i).getContactName(), masterGroup);
+                    singleMessage.save();
+                    singleMessage.sendMessage(getBaseContext());
+                }
+
+                // return to main activity (Messages fragment)
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
