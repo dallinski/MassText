@@ -17,7 +17,7 @@
     <string name="send">Send</string>
     <string name="finalize">Finalize</string>
 
-    <!--ContactPicker string values-->
+    <!-- ContactPicker string values -->
     <string name="selectAccountLabel">Select</string>
     <string name="selectLabel">Select label</string>
     <string name="targetAccountLabel">Target Account</string>
@@ -34,7 +34,11 @@
     <string name="clear_search_description">Clear search button</string>
     <string name="action_toggle_views">Toggle Group View</string>
     <string name="action_toggle_views_short">Toggle</string>
+    <string name="show_message_text">SHOW MESSAGE TEXT</string>
 
-    <!--TODO: refactor contactpicker strings to be underscore-->
+    <!-- TODO: refactor contactpicker strings to be underscore -->
+
+    <string name="title_activity_sent_message_details">Message Details</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -17,11 +17,11 @@ import contactpicker.Contact;
  * Created by dallin on 2/7/15.
  */
 public class SingleMessage extends SugarRecord<SingleMessage> {
-    String phoneNumber;
-    int deliveryAttempts;
-    String successfullySentAt;
-    GroupMessage groupMessage;
-    static String contactName;
+    public String phoneNumber;
+    public int deliveryAttempts;
+    public String successfullySentAt;
+    public GroupMessage groupMessage;
+    public String contactName;
 
     public SingleMessage() {
 
@@ -47,7 +47,7 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         return groupMessage.messageBody;
     }
 
-    private static String replaceNameVariables(String message, ArrayList<String> variables) {
+    private String replaceNameVariables(String message, ArrayList<String> variables) {
         // TODO: Make this more robust. Handle names that don't have spaces (only one name)
 
         String fullName = contactName;
@@ -72,7 +72,7 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
 
     private void setAsSent() {
         DateTime dateTime = DateTime.now();
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("d/m/yyyy h:mm a");
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM d, yyyy - h:mm a");
         successfullySentAt = dateTime.toString(fmt);
     }
 }

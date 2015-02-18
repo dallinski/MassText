@@ -23,7 +23,7 @@ public class GroupMessage extends SugarRecord<GroupMessage> {
 
     public GroupMessage(String body, ArrayList<String> vars) {
         DateTime dateTime = DateTime.now();
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("d/m/yyyy h:mm a");
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM d, yyyy - h:mm a");
         sentAt = dateTime.toString(fmt);
         messageBody = body;
         variables = vars;

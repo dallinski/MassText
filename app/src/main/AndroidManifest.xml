@@ -71,6 +71,15 @@
             android:name=".messaging.SendSMS"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name=".messaging.SentMessageDetails"
+            android:label="@string/title_activity_sent_message_details"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dallinc.masstexter.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

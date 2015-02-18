@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dallinc.masstexter.messaging.Compose;
+import com.dallinc.masstexter.messaging.SentMessageDetails;
 import com.dallinc.masstexter.models.GroupMessage;
 import com.dallinc.masstexter.models.Template;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -132,10 +133,9 @@ public class MessagingFragment extends Fragment {
             GroupMessageViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: navigate to detail view
-//                    Intent intent = new Intent(GroupMessageViewHolder.itemView.getContext(), SentMessageDetails.class);
-//                    intent.putExtra("message_id", sentMessage.getId());
-//                    startActivity(intent);
+                    Intent intent = new Intent(GroupMessageViewHolder.itemView.getContext(), SentMessageDetails.class);
+                    intent.putExtra("message_id", sentMessage.getId());
+                    startActivity(intent);
                 }
             });
             GroupMessageViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
