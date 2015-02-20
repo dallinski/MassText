@@ -56,28 +56,6 @@
             android:padding="2dp"
             android:textColor="#7F7F7F"
             android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/groupLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/numberLabel"
-            android:layout_toRightOf="@+id/recipientNumber"
-            android:padding="2dp"
-            android:textColor="#7F7F7F"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/groups"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/numberLabel"
-            android:layout_toRightOf="@+id/groupLabel"
-            android:ellipsize="end"
-            android:padding="2dp"
-            android:singleLine="true"
-            android:textColor="#7F7F7F"
-            android:textSize="12sp" />
     </RelativeLayout>
 
 </RelativeLayout>

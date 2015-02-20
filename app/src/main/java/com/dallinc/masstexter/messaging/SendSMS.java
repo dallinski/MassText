@@ -52,5 +52,7 @@ public class SendSMS extends IntentService {
     private void handleActionSendSMS(String phoneNumber, String message) {
         SystemClock.sleep(3000); // sleep for 3 seconds (Just for testing purposes)
         System.out.println(phoneNumber + ": " + message);
+
+//        http://stackoverflow.com/questions/16643391/how-to-check-for-successful-multi-part-sms-send
     }
 }

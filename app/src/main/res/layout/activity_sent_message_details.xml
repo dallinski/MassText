@@ -13,51 +13,25 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:textStyle="bold"
         android:textSize="26dp"
-        android:textColor="@color/black_semi_transparent"/>
+        android:textColor="@color/black_semi_transparent" />
 
-    <ScrollView
-        android:layout_below="@id/sentMessageAtTitle"
+    <TextView
+        android:id="@+id/sentMessageBodyText"
+        android:layout_below="@+id/sentMessageAtTitle"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/fab_label_background"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+    <ListView
+        android:id="@+id/messageRecipientsListView"
+        android:layout_below="@+id/sentMessageBodyText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-            <com.gc.materialdesign.views.Card
-                android:id="@+id/sentMessageBodyCard"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true">
-
-                <TextView
-                    android:id="@+id/sentMessageBodyText"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:padding="10dp" />
-
-            </com.gc.materialdesign.views.Card>
-
-            <com.gc.materialdesign.views.ButtonFlat
-                android:id="@+id/showMessageText"
-                android:layout_below="@+id/sentMessageBodyCard"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/show_message_text" />
-
-            <LinearLayout
-                android:id="@+id/messageRecipientsList"
-                android:layout_below="@+id/showMessageText"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </ScrollView>
+    </ListView>
 
 </RelativeLayout>

@@ -1,26 +1,31 @@
 package com.dallinc.masstexter.messaging;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dallinc.masstexter.R;
 import com.dallinc.masstexter.helpers.TextDrawable;
 import com.dallinc.masstexter.models.GroupMessage;
 import com.dallinc.masstexter.models.SingleMessage;
-import com.gc.materialdesign.views.ButtonFlat;
-import com.gc.materialdesign.views.Card;
 
 import java.util.List;
 
@@ -34,27 +39,6 @@ public class SentMessageDetails extends ActionBarActivity {
         setContentView(R.layout.activity_sent_message_details);
 
         TextView title = (TextView) findViewById(R.id.sentMessageAtTitle);
-        final Card messageCard = (Card) findViewById(R.id.sentMessageBodyCard);
-        final ButtonFlat showMessage = (ButtonFlat) findViewById(R.id.showMessageText);
-
-        messageCard.setVisibility(View.GONE);
-        showMessage.setRippleSpeed(30);
-
-        showMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageCard.setVisibility(View.VISIBLE);
-                showMessage.setVisibility(View.GONE);
-            }
-        });
-
-        messageCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageCard.setVisibility(View.GONE);
-                showMessage.setVisibility(View.VISIBLE);
-            }
-        });
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
@@ -70,9 +54,22 @@ public class SentMessageDetails extends ActionBarActivity {
     }
 
     private void setupRecipientsList() {
+        ListView listView = (ListView) findViewById(R.id.messageRecipientsListView);
         for(SingleMessage single : singleMessages) {
             System.out.println(single.phoneNumber);
         }
+        final MessageListAdapter adapter = new MessageListAdapter(getBaseContext(), singleMessages);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+
+            }
+        });
     }
 
     @Override
@@ -129,5 +126,41 @@ public class SentMessageDetails extends ActionBarActivity {
             variable_idx++;
         }
         messageText.setText(spanText, TextView.BufferType.SPANNABLE);
+    }
+
+    private class MessageListAdapter extends ArrayAdapter<SingleMessage> {
+        private final Context context;
+        private final List<SingleMessage> objects;
+
+        public MessageListAdapter(Context context, List<SingleMessage> objects) {
+            super(context, R.layout.single_message_item, objects);
+            this.context = context;
+            this.objects = objects;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View rowView = inflater.inflate(R.layout.single_message_item, parent, false);
+            TextView nameView = (TextView) rowView.findViewById(R.id.recipientName);
+            TextView numberView = (TextView) rowView.findViewById(R.id.recipientNumber);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.thumb);
+
+            nameView.setText(objects.get(position).contactName);
+            numberView.setText(objects.get(position).phoneNumber);
+
+            // TODO: set phone number label
+
+            // TODO: set image to their profile pic
+//            imageView.setImageURI(contactPhotoUri);
+
+            return rowView;
+        }
+
+        private Uri getContactUriFromPhoneNumber(String phoneNumber) {
+            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+
+            return uri;
+        }
     }
 }
