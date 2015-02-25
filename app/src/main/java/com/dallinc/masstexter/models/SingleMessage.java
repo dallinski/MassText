@@ -22,6 +22,7 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
     public GroupMessage groupMessage;
     public String contactName;
     public String photoUriString;
+    public String failureMessage;
 
     public SingleMessage() {
 
@@ -40,10 +41,11 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
 
     public void sendMessage(Context context) {
         deliveryAttempts++;
-        SendSMS.startActionSendSMS(context, phoneNumber, individualizedMessage());
+        save();
+        SendSMS.startActionSendSMS(context, this.getId());
     }
 
-    private String individualizedMessage() {
+    public String individualizedMessage() {
         groupMessage.buildArrayListFromString();
         if(groupMessage.variables.size() > 0) {
             return replaceNameVariables(groupMessage.messageBody, groupMessage.variables);
@@ -74,9 +76,20 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         return message;
     }
 
-    private void setAsSent() {
+    public boolean isFailed() {
+        return failureMessage != null;
+    }
+
+    public void setAsSent() {
+        failureMessage = null;
         DateTime dateTime = DateTime.now();
         DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM d, yyyy - h:mm a");
         successfullySentAt = dateTime.toString(fmt);
+        save();
+    }
+
+    public void fail(String message) {
+        failureMessage = message;
+        save();
     }
 }

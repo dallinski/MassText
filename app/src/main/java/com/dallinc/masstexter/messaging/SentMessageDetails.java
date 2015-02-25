@@ -155,10 +155,18 @@ public class SentMessageDetails extends ActionBarActivity {
                 sentAtLabel.setText(objects.get(position).successfullySentAt);
             }
 
+            TextView errorMessage = (TextView) rowView.findViewById(R.id.errorMessage);
+            if(objects.get(position).failureMessage != null) {
+                errorMessage.setText(objects.get(position).failureMessage);
+                errorMessage.setTextColor(Color.RED);
+            }
+
             // TODO: set phone number label
             TextView numberLabel = (TextView) rowView.findViewById(R.id.numberLabel);
 //            numberLabel.setText(label);
 
+            // TODO: fix bug where it crashes if they scroll back and forth a lot
+            // OUT OF MEMORY error - it keeps resetting the image
             if(objects.get(position).photoUriString != null) {
                 Uri test = Uri.parse(objects.get(position).photoUriString);
                 imageView.setImageURI(test);

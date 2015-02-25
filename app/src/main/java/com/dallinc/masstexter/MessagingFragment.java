@@ -27,6 +27,8 @@ import java.util.List;
  */
 public class MessagingFragment extends Fragment {
     List<GroupMessage> sentMessages = GroupMessage.listAll(GroupMessage.class);
+    GroupMessageAdapter ca;
+
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -101,10 +103,18 @@ public class MessagingFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        GroupMessageAdapter ca = new GroupMessageAdapter(sentMessages);
+        ca = new GroupMessageAdapter(sentMessages);
         recList.setAdapter(ca);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        // TODO: get this actually updating the list
+        sentMessages = GroupMessage.listAll(GroupMessage.class);
+        ca.notifyDataSetChanged();
+        super.onResume();
     }
 
     public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapter.GroupMessageViewHolder> {
