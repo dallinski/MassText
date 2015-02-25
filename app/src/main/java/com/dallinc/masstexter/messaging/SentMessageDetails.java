@@ -150,6 +150,8 @@ public class SentMessageDetails extends ActionBarActivity {
             numberView.setText(objects.get(position).phoneNumber);
 
             // TODO: set phone number label
+            TextView numberLabel = (TextView) rowView.findViewById(R.id.numberLabel);
+//            numberLabel.setText(label);
 
             // TODO: set image to their profile pic
 //            imageView.setImageURI(contactPhotoUri);

@@ -15,7 +15,7 @@
         android:layout_height="50dp"
         android:background="@drawable/ic_action_person"
         android:src="@drawable/image_border"
-        android:contentDescription="@string/contactImageLabel" />
+        android:contentDescription="@string/contact_image_label" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/recipientName"
             android:layout_marginTop="6dp"
+            android:text="@string/phone_label"
             android:ellipsize="end"
             android:padding="2dp"
             android:singleLine="true"

@@ -37,7 +37,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
@@ -54,7 +55,8 @@
         <activity
             android:name=".messaging.Compose"
             android:label="@string/title_activity_compose"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
@@ -75,7 +77,8 @@
         <activity
             android:name=".messaging.SentMessageDetails"
             android:label="@string/title_activity_sent_message_details"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />

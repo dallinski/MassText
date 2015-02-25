@@ -15,7 +15,7 @@
         android:layout_height="50dp"
         android:background="@drawable/ic_action_person"
         android:src="@drawable/image_border"
-        android:contentDescription="@string/contactImageLabel" />
+        android:contentDescription="@string/contact_image_label" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="@string/contactNameLabel"
+            android:text="@string/contact_name_label"
             android:textSize="16sp"
             android:textStyle="bold" />
 
