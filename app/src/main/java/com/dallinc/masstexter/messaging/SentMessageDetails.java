@@ -1,6 +1,7 @@
 package com.dallinc.masstexter.messaging;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -55,9 +56,6 @@ public class SentMessageDetails extends ActionBarActivity {
 
     private void setupRecipientsList() {
         ListView listView = (ListView) findViewById(R.id.messageRecipientsListView);
-        for(SingleMessage single : singleMessages) {
-            System.out.println(single.phoneNumber);
-        }
         final MessageListAdapter adapter = new MessageListAdapter(getBaseContext(), singleMessages);
         listView.setAdapter(adapter);
 
@@ -149,11 +147,18 @@ public class SentMessageDetails extends ActionBarActivity {
             nameView.setText(objects.get(position).contactName);
             numberView.setText(objects.get(position).phoneNumber);
 
+            TextView sentAtLabel = (TextView) rowView.findViewById(R.id.singleMessageSentAt);
+            if(objects.get(position).successfullySentAt == null) {
+                sentAtLabel.setText(objects.get(position).deliveryAttempts + " failed attempts");
+                sentAtLabel.setTextColor(Color.RED);
+            } else {
+                sentAtLabel.setText(objects.get(position).successfullySentAt);
+            }
+
             // TODO: set phone number label
             TextView numberLabel = (TextView) rowView.findViewById(R.id.numberLabel);
 //            numberLabel.setText(label);
 
-            // TODO: set image to their profile pic
             if(objects.get(position).photoUriString != null) {
                 Uri test = Uri.parse(objects.get(position).photoUriString);
                 imageView.setImageURI(test);

@@ -18,7 +18,7 @@
         android:contentDescription="@string/contact_image_label" />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
@@ -57,6 +57,17 @@
             android:padding="2dp"
             android:textColor="#7F7F7F"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/singleMessageSentAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:textColor="#7F7F7F"
+            android:textSize="8sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 </RelativeLayout>
