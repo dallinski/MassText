@@ -78,9 +78,8 @@ public final class ContactManager extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_manager);
 
-        // /////////// Custom progress Layout //////////////////////
+        ///////////// Custom progress Layout //////////////////////
         progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
-
         progressLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

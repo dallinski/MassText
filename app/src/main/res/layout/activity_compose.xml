@@ -79,6 +79,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"/>
 
+        <include layout="@layout/progress_dialog_custom" />
+
     </RelativeLayout>
 
 </RelativeLayout>

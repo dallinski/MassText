@@ -17,8 +17,10 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -63,6 +65,16 @@ public class Compose extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+
+        ///////////// Custom progress Layout //////////////////////
+        final RelativeLayout progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
+        progressLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+        progressLayout.setVisibility(View.GONE); // by default progress view to GONE
 
         final ButtonRectangle sendMessageBtn = (ButtonRectangle) findViewById(R.id.sendMessage);
         sendMessageBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -124,9 +136,9 @@ public class Compose extends ActionBarActivity {
                     return;
                 }
 
-                System.out.println("body: " + editText.getInputWidgetText().toString());
-                System.out.println("variables: " + variables.toString());
-                System.out.println("recipients: " + contactsSharePhone);
+                // TODO: get these lines working. For some reason the visibility isn't changing
+                progressLayout.setVisibility(View.VISIBLE);
+                sendMessageBtn.setVisibility(View.INVISIBLE);
 
                 GroupMessage masterGroup = new GroupMessage(editText.getInputWidgetText().toString(), variables);
                 masterGroup.save();
