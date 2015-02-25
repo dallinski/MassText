@@ -1,6 +1,7 @@
 package com.dallinc.masstexter.models;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.dallinc.masstexter.messaging.SendSMS;
 import com.orm.SugarRecord;
@@ -11,8 +12,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
-import contactpicker.Contact;
-
 /**
  * Created by dallin on 2/7/15.
  */
@@ -22,6 +21,7 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
     public String successfullySentAt;
     public GroupMessage groupMessage;
     public String contactName;
+    public String photoUriString;
 
     public SingleMessage() {
 
@@ -32,6 +32,10 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         contactName = name;
         groupMessage = group;
         deliveryAttempts = 0;
+    }
+
+    public void setPhotoUri(Uri uri) {
+        photoUriString = uri.toString();
     }
 
     public void sendMessage(Context context) {

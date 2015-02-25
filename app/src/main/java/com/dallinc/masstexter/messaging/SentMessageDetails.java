@@ -154,7 +154,10 @@ public class SentMessageDetails extends ActionBarActivity {
 //            numberLabel.setText(label);
 
             // TODO: set image to their profile pic
-//            imageView.setImageURI(contactPhotoUri);
+            if(objects.get(position).photoUriString != null) {
+                Uri test = Uri.parse(objects.get(position).photoUriString);
+                imageView.setImageURI(test);
+            }
 
             return rowView;
         }

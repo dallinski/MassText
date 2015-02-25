@@ -145,6 +145,9 @@ public class Compose extends ActionBarActivity {
 
                 for(int i=0; i<contactsSharePhone.size(); i++) {
                     SingleMessage singleMessage = new SingleMessage(contactsSharePhone.get(i), contactsShareDetail.get(i).getContactName(), masterGroup);
+                    if(contactsShareDetail.get(i).getContactPhotoUri() != null) {
+                        singleMessage.setPhotoUri(contactsShareDetail.get(i).getContactPhotoUri());
+                    }
                     singleMessage.save();
                     singleMessage.sendMessage(getBaseContext());
                 }
