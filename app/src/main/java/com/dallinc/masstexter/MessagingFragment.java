@@ -1,5 +1,7 @@
 package com.dallinc.masstexter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -73,25 +75,31 @@ public class MessagingFragment extends Fragment {
             }
         });
 
-        messageVeil.setVisibility(View.GONE);
-//        composeButton.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
-//            @Override
-//            public void onMenuExpanded() {
-//                messageVeil.setAlpha(0f);
-//                messageVeil.setVisibility(View.VISIBLE);
-//                messageVeil.animate().alpha(1f).setDuration(300).setListener(null);
-//            }
-//
-//            @Override
-//            public void onMenuCollapsed() {
-//                messageVeil.animate().alpha(0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
-//                    @Override
-//                    public void onAnimationEnd(Animator animation) {
-//                        messageVeil.setVisibility(View.GONE);
-//                    }
-//                });
-//            }
-//        });
+        messageVeil.setVisibility(View.INVISIBLE);
+        messageVeil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                composeButton.collapse();
+            }
+        });
+        composeButton.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+                messageVeil.setAlpha(0f);
+                messageVeil.setVisibility(View.VISIBLE);
+                messageVeil.animate().alpha(1f).setDuration(300).setListener(null);
+            }
+
+            @Override
+            public void onMenuCollapsed() {
+                messageVeil.animate().alpha(0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        messageVeil.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        });
 
         FloatingActionButton usingTemplateButton = (FloatingActionButton) rootView.findViewById(R.id.buttonComposeUsingTemplate);
         usingTemplateButton.setOnClickListener( new View.OnClickListener() {

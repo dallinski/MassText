@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dallinc.masstexter.models.Template;
@@ -155,6 +156,8 @@ public class TemplatesFragment extends Fragment {
                 super(v);
                 vTitle =  (TextView) v.findViewById(R.id.templateCardTitle);
                 vBody = (TextView)  v.findViewById(R.id.templateCardBody);
+                ImageView iv = (ImageView) v.findViewById(R.id.recipientIcon);
+                iv.setVisibility(View.GONE); // don't show the user icon on template cards
             }
         }
     }
