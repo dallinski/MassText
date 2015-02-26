@@ -22,17 +22,36 @@
             android:gravity="center_vertical"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/templateCardBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:layout_below="@id/templateCardTitle"
             android:layout_marginLeft="5dp"
             />
+
+        <TextView
+            android:id="@+id/recipientCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:textColor="#7F7F7F"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/recipientIcon" />
+
+        <ImageView
+            android:id="@+id/recipientIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_action_person"/>
 
     </RelativeLayout>
 

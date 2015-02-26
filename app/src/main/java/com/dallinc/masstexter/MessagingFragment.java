@@ -1,7 +1,5 @@
 package com.dallinc.masstexter;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +18,7 @@ import android.widget.Toast;
 import com.dallinc.masstexter.messaging.Compose;
 import com.dallinc.masstexter.messaging.SentMessageDetails;
 import com.dallinc.masstexter.models.GroupMessage;
+import com.dallinc.masstexter.models.SingleMessage;
 import com.dallinc.masstexter.models.Template;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -211,6 +210,8 @@ public class MessagingFragment extends Fragment {
                     return false;
                 }
             });
+            Long totalRecipients = SingleMessage.count(SingleMessage.class, "group_message = ?", new String[]{Long.toString(sentMessage.getId())});
+            GroupMessageViewHolder.vRecipientCount.setText(Long.toString(totalRecipients));
         }
 
         @Override
@@ -222,11 +223,13 @@ public class MessagingFragment extends Fragment {
         public class GroupMessageViewHolder extends RecyclerView.ViewHolder {
             protected TextView vTitle;
             protected TextView vBody;
+            protected TextView vRecipientCount;
 
             public GroupMessageViewHolder(View v) {
                 super(v);
                 vTitle =  (TextView) v.findViewById(R.id.templateCardTitle);
                 vBody = (TextView)  v.findViewById(R.id.templateCardBody);
+                vRecipientCount = (TextView)  v.findViewById(R.id.recipientCount);
             }
         }
     }
