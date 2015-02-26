@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    ViewPager mViewPager;
+    static ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public static void switchFragments(int tab_id) {
+        mViewPager.setCurrentItem(tab_id);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,17 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.about_fragment, container, false);
+        rootView.setFocusableInTouchMode(true);
+        rootView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK)
+                {
+                    MainActivity.switchFragments(0);
+                }
+                return true;
+            }
+        });
         ButtonRectangle b = (ButtonRectangle)rootView.findViewById(R.id.buttonDonate);
         ButtonRectangle b2 = (ButtonRectangle)rootView.findViewById(R.id.buttonChangeLog);
         b.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
