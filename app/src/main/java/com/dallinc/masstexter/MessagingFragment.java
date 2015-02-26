@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,25 +61,38 @@ public class MessagingFragment extends Fragment {
         final RelativeLayout messageVeil = (RelativeLayout) rootView.findViewById(R.id.messageVeil);
         final FloatingActionsMenu composeButton = (FloatingActionsMenu) rootView.findViewById(R.id.buttonComposeMessage);
 
-        messageVeil.setVisibility(View.GONE);
-        composeButton.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+        rootView.setFocusableInTouchMode(true);
+        rootView.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onMenuExpanded() {
-                messageVeil.setAlpha(0f);
-                messageVeil.setVisibility(View.VISIBLE);
-                messageVeil.animate().alpha(1f).setDuration(300).setListener(null);
-            }
-
-            @Override
-            public void onMenuCollapsed() {
-                messageVeil.animate().alpha(0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        messageVeil.setVisibility(View.GONE);
-                    }
-                });
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK && composeButton.isExpanded())
+                {
+                    composeButton.collapse();
+                    return true;
+                }
+                return false;
             }
         });
+
+        messageVeil.setVisibility(View.GONE);
+//        composeButton.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+//            @Override
+//            public void onMenuExpanded() {
+//                messageVeil.setAlpha(0f);
+//                messageVeil.setVisibility(View.VISIBLE);
+//                messageVeil.animate().alpha(1f).setDuration(300).setListener(null);
+//            }
+//
+//            @Override
+//            public void onMenuCollapsed() {
+//                messageVeil.animate().alpha(0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        messageVeil.setVisibility(View.GONE);
+//                    }
+//                });
+//            }
+//        });
 
         FloatingActionButton usingTemplateButton = (FloatingActionButton) rootView.findViewById(R.id.buttonComposeUsingTemplate);
         usingTemplateButton.setOnClickListener( new View.OnClickListener() {
