@@ -11,6 +11,14 @@
         android:layout_height="match_parent"
         />
 
+    <RelativeLayout
+        android:id="@+id/messageVeil"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white_semi_transparent"
+        android:focusable="true"
+        android:clickable="true" ></RelativeLayout>
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/buttonComposeMessage"
         android:layout_width="wrap_content"

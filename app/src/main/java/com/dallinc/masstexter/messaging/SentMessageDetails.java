@@ -149,8 +149,13 @@ public class SentMessageDetails extends ActionBarActivity {
 
             TextView sentAtLabel = (TextView) rowView.findViewById(R.id.singleMessageSentAt);
             if(objects.get(position).successfullySentAt == null) {
-                sentAtLabel.setText(objects.get(position).deliveryAttempts + " failed attempts");
-                sentAtLabel.setTextColor(Color.RED);
+                if(objects.get(position).failureMessage != null) {
+                    sentAtLabel.setText(objects.get(position).deliveryAttempts + " failed attempts");
+                    sentAtLabel.setTextColor(Color.RED);
+                } else {
+                    sentAtLabel.setText("Pending delivery");
+                }
+
             } else {
                 sentAtLabel.setText(objects.get(position).successfullySentAt);
             }

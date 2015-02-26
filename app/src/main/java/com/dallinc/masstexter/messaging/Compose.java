@@ -153,9 +153,6 @@ public class Compose extends ActionBarActivity {
                 }
 
                 // return to main activity (Messages fragment)
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
-
                 finish();
             }
         });

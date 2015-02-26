@@ -1,5 +1,7 @@
 package com.dallinc.masstexter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,8 +57,29 @@ public class MessagingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.messaging_fragment, container, false);
-
+        final RelativeLayout messageVeil = (RelativeLayout) rootView.findViewById(R.id.messageVeil);
         final FloatingActionsMenu composeButton = (FloatingActionsMenu) rootView.findViewById(R.id.buttonComposeMessage);
+
+        messageVeil.setVisibility(View.GONE);
+        composeButton.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+                messageVeil.setAlpha(0f);
+                messageVeil.setVisibility(View.VISIBLE);
+                messageVeil.animate().alpha(1f).setDuration(300).setListener(null);
+            }
+
+            @Override
+            public void onMenuCollapsed() {
+                messageVeil.animate().alpha(0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        messageVeil.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
+
         FloatingActionButton usingTemplateButton = (FloatingActionButton) rootView.findViewById(R.id.buttonComposeUsingTemplate);
         usingTemplateButton.setOnClickListener( new View.OnClickListener() {
 
