@@ -150,6 +150,7 @@ public class MessagingFragment extends Fragment {
 
         ca = new GroupMessageAdapter(sentMessages);
         recList.setAdapter(ca);
+        recList.smoothScrollToPosition(ca.getItemCount() - 1);
 
         return rootView;
     }
