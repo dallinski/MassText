@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.os.SystemClock;
+import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.SmsManager;
 import android.util.Log;
 
+import com.dallinc.masstexter.helpers.Constants;
 import com.dallinc.masstexter.models.SingleMessage;
 
 import java.util.ArrayList;
@@ -20,14 +22,20 @@ import java.util.ArrayList;
  * a service on a separate handler thread.
  */
 public class SendSMS extends IntentService {
-    private final String LOG_TAG = "SendSMS";
-    private final String SENT = "SMS_SENT";
-    private final String DELIVERED = "SMS_DELIVERED";
-    private final String ERROR = "ERROR";
-    private static final String ACTION_SEND_SMS = "com.dallinc.masstexter.action.SEND_SMS";
+    private LocalBroadcastManager broadcaster;
 
-    private static final String EXTRA_MESSAGE_ID= "com.dallinc.masstexter.extra.MESSAGE_ID";
-    private static final String EXTRA_PERSONALIZED_MESSAGE = "com.dallinc.masstexter.extra.PERSONALIZED_MESSAGE";
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        broadcaster = LocalBroadcastManager.getInstance(this);
+    }
+
+    public void sendResult(long id, String message) {
+        Intent intent = new Intent(Constants.BROADCAST_SMS_RESULT);
+        intent.putExtra(Constants.EXTRA_MESSAGE_ID, id);
+        intent.putExtra(Constants.EXTRA_SEND_SMS_RESULT, message);
+        broadcaster.sendBroadcast(intent);
+    }
 
     /**
      * Starts this service to perform action SendSMS with the given parameters. If
@@ -37,8 +45,8 @@ public class SendSMS extends IntentService {
      */
     public static void startActionSendSMS(Context context, long messageId) {
         Intent intent = new Intent(context, SendSMS.class);
-        intent.setAction(ACTION_SEND_SMS);
-        intent.putExtra(EXTRA_MESSAGE_ID, messageId);
+        intent.setAction(Constants.ACTION_SEND_SMS);
+        intent.putExtra(Constants.EXTRA_MESSAGE_ID, messageId);
         context.startService(intent);
     }
 
@@ -50,13 +58,13 @@ public class SendSMS extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_SEND_SMS.equals(action)) {
-                long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
+            if (Constants.ACTION_SEND_SMS.equals(action)) {
+                long messageId = intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1);
                 SingleMessage singleMessage = SingleMessage.findById(SingleMessage.class, messageId);
                 if(singleMessage != null) {
                     handleActionSendSMS(singleMessage);
                 } else {
-                    Log.e(ERROR, "Couldn't find the message with id: " + messageId);
+                    Log.e(Constants.ERROR, "Couldn't find the message with id: " + messageId);
                 }
             }
         }
@@ -105,27 +113,29 @@ public class SendSMS extends IntentService {
                 nMsgParts--;
                 if (nMsgParts <= 0) {
                     // Stop us from getting any other broadcasts (may be for other messages)
-                    Log.i(LOG_TAG, "All message part responses received, unregistering message Id: " + singleMessage.getId());
+                    Log.i(Constants.LOG_TAG, "All message part responses received, unregistering message Id: " + singleMessage.getId());
                     context.unregisterReceiver(this);
 
                     if (singleMessage.isFailed()) {
-                        Log.d(LOG_TAG, "SMS Failure for message id: " + singleMessage.getId());
+                        Log.d(Constants.LOG_TAG, "SMS Failure for message id: " + singleMessage.getId());
+                        sendResult(singleMessage.getId(), "failure");
                     } else {
-                        Log.d(LOG_TAG, "SMS Success for message id: " + singleMessage.getId());
+                        Log.d(Constants.LOG_TAG, "SMS Success for message id: " + singleMessage.getId());
                         singleMessage.setAsSent();
+                        sendResult(singleMessage.getId(), "success");
                     }
                 }
             }
         };
 
-        context.registerReceiver(broadcastReceiver, new IntentFilter(SENT + singleMessage.getId()));
+        context.registerReceiver(broadcastReceiver, new IntentFilter(Constants.SENT + singleMessage.getId()));
 
         for (int i = 0; i < messageParts.size(); i++) {
-            Intent sentIntent = new Intent(SENT + singleMessage.getId());
+            Intent sentIntent = new Intent(Constants.SENT + singleMessage.getId());
             pendingIntents.add(PendingIntent.getBroadcast(context, 0, sentIntent, 0));
         }
 
-        Log.i(LOG_TAG, "About to send multi-part message Id: " + singleMessage.getId());
+        Log.i(Constants.LOG_TAG, "About to send multi-part message Id: " + singleMessage.getId());
         smsManager.sendMultipartTextMessage(singleMessage.phoneNumber, null, messageParts, pendingIntents, null);
     }
 }

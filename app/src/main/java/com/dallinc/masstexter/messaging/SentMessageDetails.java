@@ -1,19 +1,24 @@
 package com.dallinc.masstexter.messaging;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +28,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dallinc.masstexter.R;
+import com.dallinc.masstexter.helpers.Constants;
 import com.dallinc.masstexter.helpers.TextDrawable;
 import com.dallinc.masstexter.models.GroupMessage;
 import com.dallinc.masstexter.models.SingleMessage;
@@ -34,6 +41,19 @@ import java.util.List;
 public class SentMessageDetails extends ActionBarActivity {
     private GroupMessage groupMessage;
     private List<SingleMessage> singleMessages;
+    private BroadcastReceiver receiver;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver), new IntentFilter(Constants.BROADCAST_SMS_RESULT));
+    }
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +63,38 @@ public class SentMessageDetails extends ActionBarActivity {
         TextView title = (TextView) findViewById(R.id.sentMessageAtTitle);
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            final long message_id = bundle.getLong("message_id");
-            groupMessage = GroupMessage.findById(GroupMessage.class, message_id);
-            singleMessages = SingleMessage.find(SingleMessage.class, "group_message = ?", Long.toString(message_id));
-            setupRecipientsList();
-            groupMessage.buildArrayListFromString();
-            title.setText(groupMessage.sentAt);
-            styleMessageText();
+        if(bundle == null) {
+            Toast.makeText(getBaseContext(), "Unexpected error. No message details found.", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
-    }
+        final long message_id = bundle.getLong("message_id");
+        groupMessage = GroupMessage.findById(GroupMessage.class, message_id);
+        singleMessages = SingleMessage.find(SingleMessage.class, "group_message = ?", Long.toString(message_id));
 
-    private void setupRecipientsList() {
+        // Setup Recipients List
         ListView listView = (ListView) findViewById(R.id.messageRecipientsListView);
         final MessageListAdapter adapter = new MessageListAdapter(getBaseContext(), singleMessages);
         listView.setAdapter(adapter);
+
+        groupMessage.buildArrayListFromString();
+        title.setText(groupMessage.sentAt);
+        styleMessageText();
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String result = intent.getStringExtra(Constants.EXTRA_SEND_SMS_RESULT);
+                long id = intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1);
+
+                System.out.println("I got a broadcast result!");
+                System.out.println("id: " + id);
+                System.out.println(result);
+
+                Toast.makeText(getBaseContext(), "Resend " + result, Toast.LENGTH_SHORT).show();
+                adapter.updateSingleMessage(id);
+            }
+        };
     }
 
     @Override
@@ -125,6 +161,22 @@ public class SentMessageDetails extends ActionBarActivity {
             super(context, R.layout.single_message_item, objects);
             this.context = context;
             this.objects = objects;
+        }
+
+        public void updateSingleMessage(long id) {
+            for(int i=0; i<objects.size(); i++) {
+                if(id == objects.get(i).getId()) {
+                    updateSingleMessage(i);
+                    return;
+                }
+            }
+            Log.e(Constants.ERROR, "Failed to update UI for message with id: " + id);
+        }
+
+        private void updateSingleMessage(int i) {
+            SingleMessage updatedMessage = SingleMessage.findById(SingleMessage.class, objects.get(i).getId());
+            objects.set(i, updatedMessage);
+            notifyDataSetChanged();
         }
 
         @Override
