@@ -31,7 +31,6 @@ import java.util.List;
  * Created by dallin on 1/30/15.
  */
 public class MessagingFragment extends Fragment {
-    List<GroupMessage> sentMessages = GroupMessage.listAll(GroupMessage.class);
     GroupMessageAdapter ca;
 
     /**
@@ -142,13 +141,13 @@ public class MessagingFragment extends Fragment {
             }
         });
 
-        RecyclerView recList = (RecyclerView) rootView.findViewById(R.id.sentMessagesCardList);
+        final RecyclerView recList = (RecyclerView) rootView.findViewById(R.id.sentMessagesCardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        ca = new GroupMessageAdapter(sentMessages);
+        ca = new GroupMessageAdapter();
         recList.setAdapter(ca);
         recList.smoothScrollToPosition(ca.getItemCount() - 1);
 
@@ -157,28 +156,29 @@ public class MessagingFragment extends Fragment {
 
     @Override
     public void onResume() {
-        // TODO: get this actually updating the list
-        sentMessages = GroupMessage.listAll(GroupMessage.class);
-        ca.notifyDataSetChanged();
+        // TODO: replace this with a BroadcastReceiver register (see SentMessageDetails for example)
+        ca.updateMessages();
+        RecyclerView recList = (RecyclerView) getActivity().findViewById(R.id.sentMessagesCardList);
+        recList.smoothScrollToPosition(ca.getItemCount() - 1);
         super.onResume();
     }
 
     public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapter.GroupMessageViewHolder> {
 
-        private List<GroupMessage> sentMessageList;
+        private List<GroupMessage> objects;
 
-        public GroupMessageAdapter(List<GroupMessage> sentMessageList) {
-            this.sentMessageList = sentMessageList;
+        public GroupMessageAdapter() {
+            this.objects = GroupMessage.listAll(GroupMessage.class);
         }
 
         @Override
         public int getItemCount() {
-            return sentMessageList.size();
+            return objects.size();
         }
 
         @Override
         public void onBindViewHolder(final GroupMessageViewHolder GroupMessageViewHolder, int i) {
-            final GroupMessage sentMessage = sentMessageList.get(i);
+            final GroupMessage sentMessage = objects.get(i);
             GroupMessageViewHolder.vTitle.setText(sentMessage.sentAt);
             String body = sentMessage.messageBody;
             sentMessage.buildArrayListFromString();
@@ -204,7 +204,7 @@ public class MessagingFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             sentMessage.delete();
-                            sentMessageList = sentMessages = GroupMessage.listAll(GroupMessage.class);
+                            objects = GroupMessage.listAll(GroupMessage.class);
                             notifyDataSetChanged();
                             dialog.dismiss();
                         }
@@ -240,6 +240,11 @@ public class MessagingFragment extends Fragment {
                 vBody = (TextView)  v.findViewById(R.id.templateCardBody);
                 vRecipientCount = (TextView)  v.findViewById(R.id.recipientCount);
             }
+        }
+
+        public void updateMessages() {
+            this.objects = GroupMessage.listAll(GroupMessage.class);
+            notifyDataSetChanged();
         }
     }
 }

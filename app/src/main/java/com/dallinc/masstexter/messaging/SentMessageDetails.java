@@ -86,11 +86,6 @@ public class SentMessageDetails extends ActionBarActivity {
             public void onReceive(Context context, Intent intent) {
                 String result = intent.getStringExtra(Constants.EXTRA_SEND_SMS_RESULT);
                 long id = intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1);
-
-                System.out.println("I got a broadcast result!");
-                System.out.println("id: " + id);
-                System.out.println(result);
-
                 Toast.makeText(getBaseContext(), "Resend " + result, Toast.LENGTH_SHORT).show();
                 adapter.updateSingleMessage(id);
             }

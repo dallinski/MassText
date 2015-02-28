@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,7 +26,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.dallinc.masstexter.MainActivity;
 import com.dallinc.masstexter.helpers.Constants;
 import com.dallinc.masstexter.R;
 import com.dallinc.masstexter.helpers.ScrollViewWithMaxHeight;
@@ -54,6 +54,7 @@ import contactpicker.FlowLayout;
 
 
 public class Compose extends ActionBarActivity {
+    private LocalBroadcastManager broadcaster;
     final int REQUEST_CODE = 100;
     boolean repeatCheck = false;
     int i = 0;
@@ -61,10 +62,18 @@ public class Compose extends ActionBarActivity {
     ArrayList<String> contactsSharePhone;
     ArrayList<String> variables;
 
+    public void sendResult(long id) {
+        Intent intent = new Intent(Constants.BROADCAST_SENT_GROUP_MESSAGE);
+        intent.putExtra(Constants.EXTRA_MESSAGE_ID, id);
+        broadcaster.sendBroadcast(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+
+        broadcaster = LocalBroadcastManager.getInstance(this);
 
         ///////////// Custom progress Layout //////////////////////
         final RelativeLayout progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
@@ -151,6 +160,8 @@ public class Compose extends ActionBarActivity {
                     singleMessage.save();
                     singleMessage.sendMessage(getBaseContext());
                 }
+
+                sendResult(masterGroup.getId());
 
                 // return to main activity (Messages fragment)
                 finish();
