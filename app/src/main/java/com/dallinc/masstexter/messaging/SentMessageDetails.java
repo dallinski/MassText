@@ -1,6 +1,8 @@
 package com.dallinc.masstexter.messaging;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -17,10 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.dallinc.masstexter.R;
@@ -49,7 +50,7 @@ public class SentMessageDetails extends ActionBarActivity {
             setupRecipientsList();
             groupMessage.buildArrayListFromString();
             title.setText(groupMessage.sentAt);
-            styleEditText();
+            styleMessageText();
         }
 
     }
@@ -58,16 +59,6 @@ public class SentMessageDetails extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.messageRecipientsListView);
         final MessageListAdapter adapter = new MessageListAdapter(getBaseContext(), singleMessages);
         listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-
-            }
-        });
     }
 
     @Override
@@ -92,7 +83,7 @@ public class SentMessageDetails extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void styleEditText() {
+    private void styleMessageText() {
         TextView messageText = (TextView) findViewById(R.id.sentMessageBodyText);
         String template_text = groupMessage.messageBody;
         SpannableString spanText = new SpannableString(template_text);
@@ -137,32 +128,57 @@ public class SentMessageDetails extends ActionBarActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, final ViewGroup parent) {
+            final SingleMessage sentMessage = objects.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView = inflater.inflate(R.layout.single_message_item, parent, false);
             TextView nameView = (TextView) rowView.findViewById(R.id.recipientName);
             TextView numberView = (TextView) rowView.findViewById(R.id.recipientNumber);
-            ImageView imageView = (ImageView) rowView.findViewById(R.id.thumb);
 
-            nameView.setText(objects.get(position).contactName);
-            numberView.setText(objects.get(position).phoneNumber);
+            QuickContactBadge quickContactBadge = (QuickContactBadge) rowView.findViewById(R.id.contactBadge);
+            quickContactBadge.assignContactFromPhone(sentMessage.phoneNumber, true);
+
+            nameView.setText(sentMessage.contactName);
+            numberView.setText(sentMessage.phoneNumber);
+
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Resend Message");
+                    builder.setMessage("Would you like to resend this message to " + sentMessage.contactName + "?");
+                    builder.setPositiveButton("Resend", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int n) {
+                            sentMessage.sendMessage(v.getContext());
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialogInterface, int n) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    final AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            });
 
             TextView sentAtLabel = (TextView) rowView.findViewById(R.id.singleMessageSentAt);
-            if(objects.get(position).successfullySentAt == null) {
-                if(objects.get(position).failureMessage != null) {
-                    sentAtLabel.setText(objects.get(position).deliveryAttempts + " failed attempts");
+            if(sentMessage.successfullySentAt == null) {
+                if(sentMessage.failureMessage != null) {
+                    sentAtLabel.setText(sentMessage.deliveryAttempts + " failed attempts");
                     sentAtLabel.setTextColor(Color.RED);
                 } else {
                     sentAtLabel.setText("Pending delivery");
                 }
 
             } else {
-                sentAtLabel.setText(objects.get(position).successfullySentAt);
+                sentAtLabel.setText(sentMessage.successfullySentAt);
             }
 
             TextView errorMessage = (TextView) rowView.findViewById(R.id.errorMessage);
-            if(objects.get(position).failureMessage != null) {
-                errorMessage.setText(objects.get(position).failureMessage);
+            if(sentMessage.failureMessage != null) {
+                errorMessage.setText(sentMessage.failureMessage);
                 errorMessage.setTextColor(Color.RED);
             }
 
@@ -172,9 +188,9 @@ public class SentMessageDetails extends ActionBarActivity {
 
             // TODO: fix bug where it crashes if they scroll back and forth a lot
             // OUT OF MEMORY error - it keeps resetting the image
-            if(objects.get(position).photoUriString != null) {
-                Uri test = Uri.parse(objects.get(position).photoUriString);
-                imageView.setImageURI(test);
+            if(sentMessage.photoUriString != null) {
+                Uri photoUri = Uri.parse(sentMessage.photoUriString);
+                quickContactBadge.setImageURI(photoUri);
             }
 
             return rowView;

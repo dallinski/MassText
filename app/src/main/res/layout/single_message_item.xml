@@ -8,13 +8,12 @@
     android:clickable="true"
     android:background="@drawable/layout_selector">
 
-    <ImageView
-        android:id="@+id/thumb"
+    <QuickContactBadge
+        android:id="@+id/contactBadge"
         android:layout_marginLeft="5dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ic_action_person"
-        android:src="@drawable/image_border"
         android:contentDescription="@string/contact_image_label" />
 
     <RelativeLayout
@@ -23,7 +22,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toRightOf="@+id/thumb"
+        android:layout_toRightOf="@+id/contactBadge"
         android:orientation="vertical" >
 
         <TextView

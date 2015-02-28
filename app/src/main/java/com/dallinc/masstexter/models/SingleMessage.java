@@ -88,6 +88,11 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         save();
     }
 
+    public void clearFailureMessage() {
+        failureMessage = null;
+        save();
+    }
+
     public void fail(String message) {
         failureMessage = message;
         save();

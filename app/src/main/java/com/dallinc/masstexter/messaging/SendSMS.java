@@ -67,7 +67,7 @@ public class SendSMS extends IntentService {
      * parameters.
      */
     private void handleActionSendSMS(SingleMessage singleMessage) {
-        SystemClock.sleep(1000); // sleep for 1 second (in an attempt to not overload the port)
+//        SystemClock.sleep(1000); // sleep for 1 second (in an attempt to not overload the port)
 
 //        http://stackoverflow.com/questions/16643391/how-to-check-for-successful-multi-part-sms-send
         sendLongSmsMessage4(getApplicationContext(), singleMessage);
@@ -86,6 +86,7 @@ public class SendSMS extends IntentService {
                 // We need to make all the parts succeed before we say we have succeeded.
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
+                        singleMessage.clearFailureMessage();
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         singleMessage.fail("Error - Generic failure");
@@ -104,7 +105,7 @@ public class SendSMS extends IntentService {
                 nMsgParts--;
                 if (nMsgParts <= 0) {
                     // Stop us from getting any other broadcasts (may be for other messages)
-                    Log.i(LOG_TAG, "All message part resoponses received, unregistering message Id: " + singleMessage.getId());
+                    Log.i(LOG_TAG, "All message part responses received, unregistering message Id: " + singleMessage.getId());
                     context.unregisterReceiver(this);
 
                     if (singleMessage.isFailed()) {
