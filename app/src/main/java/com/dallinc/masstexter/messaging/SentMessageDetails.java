@@ -86,7 +86,7 @@ public class SentMessageDetails extends ActionBarActivity {
             public void onReceive(Context context, Intent intent) {
                 String result = intent.getStringExtra(Constants.EXTRA_SEND_SMS_RESULT);
                 long id = intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1);
-                Toast.makeText(getBaseContext(), "Resend " + result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Delivery attempt: " + result, Toast.LENGTH_SHORT).show();
                 adapter.updateSingleMessage(id);
             }
         };

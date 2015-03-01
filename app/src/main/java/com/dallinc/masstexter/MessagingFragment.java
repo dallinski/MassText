@@ -3,10 +3,14 @@ package com.dallinc.masstexter;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -17,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dallinc.masstexter.helpers.Constants;
 import com.dallinc.masstexter.messaging.Compose;
 import com.dallinc.masstexter.messaging.SentMessageDetails;
 import com.dallinc.masstexter.models.GroupMessage;
@@ -31,6 +36,7 @@ import java.util.List;
  * Created by dallin on 1/30/15.
  */
 public class MessagingFragment extends Fragment {
+    private BroadcastReceiver receiver;
     GroupMessageAdapter ca;
 
     /**
@@ -151,16 +157,22 @@ public class MessagingFragment extends Fragment {
         recList.setAdapter(ca);
         recList.smoothScrollToPosition(ca.getItemCount() - 1);
 
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ca.addMessage(intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1));
+                recList.smoothScrollToPosition(ca.getItemCount() - 1);
+            }
+        };
+        LocalBroadcastManager.getInstance(getActivity().getBaseContext()).registerReceiver((receiver), new IntentFilter(Constants.BROADCAST_SENT_GROUP_MESSAGE));
+
         return rootView;
     }
 
     @Override
-    public void onResume() {
-        // TODO: replace this with a BroadcastReceiver register (see SentMessageDetails for example)
-        ca.updateMessages();
-        RecyclerView recList = (RecyclerView) getActivity().findViewById(R.id.sentMessagesCardList);
-        recList.smoothScrollToPosition(ca.getItemCount() - 1);
-        super.onResume();
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(getActivity().getBaseContext()).unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
     public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapter.GroupMessageViewHolder> {
@@ -242,8 +254,9 @@ public class MessagingFragment extends Fragment {
             }
         }
 
-        public void updateMessages() {
-            this.objects = GroupMessage.listAll(GroupMessage.class);
+        public void addMessage(long id) {
+            GroupMessage newMessage = GroupMessage.findById(GroupMessage.class, id);
+            objects.add(newMessage);
             notifyDataSetChanged();
         }
     }

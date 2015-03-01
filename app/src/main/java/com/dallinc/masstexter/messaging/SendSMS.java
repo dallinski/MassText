@@ -113,14 +113,14 @@ public class SendSMS extends IntentService {
                 nMsgParts--;
                 if (nMsgParts <= 0) {
                     // Stop us from getting any other broadcasts (may be for other messages)
-                    Log.i(Constants.LOG_TAG, "All message part responses received, unregistering message Id: " + singleMessage.getId());
+                    Log.i("SendSMS", "All message part responses received, unregistering message Id: " + singleMessage.getId());
                     context.unregisterReceiver(this);
 
                     if (singleMessage.isFailed()) {
-                        Log.d(Constants.LOG_TAG, "SMS Failure for message id: " + singleMessage.getId());
+                        Log.d("SendSMS", "SMS Failure for message id: " + singleMessage.getId());
                         sendResult(singleMessage.getId(), "failure");
                     } else {
-                        Log.d(Constants.LOG_TAG, "SMS Success for message id: " + singleMessage.getId());
+                        Log.d("SendSMS", "SMS Success for message id: " + singleMessage.getId());
                         singleMessage.setAsSent();
                         sendResult(singleMessage.getId(), "success");
                     }
@@ -135,7 +135,7 @@ public class SendSMS extends IntentService {
             pendingIntents.add(PendingIntent.getBroadcast(context, 0, sentIntent, 0));
         }
 
-        Log.i(Constants.LOG_TAG, "About to send multi-part message Id: " + singleMessage.getId());
+        Log.i("SendSMS", "About to send multi-part message Id: " + singleMessage.getId());
         smsManager.sendMultipartTextMessage(singleMessage.phoneNumber, null, messageParts, pendingIntents, null);
     }
 }
