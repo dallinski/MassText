@@ -19,6 +19,10 @@
     <string name="finalize">Finalize</string>
     <string name="phone_label">Phone:</string>
 
+    <string name="show_change_log">Show Change Log</string>
+    <string name="donate">Donate</string>
+    <string name="donate_explanation">Making apps isn't easy or fast, but I enjoy it. I originally made MassText because I needed it, not to make money. I released it on the Play Store merely because I thought a handful of people might find it useful. I didn't anticipate so many people downloading it and requesting new features.\n\nI don't won't to ruin the user experience by putting ads everywhere, but I would like some revenue from this app. If it's not making me money, it's hard to justify spending a lot of time on it.\n\nSo if this app has helped you or saved you time, please donate.</string>
+
     <!-- ContactPicker string values -->
     <string name="select_account_label">Select</string>
     <string name="contact_name_label">Contact Name</string>

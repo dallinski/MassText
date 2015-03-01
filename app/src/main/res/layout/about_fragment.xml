@@ -11,53 +11,28 @@
     android:layout_centerHorizontal="true"
     tools:context=".MainActivity$AboutFragment" >
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="How To Use"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Some explanation"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Change Log"
-        android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal" />
-
     <com.gc.materialdesign.views.ButtonRectangle
         android:id="@+id/buttonChangeLog"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:text="Show Change Log"
+        android:text="@string/show_change_log"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Donate"
-        android:id="@+id/textView4"
+        android:text="@string/donate"
+        android:id="@+id/donateTitle"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Explanation"
-        android:id="@+id/textView5"
+        android:text="@string/donate_explanation"
+        android:id="@+id/donateExplanation"
         android:layout_gravity="center_horizontal" />
 
     <com.gc.materialdesign.views.ButtonRectangle
@@ -65,6 +40,6 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:text="Donate"
+        android:text="@string/donate"
         android:layout_gravity="center_horizontal"/>
 </LinearLayout>

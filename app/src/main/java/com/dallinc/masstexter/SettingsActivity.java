@@ -119,6 +119,8 @@ public class SettingsActivity extends PreferenceActivity {
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 prefs.edit().putBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, false).commit();
                 Toast.makeText(getBaseContext(), "Example templates recreated!", Toast.LENGTH_SHORT).show();
+
+                // TODO: use a Broadcast to update the templates fragment (to show the newly created templates)
                 return false;
             }
         });
