@@ -30,10 +30,11 @@ public class SendSMS extends IntentService {
         broadcaster = LocalBroadcastManager.getInstance(this);
     }
 
-    public void sendResult(long id, String message) {
+    public void sendResult(long id, String message, int delay) {
         Intent intent = new Intent(Constants.BROADCAST_SMS_RESULT);
         intent.putExtra(Constants.EXTRA_MESSAGE_ID, id);
         intent.putExtra(Constants.EXTRA_SEND_SMS_RESULT, message);
+        intent.putExtra(Constants.EXTRA_DELAY_MILLIS, delay);
         broadcaster.sendBroadcast(intent);
     }
 
@@ -118,7 +119,7 @@ public class SendSMS extends IntentService {
 
                     if (singleMessage.isFailed()) {
                         Log.d("SendSMS", "SMS Failure for message id: " + singleMessage.getId());
-                        sendResult(singleMessage.getId(), "failure");
+                        sendResult(singleMessage.getId(), "failure", delay);
                         if(delay < 60000) { // retry sending until the delay is greater than a minute
                             SystemClock.sleep(500 + delay);
                             int newDelay = 2 * delay; // double the length of the delay each failure
@@ -127,7 +128,7 @@ public class SendSMS extends IntentService {
                     } else {
                         Log.d("SendSMS", "SMS Success for message id: " + singleMessage.getId());
                         singleMessage.setAsSent();
-                        sendResult(singleMessage.getId(), "success");
+                        sendResult(singleMessage.getId(), "success", 0);
                     }
                 }
             }

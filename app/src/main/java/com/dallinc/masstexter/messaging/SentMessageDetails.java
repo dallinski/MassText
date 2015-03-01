@@ -86,7 +86,13 @@ public class SentMessageDetails extends ActionBarActivity {
             public void onReceive(Context context, Intent intent) {
                 String result = intent.getStringExtra(Constants.EXTRA_SEND_SMS_RESULT);
                 long id = intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1);
-                Toast.makeText(getBaseContext(), "Delivery attempt: " + result, Toast.LENGTH_SHORT).show();
+                int delay = intent.getIntExtra(Constants.EXTRA_DELAY_MILLIS, 0);
+                if(result.equals("success")) {
+                    Toast.makeText(getBaseContext(), "Successfully sent message!", Toast.LENGTH_SHORT).show();
+                } else if(result.equals("failure") && delay >= 60000) {
+                    // Only show the toast for the last failure (because there might be a ton)
+                    Toast.makeText(getBaseContext(), "Delivery attempt: " + result, Toast.LENGTH_SHORT).show();
+                }
                 adapter.updateSingleMessage(id);
             }
         };
