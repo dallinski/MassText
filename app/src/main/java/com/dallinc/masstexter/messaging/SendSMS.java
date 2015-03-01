@@ -43,10 +43,11 @@ public class SendSMS extends IntentService {
      *
      * @see IntentService
      */
-    public static void startActionSendSMS(Context context, long messageId) {
+    public static void startActionSendSMS(Context context, long messageId, int delay) {
         Intent intent = new Intent(context, SendSMS.class);
         intent.setAction(Constants.ACTION_SEND_SMS);
         intent.putExtra(Constants.EXTRA_MESSAGE_ID, messageId);
+        intent.putExtra(Constants.EXTRA_DELAY_MILLIS, delay);
         context.startService(intent);
     }
 
@@ -60,9 +61,10 @@ public class SendSMS extends IntentService {
             final String action = intent.getAction();
             if (Constants.ACTION_SEND_SMS.equals(action)) {
                 long messageId = intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1);
+                int delay = intent.getIntExtra(Constants.EXTRA_DELAY_MILLIS, 1);
                 SingleMessage singleMessage = SingleMessage.findById(SingleMessage.class, messageId);
                 if(singleMessage != null) {
-                    handleActionSendSMS(singleMessage);
+                    handleActionSendSMS(singleMessage, delay);
                 } else {
                     Log.e(Constants.ERROR, "Couldn't find the message with id: " + messageId);
                 }
@@ -74,14 +76,12 @@ public class SendSMS extends IntentService {
      * Handle action SendSMS in the provided background thread with the provided
      * parameters.
      */
-    private void handleActionSendSMS(SingleMessage singleMessage) {
-//        SystemClock.sleep(1000); // sleep for 1 second (in an attempt to not overload the port)
-
+    private void handleActionSendSMS(SingleMessage singleMessage, int delay) {
 //        http://stackoverflow.com/questions/16643391/how-to-check-for-successful-multi-part-sms-send
-        sendLongSmsMessage4(getApplicationContext(), singleMessage);
+        sendLongSmsMessage4(getApplicationContext(), singleMessage, delay);
     }
 
-    private void sendLongSmsMessage4(Context context, final SingleMessage singleMessage) {
+    private void sendLongSmsMessage4(Context context, final SingleMessage singleMessage, final int delay) {
         SmsManager smsManager = SmsManager.getDefault();
         final ArrayList<String> messageParts = smsManager.divideMessage(singleMessage.individualizedMessage());
         ArrayList<PendingIntent> pendingIntents = new ArrayList<PendingIntent>(messageParts.size());
@@ -119,6 +119,11 @@ public class SendSMS extends IntentService {
                     if (singleMessage.isFailed()) {
                         Log.d("SendSMS", "SMS Failure for message id: " + singleMessage.getId());
                         sendResult(singleMessage.getId(), "failure");
+                        if(delay < 60000) { // retry sending until the delay is greater than a minute
+                            SystemClock.sleep(500 + delay);
+                            int newDelay = 2 * delay; // double the length of the delay each failure
+                            singleMessage.sendMessage(context, newDelay);
+                        }
                     } else {
                         Log.d("SendSMS", "SMS Success for message id: " + singleMessage.getId());
                         singleMessage.setAsSent();

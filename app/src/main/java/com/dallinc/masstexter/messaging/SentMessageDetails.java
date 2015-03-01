@@ -196,7 +196,7 @@ public class SentMessageDetails extends ActionBarActivity {
                     builder.setMessage("Would you like to resend this message to " + sentMessage.contactName + "?");
                     builder.setPositiveButton("Resend", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogInterface, int n) {
-                            sentMessage.sendMessage(v.getContext());
+                            sentMessage.sendMessage(v.getContext(), 1);
                             dialogInterface.dismiss();
                         }
                     });

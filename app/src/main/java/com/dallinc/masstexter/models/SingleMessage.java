@@ -39,10 +39,10 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         photoUriString = uri.toString();
     }
 
-    public void sendMessage(Context context) {
+    public void sendMessage(Context context, int delay) {
         deliveryAttempts++;
         save();
-        SendSMS.startActionSendSMS(context, this.getId());
+        SendSMS.startActionSendSMS(context, this.getId(), delay);
     }
 
     public String individualizedMessage() {

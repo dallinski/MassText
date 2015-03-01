@@ -158,7 +158,7 @@ public class Compose extends ActionBarActivity {
                         singleMessage.setPhotoUri(contactsShareDetail.get(i).getContactPhotoUri());
                     }
                     singleMessage.save();
-                    singleMessage.sendMessage(getBaseContext());
+                    singleMessage.sendMessage(getBaseContext(), 1);
                 }
 
                 sendResult(masterGroup.getId());
