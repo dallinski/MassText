@@ -1,8 +1,8 @@
 package com.dallinc.masstexter;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -17,6 +17,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -26,8 +27,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
-import com.dallinc.masstexter.R;
 import com.dallinc.masstexter.helpers.Constants;
 import com.gc.materialdesign.widgets.ColorSelector;
 
@@ -45,6 +44,7 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends PreferenceActivity {
+    private LocalBroadcastManager broadcaster;
     /**
      * Determines whether to always show the simplified settings UI, where
      * settings are presented in a single list. When false, settings are shown
@@ -56,6 +56,7 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        broadcaster = LocalBroadcastManager.getInstance(this);
     }
 
     @Override
@@ -119,8 +120,7 @@ public class SettingsActivity extends PreferenceActivity {
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 prefs.edit().putBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, false).commit();
                 Toast.makeText(getBaseContext(), "Example templates recreated!", Toast.LENGTH_SHORT).show();
-
-                // TODO: use a Broadcast to update the templates fragment (to show the newly created templates)
+                broadcaster.sendBroadcast(new Intent(Constants.BROADCAST_RELOAD_TEMPLATES));
                 return false;
             }
         });

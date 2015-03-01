@@ -1,13 +1,16 @@
 package com.dallinc.masstexter;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -28,7 +31,8 @@ import java.util.List;
  * Created by dallin on 1/30/15.
  */
 public class TemplatesFragment extends Fragment {
-    List<Template> templates = Template.listAll(Template.class);
+    private BroadcastReceiver receiver;
+    TemplateAdapter ca;
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -66,24 +70,6 @@ public class TemplatesFragment extends Fragment {
             }
         });
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-        boolean hasSeenExample = prefs.getBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, false);
-        if(!hasSeenExample) {
-            Template example1 = Constants.getExample1();
-            example1.save();
-            templates.add(example1);
-            Template example2 = Constants.getExample2();
-            example2.save();
-            templates.add(example2);
-            Template example3 = Constants.getExample3();
-            example3.save();
-            templates.add(example3);
-            Template example4 = Constants.getExample4();
-            example4.save();
-            templates.add(example4);
-            prefs.edit().putBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, true).commit();
-        }
-
         FloatingActionButton clickButton = (FloatingActionButton) rootView.findViewById(R.id.buttonCreateTemplate);
         clickButton.setOnClickListener( new View.OnClickListener() {
 
@@ -100,10 +86,26 @@ public class TemplatesFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        TemplateAdapter ca = new TemplateAdapter(templates);
+        ca = new TemplateAdapter(Template.listAll(Template.class));
         recList.setAdapter(ca);
 
+        ca.updateTemplates();
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ca.updateTemplates();
+            }
+        };
+        LocalBroadcastManager.getInstance(getActivity().getBaseContext()).registerReceiver((receiver), new IntentFilter(Constants.BROADCAST_RELOAD_TEMPLATES));
+
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(getActivity().getBaseContext()).unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
     public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.TemplateViewHolder> {
@@ -147,7 +149,7 @@ public class TemplatesFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             template.delete();
-                            objects = templates = Template.listAll(Template.class);
+                            objects = Template.listAll(Template.class);
                             notifyDataSetChanged();
                             dialog.dismiss();
                         }
@@ -180,6 +182,27 @@ public class TemplatesFragment extends Fragment {
                 vBody = (TextView)  v.findViewById(R.id.templateCardBody);
                 ImageView iv = (ImageView) v.findViewById(R.id.recipientIcon);
                 iv.setVisibility(View.GONE); // don't show the user icon on template cards
+            }
+        }
+
+        public void updateTemplates() {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+            boolean hasSeenExample = prefs.getBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, false);
+            if(!hasSeenExample) {
+                Template example1 = Constants.getExample1();
+                example1.save();
+                objects.add(example1);
+                Template example2 = Constants.getExample2();
+                example2.save();
+                objects.add(example2);
+                Template example3 = Constants.getExample3();
+                example3.save();
+                objects.add(example3);
+                Template example4 = Constants.getExample4();
+                example4.save();
+                objects.add(example4);
+                prefs.edit().putBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, true).commit();
+                notifyDataSetChanged();
             }
         }
     }

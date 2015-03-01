@@ -20,6 +20,7 @@ public abstract class Constants {
     public static final String ACTION_SEND_SMS = "com.dallinc.masstexter.action.SEND_SMS";
     public static final String BROADCAST_SMS_RESULT= "com.dallinc.masstexter.broadcast.SMS_RESULT";
     public static final String BROADCAST_SENT_GROUP_MESSAGE= "com.dallinc.masstexter.broadcast.SENT_GROUP_MESSAGE";
+    public static final String BROADCAST_RELOAD_TEMPLATES= "com.dallinc.masstexter.broadcast.RELOAD_TEMPLATES";
     public static final String EXTRA_MESSAGE_ID= "com.dallinc.masstexter.extra.MESSAGE_ID";
     public static final String EXTRA_SEND_SMS_RESULT = "com.dallinc.masstexter.extra.SEND_SMS_RESULT";
     public static final String EXTRA_DELAY_MILLIS = "com.dallinc.masstexter.extra.DELAY_MILLIS";
