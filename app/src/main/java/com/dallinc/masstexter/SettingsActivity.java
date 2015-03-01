@@ -24,9 +24,11 @@ import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.dallinc.masstexter.R;
+import com.dallinc.masstexter.helpers.Constants;
 import com.gc.materialdesign.widgets.ColorSelector;
 
 import java.util.List;
@@ -109,6 +111,17 @@ public class SettingsActivity extends PreferenceActivity {
 
         final SharedPreferences customSharedPreference = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         final SharedPreferences.Editor editor = customSharedPreference.edit();
+
+        final Preference recreate_example_templates = findPreference("recreate_example_templates");
+        recreate_example_templates.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                prefs.edit().putBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, false).commit();
+                Toast.makeText(getBaseContext(), "Example templates recreated!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         final Preference primary_color = findPreference("primary_color");
         primary_color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

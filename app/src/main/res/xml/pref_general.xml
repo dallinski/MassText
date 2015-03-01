@@ -31,6 +31,11 @@
         android:positiveButtonText="@null" />
 
     <Preference
+        android:key="recreate_example_templates"
+        android:title="Recreate Example Templates"
+        android:enabled="true" />
+
+    <Preference
         android:key="primary_color"
         android:title="@string/select_color_primary"
         android:enabled="true" />

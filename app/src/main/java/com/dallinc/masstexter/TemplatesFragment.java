@@ -3,7 +3,10 @@ package com.dallinc.masstexter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dallinc.masstexter.helpers.Constants;
 import com.dallinc.masstexter.models.Template;
 import com.dallinc.masstexter.templates.EditTemplate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -62,6 +66,24 @@ public class TemplatesFragment extends Fragment {
             }
         });
 
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+        boolean hasSeenExample = prefs.getBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, false);
+        if(!hasSeenExample) {
+            Template example1 = Constants.getExample1();
+            example1.save();
+            templates.add(example1);
+            Template example2 = Constants.getExample2();
+            example2.save();
+            templates.add(example2);
+            Template example3 = Constants.getExample3();
+            example3.save();
+            templates.add(example3);
+            Template example4 = Constants.getExample4();
+            example4.save();
+            templates.add(example4);
+            prefs.edit().putBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, true).commit();
+        }
+
         FloatingActionButton clickButton = (FloatingActionButton) rootView.findViewById(R.id.buttonCreateTemplate);
         clickButton.setOnClickListener( new View.OnClickListener() {
 
@@ -86,20 +108,20 @@ public class TemplatesFragment extends Fragment {
 
     public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.TemplateViewHolder> {
 
-        private List<Template> templateList;
+        private List<Template> objects;
 
-        public TemplateAdapter(List<Template> templateList) {
-            this.templateList = templateList;
+        public TemplateAdapter(List<Template> objects) {
+            this.objects = objects;
         }
 
         @Override
         public int getItemCount() {
-            return templateList.size();
+            return objects.size();
         }
 
         @Override
         public void onBindViewHolder(final TemplateViewHolder TemplateViewHolder, int i) {
-            final Template template = templateList.get(i);
+            final Template template = objects.get(i);
             TemplateViewHolder.vTitle.setText(template.title);
             String body = template.body;
             template.buildArrayListFromString();
@@ -125,7 +147,7 @@ public class TemplatesFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             template.delete();
-                            templateList = templates = Template.listAll(Template.class);
+                            objects = templates = Template.listAll(Template.class);
                             notifyDataSetChanged();
                             dialog.dismiss();
                         }
