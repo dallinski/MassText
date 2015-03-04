@@ -36,7 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -46,7 +45,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
         </activity>
-
         <activity
             android:name=".templates.EditTemplate"
             android:label="@string/title_activity_edit_template"
@@ -56,7 +54,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
         </activity>
-
         <activity
             android:name=".messaging.Compose"
             android:label="@string/title_activity_compose"
@@ -66,7 +63,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
         </activity>
-
         <activity
             android:name="contactpicker.ContactManager"
             android:configChanges="orientation|screenSize"
@@ -89,16 +85,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
         </activity>
-
         <activity
             android:name=".Donate"
             android:label="@string/title_activity_donate"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dallinc.masstexter.MainActivity" />
         </activity>
-
+        <activity
+            android:name=".FAQs"
+            android:label="@string/title_activity_faqs"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dallinc.masstexter.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

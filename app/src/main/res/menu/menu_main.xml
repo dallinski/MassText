@@ -15,9 +15,15 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_faq"
+        android:title="@string/title_activity_faqs"
+        android:orderInCategory="102"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_show_change_log"
         android:title="@string/action_show_change_log"
-        android:orderInCategory="102"
+        android:orderInCategory="103"
         app:showAsAction="never" />
 
 </menu>

@@ -84,6 +84,10 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(this, Donate.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_faq) {
+            Intent intent = new Intent(this, FAQs.class);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.action_show_change_log) {
             openDialogFragment(new DialogMaterialFragment());
             return true;
