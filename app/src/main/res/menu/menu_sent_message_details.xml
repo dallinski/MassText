@@ -2,6 +2,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.dallinc.masstexter.messaging.SentMessageDetails">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+
+    <!--<item-->
+        <!--android:id="@+id/action_resend_to_all"-->
+        <!--android:title="@string/action_resend_to_all"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never" />-->
+
+    <!--<item-->
+        <!--android:id="@+id/action_resend_to_failed"-->
+        <!--android:title="@string/action_resend_to_failed"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never" />-->
+
+    <!--<item-->
+        <!--android:id="@+id/action_send_new_to_all"-->
+        <!--android:title="@string/action_send_new_to_all"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never" />-->
+
+    <!--<item-->
+        <!--android:id="@+id/action_send_this_message_to_others"-->
+        <!--android:title="@string/action_send_this_message_to_others"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never" />-->
+
 </menu>

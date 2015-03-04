@@ -19,6 +19,10 @@
     <string name="action_select_recipients">Select Recipients</string>
     <string name="action_toggle_views">Toggle Group View</string>
     <string name="action_toggle_views_short">Toggle</string>
+    <string name="action_resend_to_all">Resend this message to all recipients</string>
+    <string name="action_resend_to_failed">Resend this message to failed recipients</string>
+    <string name="action_send_new_to_all">Send a new message to all recipients</string>
+    <string name="action_send_this_message_to_others">Send this message to other recipients</string>
     <string name="select_color_primary">Primary Color</string>
     <string name="select_color_accent">Accent Color</string>
     <string name="select_account_label">Select</string>

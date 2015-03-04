@@ -112,10 +112,15 @@ public class SentMessageDetails extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_resend_to_all) {
+//            return true;
+//        } else if (id == R.id.action_resend_to_failed) {
+//            return true;
+//        } else if (id == R.id.action_send_new_to_all) {
+//            return true;
+//        } else if (id == R.id.action_send_this_message_to_others) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
