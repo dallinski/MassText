@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog bulletedList="true">
+
+    <changelogversion versionName="2.0" changeDate="March 7, 2015">
+        <changelogtext>[font color=blue][b]Complete redesign![/b][/font]</changelogtext>
+        <changelogtext>[b]Message send reliability and reporting greatly improved[/b]</changelogtext>
+        <changelogtext>[b]New:[/b] Multi-contact picker</changelogtext>
+        <changelogtext>[b]New:[/b] Ability to choose all contacts in an Android contact group</changelogtext>
+        <changelogtext>[b]New:[/b] Message history</changelogtext>
+        <changelogtext>Improved variables in templates</changelogtext>
+        <changelogtext>Material design principles used in layouts</changelogtext>
+        <changelogtext>[font color=red]Gingerbread no longer supported[/font]</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.1.2" changeDate="March 16, 2013">
+        <changelogtext>Group and message management added</changelogtext>
+        <changelogtext>More intuitive layout</changelogtext>
+        <changelogtext>Small bug fixes</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.1" changeDate="March 7, 2013">
+        <changelogtext>[font color=blue]Gingerbread compatibility[/font]</changelogtext>
+        <changelogtext>Contact pictures</changelogtext>
+        <changelogtext>Number listed under name</changelogtext>
+        <changelogtext>Ability to choose phone number for contacts that have multiple numbers</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="1.0" changeDate="March 4, 2013">
+        <changelogtext>[font color=blue][b]Mass Text released![/b][/font]</changelogtext>
+        <changelogtext>It's not pretty, but it's functional</changelogtext>
+    </changelogversion>
+
+</changelog>

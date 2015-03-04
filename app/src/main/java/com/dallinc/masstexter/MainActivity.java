@@ -3,6 +3,8 @@ package com.dallinc.masstexter;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dallinc.masstexter.helpers.Constants;
+import com.dallinc.masstexter.helpers.DialogMaterialFragment;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -39,7 +42,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_main);
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -83,12 +85,24 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.action_show_change_log) {
-//            Intent intent = new Intent(this, ChangeLog.class);
-//            startActivity(intent);
+            openDialogFragment(new DialogMaterialFragment());
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openDialogFragment(DialogFragment dialogStandardFragment) {
+        if (dialogStandardFragment!=null){
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            Fragment prev = fm.findFragmentByTag("changelog_dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+
+            dialogStandardFragment.show(ft,"changelog_dialog");
+        }
     }
 
 

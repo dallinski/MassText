@@ -31,4 +31,5 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.6.0'
     compile 'com.marvinlabs:android-floatinglabel-widgets:1.5.0@aar'
     compile 'net.danlew:android.joda:2.7.0'
+    compile 'com.github.gabrielemariotti.changeloglib:library:1.5.2'
 }

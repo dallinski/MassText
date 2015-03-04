@@ -155,7 +155,9 @@ public class MessagingFragment extends Fragment {
 
         ca = new GroupMessageAdapter();
         recList.setAdapter(ca);
-        recList.smoothScrollToPosition(ca.getItemCount() - 1);
+        if(ca.getItemCount() > 0) {
+            recList.smoothScrollToPosition(ca.getItemCount() - 1);
+        }
 
         receiver = new BroadcastReceiver() {
             @Override
