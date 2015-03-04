@@ -9,15 +9,7 @@
     android:orientation="vertical"
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"
-    tools:context=".MainActivity$AboutFragment" >
-
-    <com.gc.materialdesign.views.ButtonRectangle
-        android:id="@+id/buttonChangeLog"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:text="@string/show_change_log"
-        android:layout_gravity="center_horizontal"/>
+    tools:context="com.dallinc.masstexter.Donate">
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,6 +24,7 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:text="@string/donate"
+        android:text="@string/action_donate"
         android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

@@ -74,10 +74,17 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
+            return true;
+        } else if (id == R.id.action_donate) {
+            Intent intent = new Intent(this, Donate.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_show_change_log) {
+//            Intent intent = new Intent(this, ChangeLog.class);
+//            startActivity(intent);
             return true;
         }
 
@@ -103,16 +110,13 @@ public class MainActivity extends ActionBarActivity {
                     return MessagingFragment.newInstance(position + 1);
                 case Constants.TEMPLATES_FRAGMENT_POS:
                     return TemplatesFragment.newInstance(position + 1);
-                case Constants.ABOUT_FRAGMENT_POS:
-                    return AboutFragment.newInstance(position + 1);
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -123,8 +127,6 @@ public class MainActivity extends ActionBarActivity {
                     return getString(R.string.title_section1).toUpperCase(l);
                 case Constants.TEMPLATES_FRAGMENT_POS:
                     return getString(R.string.title_section2).toUpperCase(l);
-                case Constants.ABOUT_FRAGMENT_POS:
-                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
