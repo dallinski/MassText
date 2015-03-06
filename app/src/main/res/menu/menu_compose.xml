@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="com.dallinc.masstexter.messaging.Compose">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.dallinc.masstext.messaging.Compose">
 
     <item android:id="@+id/action_select_recipients"
         android:title="@string/action_insert_variable"

@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.helpers;
+package com.dallinc.masstext.helpers;
 
 import android.content.Context;
 import android.util.AttributeSet;

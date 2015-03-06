@@ -1,25 +1,32 @@
-package com.dallinc.masstexter.models;
+package com.dallinc.masstext.models;
 
 import com.orm.SugarRecord;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
 /**
- * Created by dallin on 1/31/15.
+ * Created by dallin on 2/7/15.
  */
-public class Template extends SugarRecord<Template> {
-    public String title;
-    public String body;
+public class GroupMessage extends SugarRecord<GroupMessage> {
+    public String sentAt;
+    public String messageBody;
     public ArrayList<String> variables;
     public String variable_string;
 
-    public Template() {
+    public GroupMessage() {
+
     }
 
-    public Template(String t, String b, ArrayList<String> v) {
-        title = t;
-        body = b;
-        variables = v;
+    public GroupMessage(String body, ArrayList<String> vars) {
+        DateTime dateTime = DateTime.now();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM d, yyyy - h:mm a");
+        sentAt = dateTime.toString(fmt);
+        messageBody = body;
+        variables = vars;
     }
 
     public void buildArrayListFromString() {

@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.pickers;
+package com.dallinc.masstext.pickers;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstext;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

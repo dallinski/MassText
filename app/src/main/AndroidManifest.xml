@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dallinc.masstexter" >
+    package="com.dallinc.masstext" >
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -18,16 +18,16 @@
             android:value="mass_text.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="7" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.dallinc.masstexter" />
+            android:value="com.dallinc.masstext" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.dallinc.masstext.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -37,31 +37,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.dallinc.masstext.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.dallinc.masstext.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dallinc.masstexter.MainActivity" />
+                android:value="com.dallinc.masstext.MainActivity" />
         </activity>
         <activity
-            android:name=".templates.EditTemplate"
+            android:name="com.dallinc.masstext.templates.EditTemplate"
             android:label="@string/title_activity_edit_template"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.dallinc.masstext.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dallinc.masstexter.MainActivity" />
+                android:value="com.dallinc.masstext.MainActivity" />
         </activity>
         <activity
-            android:name=".messaging.Compose"
+            android:name="com.dallinc.masstext.messaging.Compose"
             android:label="@string/title_activity_compose"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.dallinc.masstext.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dallinc.masstexter.MainActivity" />
+                android:value="com.dallinc.masstext.MainActivity" />
         </activity>
         <activity
             android:name="contactpicker.ContactManager"
@@ -72,36 +72,36 @@
         </activity>
 
         <service
-            android:name=".messaging.SendSMS"
+            android:name="com.dallinc.masstext.messaging.SendSMS"
             android:exported="false" >
         </service>
 
         <activity
-            android:name=".messaging.SentMessageDetails"
+            android:name="com.dallinc.masstext.messaging.SentMessageDetails"
             android:label="@string/title_activity_sent_message_details"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.dallinc.masstext.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dallinc.masstexter.MainActivity" />
+                android:value="com.dallinc.masstext.MainActivity" />
         </activity>
         <activity
-            android:name=".Donate"
+            android:name="com.dallinc.masstext.Donate"
             android:label="@string/title_activity_donate"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.dallinc.masstext.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dallinc.masstexter.MainActivity" />
+                android:value="com.dallinc.masstext.MainActivity" />
         </activity>
         <activity
-            android:name=".FAQs"
+            android:name="com.dallinc.masstext.FAQs"
             android:label="@string/title_activity_faqs"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.dallinc.masstext.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dallinc.masstexter.MainActivity" />
+                android:value="com.dallinc.masstext.MainActivity" />
         </activity>
     </application>
 

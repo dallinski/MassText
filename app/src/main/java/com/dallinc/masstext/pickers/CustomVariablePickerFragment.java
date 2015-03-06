@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.pickers;
+package com.dallinc.masstext.pickers;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,7 +10,7 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.dallinc.masstexter.R;
+import com.dallinc.masstext.R;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
 /**

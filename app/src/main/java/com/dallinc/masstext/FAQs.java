@@ -1,11 +1,9 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstext;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 

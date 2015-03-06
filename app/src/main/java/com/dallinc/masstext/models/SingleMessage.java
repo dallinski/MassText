@@ -1,9 +1,9 @@
-package com.dallinc.masstexter.models;
+package com.dallinc.masstext.models;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.dallinc.masstexter.messaging.SendSMS;
+import com.dallinc.masstext.messaging.SendSMS;
 import com.orm.SugarRecord;
 
 import org.joda.time.DateTime;

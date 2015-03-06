@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.messaging;
+package com.dallinc.masstext.messaging;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -18,7 +18,7 @@ import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,11 +30,11 @@ import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dallinc.masstexter.R;
-import com.dallinc.masstexter.helpers.Constants;
-import com.dallinc.masstexter.helpers.TextDrawable;
-import com.dallinc.masstexter.models.GroupMessage;
-import com.dallinc.masstexter.models.SingleMessage;
+import com.dallinc.masstext.R;
+import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.helpers.TextDrawable;
+import com.dallinc.masstext.models.GroupMessage;
+import com.dallinc.masstext.models.SingleMessage;
 
 import java.util.List;
 
@@ -176,7 +176,7 @@ public class SentMessageDetails extends ActionBarActivity {
                     return;
                 }
             }
-            Log.e(Constants.ERROR, "Failed to update UI for message with id: " + id);
+//            Log.e(Constants.ERROR, "Failed to update UI for message with id: " + id);
         }
 
         private void updateSingleMessage(int i) {

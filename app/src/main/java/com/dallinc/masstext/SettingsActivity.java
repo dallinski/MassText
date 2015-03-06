@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstext;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -27,7 +27,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.dallinc.masstexter.helpers.Constants;
+import com.dallinc.masstext.helpers.Constants;
 import com.gc.materialdesign.widgets.ColorSelector;
 
 import java.util.List;

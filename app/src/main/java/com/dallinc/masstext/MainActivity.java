@@ -1,8 +1,10 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstext;
 
 import java.util.Locale;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -14,8 +16,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dallinc.masstexter.helpers.Constants;
-import com.dallinc.masstexter.helpers.DialogMaterialFragment;
+import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.helpers.DialogMaterialFragment;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -55,6 +57,13 @@ public class MainActivity extends ActionBarActivity {
         if(bundle != null) {
             int current_tab = bundle.getInt("opened_tab", Constants.MESSAGING_FRAGMENT_POS);
             mViewPager.setCurrentItem(current_tab);
+        }
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean hasSeenChangeLog = prefs.getBoolean(Constants.HAS_SEEN_CHANGE_LOG, false);
+        if(!hasSeenChangeLog) {
+            openDialogFragment(new DialogMaterialFragment());
+            prefs.edit().putBoolean(Constants.HAS_SEEN_CHANGE_LOG, true).commit();
         }
     }
 

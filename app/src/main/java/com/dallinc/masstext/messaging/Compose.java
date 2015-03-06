@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.messaging;
+package com.dallinc.masstext.messaging;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -26,17 +26,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.dallinc.masstexter.helpers.Constants;
-import com.dallinc.masstexter.R;
-import com.dallinc.masstexter.helpers.ScrollViewWithMaxHeight;
-import com.dallinc.masstexter.helpers.TextDrawable;
-import com.dallinc.masstexter.models.GroupMessage;
-import com.dallinc.masstexter.models.SingleMessage;
-import com.dallinc.masstexter.models.Template;
-import com.dallinc.masstexter.pickers.CustomVariablePickerFragment;
-import com.dallinc.masstexter.pickers.DatePickerFragment;
-import com.dallinc.masstexter.pickers.DayOfWeekPickerFragment;
-import com.dallinc.masstexter.pickers.TimePickerFragment;
+import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.R;
+import com.dallinc.masstext.helpers.ScrollViewWithMaxHeight;
+import com.dallinc.masstext.helpers.TextDrawable;
+import com.dallinc.masstext.models.GroupMessage;
+import com.dallinc.masstext.models.SingleMessage;
+import com.dallinc.masstext.models.Template;
+import com.dallinc.masstext.pickers.CustomVariablePickerFragment;
+import com.dallinc.masstext.pickers.DatePickerFragment;
+import com.dallinc.masstext.pickers.DayOfWeekPickerFragment;
+import com.dallinc.masstext.pickers.TimePickerFragment;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 

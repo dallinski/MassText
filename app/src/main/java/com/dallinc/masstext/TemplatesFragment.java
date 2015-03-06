@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstext;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -20,9 +20,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dallinc.masstexter.helpers.Constants;
-import com.dallinc.masstexter.models.Template;
-import com.dallinc.masstexter.templates.EditTemplate;
+import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.models.Template;
+import com.dallinc.masstext.templates.EditTemplate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

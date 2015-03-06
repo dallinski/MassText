@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.messaging;
+package com.dallinc.masstext.messaging;
 
 import android.app.Activity;
 import android.app.IntentService;
@@ -10,10 +10,10 @@ import android.content.IntentFilter;
 import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.SmsManager;
-import android.util.Log;
+//import android.util.Log;
 
-import com.dallinc.masstexter.helpers.Constants;
-import com.dallinc.masstexter.models.SingleMessage;
+import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.models.SingleMessage;
 
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public class SendSMS extends IntentService {
                 if(singleMessage != null) {
                     handleActionSendSMS(singleMessage, delay);
                 } else {
-                    Log.e(Constants.ERROR, "Couldn't find the message with id: " + messageId);
+//                    Log.e(Constants.ERROR, "Couldn't find the message with id: " + messageId);
                 }
             }
         }
@@ -114,11 +114,11 @@ public class SendSMS extends IntentService {
                 nMsgParts--;
                 if (nMsgParts <= 0) {
                     // Stop us from getting any other broadcasts (may be for other messages)
-                    Log.i("SendSMS", "All message part responses received, unregistering message Id: " + singleMessage.getId());
+//                    Log.i("SendSMS", "All message part responses received, unregistering message Id: " + singleMessage.getId());
                     context.unregisterReceiver(this);
 
                     if (singleMessage.isFailed()) {
-                        Log.d("SendSMS", "SMS Failure for message id: " + singleMessage.getId());
+//                        Log.d("SendSMS", "SMS Failure for message id: " + singleMessage.getId());
                         sendResult(singleMessage.getId(), "failure", delay);
                         if(delay < 60000) { // retry sending until the delay is greater than a minute
                             SystemClock.sleep(500 + delay);
@@ -126,7 +126,7 @@ public class SendSMS extends IntentService {
                             singleMessage.sendMessage(context, newDelay);
                         }
                     } else {
-                        Log.d("SendSMS", "SMS Success for message id: " + singleMessage.getId());
+//                        Log.d("SendSMS", "SMS Success for message id: " + singleMessage.getId());
                         singleMessage.setAsSent();
                         sendResult(singleMessage.getId(), "success", 0);
                     }
@@ -141,7 +141,7 @@ public class SendSMS extends IntentService {
             pendingIntents.add(PendingIntent.getBroadcast(context, 0, sentIntent, 0));
         }
 
-        Log.i("SendSMS", "About to send multi-part message Id: " + singleMessage.getId());
+//        Log.i("SendSMS", "About to send multi-part message Id: " + singleMessage.getId());
         smsManager.sendMultipartTextMessage(singleMessage.phoneNumber, null, messageParts, pendingIntents, null);
     }
 }

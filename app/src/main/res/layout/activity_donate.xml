@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"
-    tools:context="com.dallinc.masstexter.Donate">
+    tools:context="com.dallinc.masstext.Donate">
 
     <TextView
         android:layout_width="wrap_content"

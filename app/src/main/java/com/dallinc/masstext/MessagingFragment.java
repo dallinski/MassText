@@ -1,4 +1,4 @@
-package com.dallinc.masstexter;
+package com.dallinc.masstext;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,12 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dallinc.masstexter.helpers.Constants;
-import com.dallinc.masstexter.messaging.Compose;
-import com.dallinc.masstexter.messaging.SentMessageDetails;
-import com.dallinc.masstexter.models.GroupMessage;
-import com.dallinc.masstexter.models.SingleMessage;
-import com.dallinc.masstexter.models.Template;
+import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.messaging.Compose;
+import com.dallinc.masstext.messaging.SentMessageDetails;
+import com.dallinc.masstext.models.GroupMessage;
+import com.dallinc.masstext.models.SingleMessage;
+import com.dallinc.masstext.models.Template;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 

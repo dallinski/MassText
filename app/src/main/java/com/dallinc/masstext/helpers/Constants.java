@@ -1,6 +1,6 @@
-package com.dallinc.masstexter.helpers;
+package com.dallinc.masstext.helpers;
 
-import com.dallinc.masstexter.models.Template;
+import com.dallinc.masstext.models.Template;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,7 @@ public abstract class Constants {
     public static final String EXTRA_SEND_SMS_RESULT = "com.dallinc.masstexter.extra.SEND_SMS_RESULT";
     public static final String EXTRA_DELAY_MILLIS = "com.dallinc.masstexter.extra.DELAY_MILLIS";
     public static final String HAS_SEEN_EXAMPLE_TEMPLATE = "com.dallinc.masstexter.preference.HAS_SEEN_EXAMPLE_TEMPLATE";
+    public static final String HAS_SEEN_CHANGE_LOG = "com.dallinc.masstexter.preference.HAS_SEEN_CHANGE_LOG";
 
     public static boolean contains(String[] vars, String var) {
         for(String v : vars) {

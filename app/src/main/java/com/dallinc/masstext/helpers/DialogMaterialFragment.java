@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.helpers;
+package com.dallinc.masstext.helpers;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 
-import com.dallinc.masstexter.R;
+import com.dallinc.masstext.R;
 
 import it.gmariotti.changelibs.library.view.ChangeLogListView;
 

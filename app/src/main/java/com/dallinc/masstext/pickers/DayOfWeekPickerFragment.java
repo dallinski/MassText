@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.pickers;
+package com.dallinc.masstext.pickers;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-import com.dallinc.masstexter.helpers.Constants;
+import com.dallinc.masstext.helpers.Constants;
 
 /**
  * Created by dallin on 2/16/15.

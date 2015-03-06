@@ -9,7 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dallinc.masstexter.R;
+import com.dallinc.masstext.R;
 
 import java.util.ArrayList;
 import java.util.List;

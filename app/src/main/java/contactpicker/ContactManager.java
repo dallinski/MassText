@@ -41,7 +41,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.dallinc.masstexter.R;
+import com.dallinc.masstext.R;
 import com.gc.materialdesign.views.ButtonIcon;
 
 import java.util.ArrayList;

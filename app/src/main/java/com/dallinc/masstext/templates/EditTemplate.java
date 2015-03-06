@@ -1,4 +1,4 @@
-package com.dallinc.masstexter.templates;
+package com.dallinc.masstext.templates;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,10 +22,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dallinc.masstexter.helpers.Constants;
-import com.dallinc.masstexter.R;
-import com.dallinc.masstexter.helpers.TextDrawable;
-import com.dallinc.masstexter.models.Template;
+import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.R;
+import com.dallinc.masstext.helpers.TextDrawable;
+import com.dallinc.masstext.models.Template;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
 import java.util.ArrayList;
