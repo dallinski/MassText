@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion versionName="2.0" changeDate="March 7, 2015">
+    <changelogversion versionName="2.0.1" changeDate="March 7, 2015">
+        <changelogtext>[b]New:[/b] Donations</changelogtext>
+    </changelogversion>
+
+    <changelogversion versionName="2.0" changeDate="March 5, 2015">
         <changelogtext>[font color=blue][b]Complete redesign![/b][/font]</changelogtext>
         <changelogtext>[b]Message send reliability and reporting greatly improved[/b]</changelogtext>
         <changelogtext>[b]New:[/b] Multi-contact picker</changelogtext>
