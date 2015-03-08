@@ -2,6 +2,7 @@ package com.dallinc.masstext;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 //import android.util.Log;
@@ -117,7 +118,11 @@ public class Donate extends ActionBarActivity {
         builder.setItems(prices, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                purchase(which);
+                try {
+                    purchase(which);
+                } catch (IllegalStateException e) {
+                    Toast.makeText(getBaseContext(), "Unable to purchase. A previous transaction may still be in process. Please restart app and try again.", Toast.LENGTH_LONG).show();
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -157,5 +162,21 @@ public class Donate extends ActionBarActivity {
         super.onDestroy();
         if (mHelper != null) mHelper.dispose();
         mHelper = null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+
+        // Pass on the activity result to the helper for handling
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+            // not handled, so handle it ourselves (here's where you'd
+            // perform any handling of activity results not related to in-app
+            // billing...
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+        else {
+//            Log.d(TAG, "onActivityResult handled by IABUtil.");
+        }
     }
 }
