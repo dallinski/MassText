@@ -32,7 +32,7 @@
     <string name="ok">Ok</string>
     <string name="change_log_title">Change Log</string>
 
-    <string name="donate_explanation">Making apps isn\'t easy or fast, but I enjoy it. I originally made MassText out of necessity - I needed an app for sending personalized mass texts, but nothing on the Play Store worked very well. I thought a handful of people might find it useful, but I didn\'t anticipate that so many people would download it and request new features.\n\nI don\'t won\'t to ruin the user experience by putting ads everywhere, but I would like some revenue from this app. Instead of making the app less useful or more annoying to use, twisting your arm to pay for some premium version, I am simply asking for you to pay what you think the app is worth to you.\n\nSo if this app has helped you or saved you time, please donate.</string>
+    <string name="donate_explanation">Making apps isn\'t easy or fast, but I enjoy it. I originally made MassText out of necessity - I needed an app for sending personalized mass texts, but nothing on the Play Store worked very well. I thought a handful of people might find it useful, but I didn\'t anticipate that so many people would download it and request new features.\n\nI don\'t want to ruin the user experience by putting ads everywhere, but I would like some revenue from this app. Instead of making the app less useful or more annoying to use, twisting your arm to pay for some premium version, I am simply asking for you to pay what you think the app is worth to you.\n\nSo if this app has helped you or saved you time, please donate.</string>
 
     <string name="contact_name_label">Contact Name</string>
     <string name="contact_image_label">Contact Image</string>
