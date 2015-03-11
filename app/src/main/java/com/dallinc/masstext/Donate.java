@@ -25,11 +25,11 @@ public class Donate extends ActionBarActivity {
     IabHelper.QueryInventoryFinishedListener mQueryFinishedListener;
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener;
     String base64EncodedPublicKey;
-    String donate1Price;
-    String donate2Price;
-    String donate5Price;
-    String donate10Price;
-    String donate15Price;
+    String donate1Price = "$1";
+    String donate2Price = "$2";
+    String donate5Price = "$5";
+    String donate10Price = "$10";
+    String donate15Price = "$15";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
