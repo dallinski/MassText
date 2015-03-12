@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion versionName="2.0.2" changeDate="March 11, 2015">
+        <changelogtext>New icon</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="2.0.1" changeDate="March 7, 2015">
         <changelogtext>[b]New:[/b] Donations</changelogtext>
     </changelogversion>
