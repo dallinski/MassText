@@ -54,10 +54,19 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
     }
 
     private String replaceNameVariables(String message, ArrayList<String> variables) {
-        // TODO: Make this more robust. Handle names that don't have spaces (only one name)
-
-        String fullName = contactName;
-        String[] parts = fullName.split(" ");
+        String fullName;
+        String[] parts;
+        if(contactName == null) {
+            fullName = "";
+            parts = new String[]{"", ""};
+        } else {
+            fullName = contactName;
+            if(fullName.contains(" ")) {
+                parts = fullName.split(" ");
+            } else {
+                parts = new String[]{fullName};
+            }
+        }
 
         for(String variable : variables) {
             switch (variable) {
