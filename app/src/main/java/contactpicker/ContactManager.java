@@ -579,6 +579,9 @@ public final class ContactManager extends FragmentActivity {
 
         @Override
         public int getPositionForSection(int section) {
+            if(section > sections.length - 1) {
+                section = sections.length - 1;
+            }
             return alphaIndexer.get(sections[section]);
         }
 
