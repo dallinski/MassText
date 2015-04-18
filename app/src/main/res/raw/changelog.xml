@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion versionName="2.0.4" changeDate="April 17, 2015">
+        <changelogtext>Bug fixes for Android 5.0 (Lollipop)</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="2.0.3" changeDate="March 28, 2015">
         <changelogtext>Bug fixes</changelogtext>
     </changelogversion>
