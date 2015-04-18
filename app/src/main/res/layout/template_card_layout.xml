@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="4dp" >
 
     <RelativeLayout

@@ -16,7 +16,7 @@ public class FAQs extends ActionBarActivity {
 
         TextView emailView = (TextView) findViewById(R.id.emailLink);
         emailView.setLinksClickable(true);
-        emailView.setText(Html.fromHtml("<a href=\"mailto:dallin.christensen+masstext@gmail.com\">Email me (Dallin) directly</a>"));
+        emailView.setText(Html.fromHtml("<a href=\"mailto:dallin.christensen+masstext2@gmail.com\">Email me (Dallin) directly</a>"));
         emailView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
