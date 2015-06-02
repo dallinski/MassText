@@ -19,8 +19,8 @@ android {
         applicationId "com.dallinc.masstext"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 9
-        versionName "2.0.4"
+        versionCode 10
+        versionName "2.0.5"
     }
     buildTypes {
         release {
@@ -39,7 +39,7 @@ dependencies {
     compile 'com.github.navasmdc:MaterialDesign:1.4@aar'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.getbase:floatingactionbutton:1.9.0'
-    compile 'com.marvinlabs:android-floatinglabel-widgets:1.6.1@aar'
+    compile 'com.marvinlabs:android-floatinglabel-widgets:1.5.0@aar' // 1.6.1 is giving me issues
     compile 'net.danlew:android.joda:2.7.2'
     compile 'com.github.gabrielemariotti.changeloglib:library:1.5.2'
 }

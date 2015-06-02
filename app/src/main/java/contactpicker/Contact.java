@@ -17,6 +17,7 @@ public class Contact implements Parcelable {
     private Bitmap contactPhoto;
     private Uri contactPhotoUri;
     private String contactEmail;
+    private String numberLabel;
     private ArrayList<ContactGroup> groups;
     public static final String CONTACTS_DATA = "CONTACTS_DATA";
 
@@ -34,6 +35,10 @@ public class Contact implements Parcelable {
         return contactNumber;
     }
 
+    public String getNumberLabel() {
+        return numberLabel;
+    }
+
     public Bitmap getContactPhoto() {
         return contactPhoto;
     }
@@ -48,6 +53,10 @@ public class Contact implements Parcelable {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+    public void setNumberLabel(String numberLabel) {
+        this.numberLabel = numberLabel;
     }
 
     public void setContactPhoto(Bitmap contactPhoto) {

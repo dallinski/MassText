@@ -23,6 +23,7 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
     public String contactName;
     public String photoUriString;
     public String failureMessage;
+    //TODO: public String numberLabel;
 
     public SingleMessage() {
 

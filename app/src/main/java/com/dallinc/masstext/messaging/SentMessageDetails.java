@@ -242,7 +242,7 @@ public class SentMessageDetails extends ActionBarActivity {
 
             // TODO: set phone number label
             TextView numberLabel = (TextView) rowView.findViewById(R.id.numberLabel);
-//            numberLabel.setText(label);
+//            numberLabel.setText(sentMessage.numberLabel);
 
             // TODO: fix bug where it crashes if they scroll back and forth a lot
             // OUT OF MEMORY error - it keeps resetting the image

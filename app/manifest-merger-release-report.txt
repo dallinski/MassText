@@ -37,17 +37,16 @@ ADDED from AndroidManifest.xml:10:5
 		ADDED from AndroidManifest.xml:10:22
 application
 ADDED from AndroidManifest.xml:12:5
-MERGED from com.android.support:appcompat-v7:21.0.3:16:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
-MERGED from com.android.support:recyclerview-v7:21.0.3:17:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
-MERGED from com.android.support:cardview-v7:21.0.3:16:5
-MERGED from com.github.satyan:sugar:1.3:11:5
+MERGED from com.android.support:appcompat-v7:22.1.0:22:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
+MERGED from com.android.support:recyclerview-v7:22.1.0:22:5
+MERGED from com.android.support:support-v4:22.1.0:22:5
+MERGED from com.android.support:cardview-v7:22.1.0:22:5
+MERGED from com.github.satyan:sugar:1.3.1:11:5
 MERGED from com.github.navasmdc:MaterialDesign:1.4:11:5
-MERGED from com.android.support:support-v4:21.0.3:16:5
-MERGED from com.getbase:floatingactionbutton:1.6.0:12:5
+MERGED from com.getbase:floatingactionbutton:1.9.0:12:5
 MERGED from com.marvinlabs:android-floatinglabel-widgets:1.5.0:11:5
-MERGED from net.danlew:android.joda:2.7.0:11:5
+MERGED from net.danlew:android.joda:2.7.2:11:5
 MERGED from com.github.gabrielemariotti.changeloglib:library:1.5.2:11:5
 	android:label
 		ADDED from AndroidManifest.xml:17:9
@@ -55,7 +54,6 @@ MERGED from com.github.gabrielemariotti.changeloglib:library:1.5.2:11:5
 		ADDED from AndroidManifest.xml:15:9
 	android:icon
 		ADDED from AndroidManifest.xml:16:9
-		REJECTED from com.github.satyan:sugar:1.3:13:9
 	android:theme
 		ADDED from AndroidManifest.xml:18:9
 	tools:replace
@@ -190,17 +188,16 @@ ADDED from AndroidManifest.xml:100:9
 		ADDED from AndroidManifest.xml:101:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
-MERGED from com.android.support:appcompat-v7:21.0.3:15:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
-MERGED from com.android.support:recyclerview-v7:21.0.3:15:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
-MERGED from com.android.support:cardview-v7:21.0.3:15:5
-MERGED from com.github.satyan:sugar:1.3:7:5
+MERGED from com.android.support:appcompat-v7:22.1.0:20:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
+MERGED from com.android.support:recyclerview-v7:22.1.0:20:5
+MERGED from com.android.support:support-v4:22.1.0:20:5
+MERGED from com.android.support:cardview-v7:22.1.0:20:5
+MERGED from com.github.satyan:sugar:1.3.1:7:5
 MERGED from com.github.navasmdc:MaterialDesign:1.4:7:5
-MERGED from com.android.support:support-v4:21.0.3:15:5
-MERGED from com.getbase:floatingactionbutton:1.6.0:8:5
+MERGED from com.getbase:floatingactionbutton:1.9.0:8:5
 MERGED from com.marvinlabs:android-floatinglabel-widgets:1.5.0:7:5
-MERGED from net.danlew:android.joda:2.7.0:7:5
+MERGED from net.danlew:android.joda:2.7.2:7:5
 MERGED from com.github.gabrielemariotti.changeloglib:library:1.5.2:7:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
@@ -209,8 +206,8 @@ MERGED from com.github.gabrielemariotti.changeloglib:library:1.5.2:7:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 activity#android.support.v7.widget.TestActivity
-ADDED from com.android.support:recyclerview-v7:21.0.3:18:9
+ADDED from com.android.support:recyclerview-v7:22.1.0:23:9
 	android:label
-		ADDED from com.android.support:recyclerview-v7:21.0.3:18:19
+		ADDED from com.android.support:recyclerview-v7:22.1.0:25:13
 	android:name
-		ADDED from com.android.support:recyclerview-v7:21.0.3:18:60
+		ADDED from com.android.support:recyclerview-v7:22.1.0:24:13

@@ -369,13 +369,16 @@ public final class ContactManager extends FragmentActivity {
                 if (mimeType.equals(Phone.CONTENT_ITEM_TYPE)) {
                     // set phone number
                     String before = contact.getContactNumber();
-                    contact.setContactNumber(cur.getString(cur.getColumnIndex(Phone.NUMBER)));
+                    String after = cur.getString(cur.getColumnIndex(Phone.NUMBER));
+                    contact.setContactNumber(after);
+                    contact.setNumberLabel(getPhoneLabel(Long.parseLong(id), after));
                     if (before != null) {
                         Contact other = new Contact();
                         other.setSelected(contact.selected);
                         other.setContactEmail(contact.getContactEmail());
                         other.setContactName(contact.getContactName());
                         other.setContactNumber(before);
+                        other.setNumberLabel(getPhoneLabel(Long.parseLong(id), before));
                         other.setContactPhoto(contact.getContactPhoto());
                         other.setContactPhotoUri(contact.getContactPhotoUri());
                         int count = 1111;
@@ -417,6 +420,57 @@ public final class ContactManager extends FragmentActivity {
         groupAdapter = new GroupAdapter(this, R.id.groupList, groups);
         groupAdapter.notifyDataSetChanged();
 
+    }
+
+    private String getPhoneLabel(long contactId, String number) {
+        ContentResolver cr = getContentResolver();
+        Cursor phone_crsr = cr.query(Phone.CONTENT_URI, null, Phone.CONTACT_ID + " = " + contactId, null, null);
+
+        while (phone_crsr.moveToNext()) {
+            String phone_number = phone_crsr.getString(phone_crsr.getColumnIndex(Phone.DATA));
+            if(!phone_number.equals(number)) {
+                continue;
+            }
+            int phone_type = phone_crsr.getInt(phone_crsr.getColumnIndex(Phone.TYPE));
+            switch (phone_type) {
+                case Phone.TYPE_HOME:
+                    phone_crsr.close();
+                    return "Home";
+                case Phone.TYPE_MOBILE:
+                    phone_crsr.close();
+                    return "Mobile";
+                case Phone.TYPE_WORK:
+                    phone_crsr.close();
+                    return "Work";
+                case Phone.TYPE_FAX_WORK:
+                    phone_crsr.close();
+                    return "Fax Work";
+                case Phone.TYPE_FAX_HOME:
+                    phone_crsr.close();
+                    return "Fax Home";
+                case Phone.TYPE_PAGER:
+                    phone_crsr.close();
+                    return "Pager";
+                case Phone.TYPE_OTHER:
+                    phone_crsr.close();
+                    return "Other";
+                case Phone.TYPE_CALLBACK:
+                    phone_crsr.close();
+                    return "Callback";
+                case Phone.TYPE_CAR:
+                    phone_crsr.close();
+                    return "Car";
+                case Phone.TYPE_CUSTOM:
+                    String label = phone_crsr.getString(phone_crsr.getColumnIndex(Phone.LABEL));
+                    phone_crsr.close();
+                    return label;
+                default:
+                    phone_crsr.close();
+                    return "Unknown type";
+            }
+        }
+        phone_crsr.close();
+        return "error";
     }
 
     // Get contact photo URI for contactId
@@ -548,10 +602,10 @@ public final class ContactManager extends FragmentActivity {
                 name.setText(contact.getContactName());
 
                 // set number label
-                if (contact.getContactNumber() == null)
+                if (contact.getNumberLabel() == null)
                     numberLabel.setText("");
                 else
-                    numberLabel.setText("Phone: ");
+                    numberLabel.setText(contact.getNumberLabel() + ": ");
 
                 number.setText(contact.getContactNumber());
 
