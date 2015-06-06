@@ -1,6 +1,7 @@
 package com.dallinc.masstext.models;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class GroupMessage extends SugarRecord<GroupMessage> {
     public String sentAt;
     public String messageBody;
+    @Ignore
     public ArrayList<String> variables;
     public String variable_string;
 

@@ -19,12 +19,12 @@ android {
         applicationId "com.dallinc.masstext"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 10
-        versionName "2.0.5"
+        versionCode 14
+        versionName "2.0.6"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false // minification causes issues with SugarORM table lookups
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

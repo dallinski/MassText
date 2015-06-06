@@ -1,6 +1,7 @@
 package com.dallinc.masstext.models;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 public class Template extends SugarRecord<Template> {
     public String title;
     public String body;
+    @Ignore
     public ArrayList<String> variables;
     public String variable_string;
 
