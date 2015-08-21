@@ -593,7 +593,7 @@ public final class ContactManager extends FragmentActivity {
                 thumb.setImageURI(contact.getContactPhotoUri());
 
                 if (thumb.getDrawable() == null) {
-                    thumb.setBackgroundResource(R.drawable.ic_action_person);
+                    thumb.setBackgroundResource(R.drawable.ic_person_grey_36dp);
                     thumb.setImageResource(R.drawable.image_border);
                 }
 
@@ -721,7 +721,7 @@ public final class ContactManager extends FragmentActivity {
                 ImageView thumb = (ImageView) view.findViewById(R.id.thumb);
                 TextView number = (TextView) view.findViewById(R.id.number);
                 TextView numberLabel = (TextView) view.findViewById(R.id.numberLabel);
-                thumb.setBackgroundResource(R.drawable.ic_action_group);
+                thumb.setBackgroundResource(R.drawable.ic_group_grey_36dp);
                 final CheckBox groupCheckBox = (CheckBox) view.findViewById(R.id.checkBox);
                 name.setText(group.getGroupName());
                 number.setText("" + numContactsInGroup(group));

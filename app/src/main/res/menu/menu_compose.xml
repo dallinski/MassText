@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context="com.dallinc.masstext.messaging.Compose">
 
     <item android:id="@+id/action_select_recipients"
-        android:title="@string/action_insert_variable"
-        android:titleCondensed="@string/action_insert_variable_short"
+        android:title="@string/action_select_recipients"
+        android:titleCondensed="Select Recipients"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_add_group" />
+        android:icon="@drawable/ic_group_add_white_36dp" />
 </menu>
