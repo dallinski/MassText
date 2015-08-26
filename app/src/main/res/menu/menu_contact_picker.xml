@@ -9,7 +9,7 @@
         android:titleCondensed="@string/action_toggle_views_short"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/flip_group_white" />
+        android:icon="@drawable/ic_flip_group_white_36p" />
 
     <item
         android:id="@+id/action_select_all"
@@ -22,5 +22,5 @@
         android:title="@string/action_save"
         android:orderInCategory="102"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_save" />
+        android:icon="@drawable/ic_done_white_36dp" />
 </menu>

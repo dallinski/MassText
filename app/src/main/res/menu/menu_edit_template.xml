@@ -8,11 +8,11 @@
         android:titleCondensed="@string/action_insert_variable_short"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_new_label" />
+        android:icon="@drawable/ic_tag_multiple_white_36dp" />
 
     <item android:id="@+id/action_save"
         android:title="@string/action_save"
         android:orderInCategory="101"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_save" />
+        android:icon="@drawable/ic_done_white_36dp" />
 </menu>

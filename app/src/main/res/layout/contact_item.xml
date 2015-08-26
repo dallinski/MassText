@@ -13,7 +13,7 @@
         android:layout_marginLeft="5dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_action_person"
+        android:background="@drawable/ic_person_grey_36dp"
         android:src="@drawable/image_border"
         android:contentDescription="@string/contact_image_label" />
 
