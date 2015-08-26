@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion versionName="2.0.7" changeDate="August 25, 2015">
+        <changelogtext>Update to Material Design icons</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="2.0.6" changeDate="June 6, 2015">
         <changelogtext>Database bug fixes</changelogtext>
     </changelogversion>
