@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/white"
-            fab:fab_title="Quick Compose"
+            fab:fab_title="@string/action_quick_compose"
             fab:fab_icon="@drawable/ic_edit_grey_36dp"
             fab:fab_colorPressed="@color/white_pressed"/>
 
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/white"
-            fab:fab_title="Use Template"
+            fab:fab_title="@string/action_use_template"
             fab:fab_icon="@drawable/ic_template_grey_36dp"
             fab:fab_colorPressed="@color/white_pressed"/>
 

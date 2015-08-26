@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.R;
 
 /**
  * Created by dallin on 2/16/15.
@@ -25,7 +26,7 @@ public class DayOfWeekPickerFragment extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Set Day of Week");
+        builder.setTitle(R.string.title_set_day_of_week);
 
         builder.setItems(Constants.DAYS_OF_THE_WEEK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int n) {
@@ -36,7 +37,7 @@ public class DayOfWeekPickerFragment extends DialogFragment {
                 return;
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

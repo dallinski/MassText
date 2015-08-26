@@ -435,38 +435,38 @@ public final class ContactManager extends FragmentActivity {
             switch (phone_type) {
                 case Phone.TYPE_HOME:
                     phone_crsr.close();
-                    return "Home";
+                    return getString(R.string.home);
                 case Phone.TYPE_MOBILE:
                     phone_crsr.close();
-                    return "Mobile";
+                    return getString(R.string.mobile);
                 case Phone.TYPE_WORK:
                     phone_crsr.close();
-                    return "Work";
+                    return getString(R.string.work);
                 case Phone.TYPE_FAX_WORK:
                     phone_crsr.close();
-                    return "Fax Work";
+                    return getString(R.string.fax_work);
                 case Phone.TYPE_FAX_HOME:
                     phone_crsr.close();
-                    return "Fax Home";
+                    return getString(R.string.fax_home);
                 case Phone.TYPE_PAGER:
                     phone_crsr.close();
-                    return "Pager";
+                    return getString(R.string.pager);
                 case Phone.TYPE_OTHER:
                     phone_crsr.close();
-                    return "Other";
+                    return getString(R.string.other);
                 case Phone.TYPE_CALLBACK:
                     phone_crsr.close();
-                    return "Callback";
+                    return getString(R.string.callback);
                 case Phone.TYPE_CAR:
                     phone_crsr.close();
-                    return "Car";
+                    return getString(R.string.car);
                 case Phone.TYPE_CUSTOM:
                     String label = phone_crsr.getString(phone_crsr.getColumnIndex(Phone.LABEL));
                     phone_crsr.close();
                     return label;
                 default:
                     phone_crsr.close();
-                    return "Unknown type";
+                    return getString(R.string.unknown_type);
             }
         }
         phone_crsr.close();
@@ -725,7 +725,7 @@ public final class ContactManager extends FragmentActivity {
                 final CheckBox groupCheckBox = (CheckBox) view.findViewById(R.id.checkBox);
                 name.setText(group.getGroupName());
                 number.setText("" + numContactsInGroup(group));
-                numberLabel.setText("# of contacts:");
+                numberLabel.setText(getString(R.string.num_of_contacts));
 
                 groupCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override

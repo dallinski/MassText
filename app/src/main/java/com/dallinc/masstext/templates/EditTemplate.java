@@ -134,12 +134,12 @@ public class EditTemplate extends ActionBarActivity {
         FloatingLabelEditText body = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
         String title_text = title.getInputWidgetText().toString();
         if(title_text.length() < 1) {
-            Toast.makeText(getBaseContext(), "You cannot save without a title.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.cant_save_without_title, Toast.LENGTH_SHORT).show();
             return false;
         }
         String body_text = body.getInputWidgetText().toString();
         if(body_text.length() < 1) {
-            Toast.makeText(getBaseContext(), "You cannot save without body text.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.cant_save_without_body, Toast.LENGTH_SHORT).show();
             return false;
         }
         if(existingTemplate != null) {
@@ -222,7 +222,7 @@ public class EditTemplate extends ActionBarActivity {
 
     private void selectVariable(final Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Insert Variable");
+        builder.setTitle(R.string.title_insert_variable);
 
         builder.setItems(Constants.VARIABLE_OPTIONS, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialogInterface, int n) {
@@ -239,32 +239,32 @@ public class EditTemplate extends ActionBarActivity {
 
     private void inputCustomVariable(final Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Insert Variable");
+        builder.setTitle(R.string.title_insert_variable);
         final FloatingLabelEditText customVariable = new FloatingLabelEditText(this);
-        customVariable.setLabelText("Custom Variable");
+        customVariable.setLabelText(R.string.custom_variable);
         customVariable.setLabelColor(getResources().getColor(R.color.colorPrimaryDark));
         customVariable.setLabelTextSize(18);
         customVariable.setInputWidgetTextSize(18);
         customVariable.setPadding(35, 0, 35, 0);
         builder.setView(customVariable);
 
-        builder.setPositiveButton("Insert", new DialogInterface.OnClickListener(){
+        builder.setPositiveButton(R.string.action_insert, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialogInterface, int n) {
                 if (customVariable.getInputWidgetText().toString().length() < 1) {
                     // This should never happen
-                    Toast.makeText(context, "You didn't write a variable name!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.didnt_write_var_name, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String var_text = customVariable.getInputWidgetText().toString().replaceAll("[^a-zA-Z0-9 ]","");
                 if(Constants.contains(Constants.VARIABLE_OPTIONS, var_text)) {
-                    Toast.makeText(context, "Input variable cannot be defined as a custom variable", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.cant_be_define_as_custom_var, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 insertVariable(var_text);
                 return;
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialogInterface, int n) {
                 dialogInterface.dismiss();
             }

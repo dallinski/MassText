@@ -13,6 +13,7 @@ import android.telephony.SmsManager;
 //import android.util.Log;
 
 import com.dallinc.masstext.helpers.Constants;
+import com.dallinc.masstext.R;
 import com.dallinc.masstext.models.SingleMessage;
 
 import java.util.ArrayList;
@@ -98,16 +99,16 @@ public class SendSMS extends IntentService {
                         singleMessage.clearFailureMessage();
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        singleMessage.fail("Error - Generic failure");
+                        singleMessage.fail(getString(R.string.error_generic_failure));
                         break;
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        singleMessage.fail("Error - No Service");
+                        singleMessage.fail(getString(R.string.error_no_service));
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
-                        singleMessage.fail("Error - Null PDU");
+                        singleMessage.fail(getString(R.string.error_null_pdu));
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        singleMessage.fail("Error - Radio off");
+                        singleMessage.fail(getString(R.string.error_radio_off));
                         break;
                 }
 

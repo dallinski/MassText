@@ -143,9 +143,9 @@ public class TemplatesFragment extends Fragment {
                 @Override
                 public boolean onLongClick(View v) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(TemplateViewHolder.itemView.getContext());
-                    builder.setTitle("Delete Template?");
-                    builder.setMessage("Do you want to delete the template \"" + template.title + "\"?");
-                    builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    builder.setTitle(R.string.delete_template);
+                    builder.setMessage(getString(R.string.want_to_delete_template) + " \"" + template.title + "\"?");
+                    builder.setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             template.delete();
@@ -154,7 +154,7 @@ public class TemplatesFragment extends Fragment {
                             dialog.dismiss();
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

@@ -28,7 +28,7 @@ public class DialogMaterialFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.change_log_title)
                 .setView(chgList)
-                .setPositiveButton(R.string.ok,
+                .setPositiveButton(R.string.action_close,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
