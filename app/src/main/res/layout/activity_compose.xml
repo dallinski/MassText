@@ -19,7 +19,7 @@
             android:id="@+id/composeTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To:"
+            android:text="@string/to_label"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <com.dallinc.masstext.helpers.ScrollViewWithMaxHeight
@@ -57,7 +57,7 @@
             android:paddingBottom="@dimen/activity_horizontal_margin"
             android:inputType="textMultiLine|textCapSentences"
             app:flw_labelTextColor="@color/colorPrimaryDark"
-            app:flw_labelText="Message"
+            app:flw_labelText="@string/title_message_body"
             app:flw_labelTextSize="18sp"
             app:flw_inputWidgetTextSize="20sp" />
 

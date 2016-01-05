@@ -20,7 +20,7 @@
         app:flw_labelTextColor="@color/colorPrimaryDark"
         app:flw_labelTextSize="18sp"
         app:flw_inputWidgetTextSize="26sp"
-        app:flw_labelText="Title" />
+        app:flw_labelText="@string/title_template_title" />
 
     <ScrollView
         android:id="@+id/bodyInputScrollView"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine|textCapSentences"
             app:flw_labelTextColor="@color/colorPrimaryDark"
-            app:flw_labelText="Body"
+            app:flw_labelText="@string/title_temple_body"
             app:flw_labelTextSize="18sp"
             app:flw_inputWidgetTextSize="20sp" />
     </ScrollView>

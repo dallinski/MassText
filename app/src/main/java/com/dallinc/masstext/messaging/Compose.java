@@ -138,10 +138,10 @@ public class Compose extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(editText.getInputWidgetText().toString().length() < 1) {
-                    Toast.makeText(getBaseContext(), "You cannot send an empty message", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.cant_send_empty_msg, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (contactsSharePhone.size() < 1) {
-                    Toast.makeText(getBaseContext(), "You must specify at least one recipient", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.must_specify_recipient, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

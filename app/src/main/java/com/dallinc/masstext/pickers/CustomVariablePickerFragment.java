@@ -32,7 +32,7 @@ public class CustomVariablePickerFragment extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Set Custom Variable");
+        builder.setTitle(R.string.title_set_custom_variable);
 
         final FloatingLabelEditText editText = new FloatingLabelEditText(getActivity());
         editText.getInputWidget().setSingleLine();
@@ -50,7 +50,7 @@ public class CustomVariablePickerFragment extends DialogFragment {
         layout.addView(editText);
 
         builder.setView(layout);
-        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.action_set, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if( mDialogResult != null ){
@@ -58,13 +58,13 @@ public class CustomVariablePickerFragment extends DialogFragment {
                     if(inputVariable.length() > 0) {
                         mDialogResult.finish(inputVariable);
                     } else {
-                        Toast.makeText(getActivity(), "Variable value not set", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.variable_not_set, Toast.LENGTH_SHORT).show();
                     }
                 }
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

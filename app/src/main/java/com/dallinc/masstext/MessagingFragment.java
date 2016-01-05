@@ -113,10 +113,10 @@ public class MessagingFragment extends Fragment {
             public void onClick(View v) {
                 composeButton.collapse();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
-                builder.setTitle("Select Template");
+                builder.setTitle(R.string.title_select_template);
                 List<Template> _templates = Template.listAll(Template.class);
                 if(_templates.size() < 1) {
-                    Toast.makeText(rootView.getContext(), "You do not have any templates saved!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(rootView.getContext(), R.string.no_saved_templates, Toast.LENGTH_LONG).show();
                     return;
                 }
                 final Template[] templates = _templates.toArray(new Template[_templates.size()]);
@@ -212,9 +212,9 @@ public class MessagingFragment extends Fragment {
                 @Override
                 public boolean onLongClick(View v) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(GroupMessageViewHolder.itemView.getContext());
-                    builder.setTitle("Delete Message?");
-                    builder.setMessage("Do you want to delete this message from the list?");
-                    builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    builder.setTitle(R.string.delete_message);
+                    builder.setMessage(R.string.delete_message_from_list);
+                    builder.setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             sentMessage.delete();
@@ -223,7 +223,7 @@ public class MessagingFragment extends Fragment {
                             dialog.dismiss();
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

@@ -64,7 +64,7 @@ public class SentMessageDetails extends ActionBarActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle == null) {
-            Toast.makeText(getBaseContext(), "Unexpected error. No message details found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.no_message_details, Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -88,10 +88,10 @@ public class SentMessageDetails extends ActionBarActivity {
                 long id = intent.getLongExtra(Constants.EXTRA_MESSAGE_ID, -1);
                 int delay = intent.getIntExtra(Constants.EXTRA_DELAY_MILLIS, 0);
                 if(result.equals("success")) {
-                    Toast.makeText(getBaseContext(), "Successfully sent message!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.successfully_sent, Toast.LENGTH_SHORT).show();
                 } else if(result.equals("failure") && delay >= 60000) {
                     // Only show the toast for the last failure (because there might be a ton)
-                    Toast.makeText(getBaseContext(), "Delivery attempt: " + result, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.delivery_attempt + " " + result, Toast.LENGTH_SHORT).show();
                 }
                 adapter.updateSingleMessage(id);
             }
@@ -203,15 +203,15 @@ public class SentMessageDetails extends ActionBarActivity {
                 @Override
                 public void onClick(final View v) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle("Resend Message");
-                    builder.setMessage("Would you like to resend this message to " + sentMessage.contactName + "?");
-                    builder.setPositiveButton("Resend", new DialogInterface.OnClickListener() {
+                    builder.setTitle(R.string.title_resend_message);
+                    builder.setMessage(getString(R.string.action_resend_message) + " " + sentMessage.contactName + "?");
+                    builder.setPositiveButton(R.string.action_resend, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogInterface, int n) {
                             sentMessage.sendMessage(v.getContext(), 1);
                             dialogInterface.dismiss();
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                    builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialogInterface, int n) {
                             dialogInterface.dismiss();
                         }
@@ -224,10 +224,10 @@ public class SentMessageDetails extends ActionBarActivity {
             TextView sentAtLabel = (TextView) rowView.findViewById(R.id.singleMessageSentAt);
             if(sentMessage.successfullySentAt == null) {
                 if(sentMessage.failureMessage != null) {
-                    sentAtLabel.setText(sentMessage.deliveryAttempts + " failed attempts");
+                    sentAtLabel.setText(sentMessage.deliveryAttempts + " " + getString(R.string.failed_attempts));
                     sentAtLabel.setTextColor(Color.RED);
                 } else {
-                    sentAtLabel.setText("Pending delivery");
+                    sentAtLabel.setText(R.string.pending_delivery);
                 }
 
             } else {
