@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_settings">Paramètres</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">Général</string>
+
+    <string name="pref_title_social_recommendations">Activer les recommandations sociales</string>
+    <string name="pref_description_social_recommendations">Recommendations sur les personnes à contacter, à partir de l\'historique de vos messages</string>
+
+    <string name="pref_title_display_name">Nom à afficher</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Ajouter des amis aux messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Toujours</item>
+        <item>Si possible</item>
+        <item>Jamais</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Données &amp; synchro</string>
+
+    <string name="pref_title_sync_frequency">Fréquence de synchro</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 heure</item>
+        <item>3 heures</item>
+        <item>6 heures</item>
+        <item>Jamais</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">Paramètres de synchro système</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">Notifications de nouveau message</string>
+
+    <string name="pref_title_ringtone">Sonnerie</string>
+    <string name="pref_ringtone_silent">Silencieux</string>
+
+    <string name="pref_title_vibrate">Vibreur</string>
+</resources>

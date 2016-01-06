@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion versionName="2.0.8" changeDate="January 5, 2016">
+        <changelogtext>Spanish and French translations</changelogtext>
+        <changelogtext>Special thanks to [a href="https://github.com/toehead2001"]toehead2001[/a] and [a href="https://play.google.com/store/apps/developer?id=Vincent+Grieu"]Vincent Grieu[/a] for their help</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="2.0.7" changeDate="August 25, 2015">
         <changelogtext>Update to Material Design icons</changelogtext>
     </changelogversion>
