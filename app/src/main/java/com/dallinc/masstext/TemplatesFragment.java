@@ -25,6 +25,7 @@ import com.dallinc.masstext.models.Template;
 import com.dallinc.masstext.templates.EditTemplate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -189,21 +190,63 @@ public class TemplatesFragment extends Fragment {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
             boolean hasSeenExample = prefs.getBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, false);
             if(!hasSeenExample) {
-                Template example1 = Constants.getExample1();
+                Template example1 = getExample1();
                 example1.save();
                 objects.add(example1);
-                Template example2 = Constants.getExample2();
+                Template example2 = getExample2();
                 example2.save();
                 objects.add(example2);
-                Template example3 = Constants.getExample3();
+                Template example3 = getExample3();
                 example3.save();
                 objects.add(example3);
-                Template example4 = Constants.getExample4();
+                Template example4 = getExample4();
                 example4.save();
                 objects.add(example4);
                 prefs.edit().putBoolean(Constants.HAS_SEEN_EXAMPLE_TEMPLATE, true).commit();
                 notifyDataSetChanged();
             }
         }
+    }
+
+    public final String EXAMPLE_TEMPLATE_1_TITLE = "Template Instructions";
+    public final String EXAMPLE_TEMPLATE_1_BODY = "Templates are really useful, but only if you know how to use them to their fullest.\n\nTemplates are mostly useful when you are sending the same basic message every day/week/month/etc.\n\nTemplates are saved so that you don't have to type up a new message each time.";
+    public final ArrayList<String> EXAMPLE_TEMPLATE_1_VARIABLES() {
+        return new ArrayList<String>();
+    }
+    public final Template getExample1() {
+        return new Template(EXAMPLE_TEMPLATE_1_TITLE, EXAMPLE_TEMPLATE_1_BODY, EXAMPLE_TEMPLATE_1_VARIABLES());
+    }
+    public final String EXAMPLE_TEMPLATE_2_TITLE = "How to use variables 1";
+    public final String EXAMPLE_TEMPLATE_2_BODY = "When you are editing a template (and your cursor is in the body field), a button will appear in the top right portion of the screen next to the save button.\n\nThat button is used to insert variables.\n\nPlace your cursor where you would like a variable, then hit the button and select a variable.\n\nVariables look like this (¬) once inserted.";
+    public final ArrayList<String> EXAMPLE_TEMPLATE_2_VARIABLES() {
+        ArrayList<String> vars = new ArrayList<String>();
+        vars.add(getString(R.string.var_date));
+        return vars;
+    }
+    public final Template getExample2() {
+        return new Template(EXAMPLE_TEMPLATE_2_TITLE, EXAMPLE_TEMPLATE_2_BODY, EXAMPLE_TEMPLATE_2_VARIABLES());
+    }
+    public final String EXAMPLE_TEMPLATE_3_TITLE = "How to use variables 2";
+    public final String EXAMPLE_TEMPLATE_3_BODY = "You will \"fill in the blank\" when you send a message using that template.\n\nFor example: if I were to send a message using this template, I would be prompted to select a date to go here (¬) before I could send the message.";
+    public final ArrayList<String> EXAMPLE_TEMPLATE_3_VARIABLES() {
+        ArrayList<String> vars = new ArrayList<String>();
+        vars.add(getString(R.string.var_date));
+        return vars;
+    }
+    public final Template getExample3() {
+        return new Template(EXAMPLE_TEMPLATE_3_TITLE, EXAMPLE_TEMPLATE_3_BODY, EXAMPLE_TEMPLATE_3_VARIABLES());
+    }
+    public final String EXAMPLE_TEMPLATE_4_TITLE = "Basketball Group";
+    public final String EXAMPLE_TEMPLATE_4_BODY = "Hey ¬, we're going to be playing basketball on ¬ at ¬. See you there at ¬!";
+    public final ArrayList<String> EXAMPLE_TEMPLATE_4_VARIABLES() {
+        ArrayList<String> vars = new ArrayList<String>();
+        vars.add(getString(R.string.var_first_name));
+        vars.add(getString(R.string.var_day_of_week));
+        vars.add(getString(R.string.var_location));
+        vars.add(getString(R.string.var_time));
+        return vars;
+    }
+    public final Template getExample4() {
+        return new Template(EXAMPLE_TEMPLATE_4_TITLE, EXAMPLE_TEMPLATE_4_BODY, EXAMPLE_TEMPLATE_4_VARIABLES());
     }
 }

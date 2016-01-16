@@ -3,6 +3,7 @@ package com.dallinc.masstext.models;
 import android.content.Context;
 import android.net.Uri;
 
+import com.dallinc.masstext.R;
 import com.dallinc.masstext.messaging.SendSMS;
 import com.orm.SugarRecord;
 
@@ -11,6 +12,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by dallin on 2/7/15.
@@ -70,16 +72,25 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         }
 
         for(String variable : variables) {
-            switch (variable) {
-                case "first name":
+            if (variable.equals(R.string.var_first_name)) {
+                message = message.replaceFirst("¬", parts[0]);
+            }
+            else if (variable.equals(R.string.var_last_name)) {
+                message = message.replaceFirst("¬", parts[parts.length-1]);
+            }
+            else if (variable.equals(R.string.var_full_name)) {
+                message = message.replaceFirst("¬", fullName);
+            }
+            else if (!Locale.getDefault().getLanguage().equals("en")) {
+                if (variable.equals("first name")) {
                     message = message.replaceFirst("¬", parts[0]);
-                    break;
-                case "last name":
+                }
+                else if (variable.equals("last name")) {
                     message = message.replaceFirst("¬", parts[parts.length-1]);
-                    break;
-                case "full name":
+                }
+                else if (variable.equals("full name")) {
                     message = message.replaceFirst("¬", fullName);
-                    break;
+                }
             }
         }
 

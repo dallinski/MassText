@@ -37,6 +37,22 @@ public class EditTemplate extends ActionBarActivity {
     ArrayList<String> variables = new ArrayList<String>();
     Template existingTemplate;
 
+    private final String[] getVariableOptions(Context c) {
+        return new String[] {
+            c.getString(R.string.var_date),
+            c.getString(R.string.var_day_of_week),
+            c.getString(R.string.var_time),
+            c.getString(R.string.var_first_name),
+            c.getString(R.string.var_last_name),
+            c.getString(R.string.var_full_name),
+            c.getString(R.string.var_custom_variable)
+        };
+    }
+
+    private static String[] englishVariableOptions = new String[] {
+        "date", "day of the week", "time", "first name", "last name", "full name", "custom variable"
+    };
+
     int cursor_position = 0;
 
     @Override
@@ -224,13 +240,13 @@ public class EditTemplate extends ActionBarActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_insert_variable);
 
-        builder.setItems(Constants.VARIABLE_OPTIONS, new DialogInterface.OnClickListener(){
+        builder.setItems(getVariableOptions(context), new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialogInterface, int n) {
-                if(Constants.VARIABLE_OPTIONS[n].equals("custom variable")) {
+                if(getVariableOptions(context)[n].equals(context.getString(R.string.var_custom_variable))) {
                     inputCustomVariable(context);
                     return;
                 }
-                insertVariable(Constants.VARIABLE_OPTIONS[n]);
+                insertVariable(getVariableOptions(context)[n]);
                 return;
             }
         });
@@ -256,7 +272,7 @@ public class EditTemplate extends ActionBarActivity {
                     return;
                 }
                 String var_text = customVariable.getInputWidgetText().toString().replaceAll("[^a-zA-Z0-9 ]","");
-                if(Constants.contains(Constants.VARIABLE_OPTIONS, var_text)) {
+                if(Constants.contains(getVariableOptions(context), var_text, englishVariableOptions)) {
                     Toast.makeText(context, R.string.cant_be_define_as_custom_var, Toast.LENGTH_SHORT).show();
                     return;
                 }

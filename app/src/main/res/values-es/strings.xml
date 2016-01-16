@@ -89,7 +89,9 @@
     <string name="var_day_of_week">día de la semana</string>
     <string name="var_first_name">primer nombre 	 </string>
     <string name="var_friday">viernes</string>
+    <string name="var_full_name">nombre completo</string>
     <string name="var_last_name">apellido</string>
+    <string name="var_location">localización</string>
     <string name="var_monday">lunes</string>
     <string name="var_saturday">sábado</string>
     <string name="var_sunday">domingo</string>

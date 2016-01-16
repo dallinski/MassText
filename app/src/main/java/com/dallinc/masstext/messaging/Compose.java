@@ -3,6 +3,7 @@ package com.dallinc.masstext.messaging;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -47,6 +48,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 
 import contactpicker.Contact;
 import contactpicker.ContactManager;
@@ -61,6 +63,14 @@ public class Compose extends ActionBarActivity {
     ArrayList<Contact> contactsShareDetail;
     ArrayList<String> contactsSharePhone;
     ArrayList<String> variables;
+    private final String[] getAutoVariables(Context c) {
+        return new String[]{
+            c.getString(R.string.var_first_name),
+            c.getString(R.string.var_last_name),
+            c.getString(R.string.var_full_name)
+        };
+    }
+    private static String[] englishAutoVariables = new String[] {"first name", "last name", "full name"};
 
     public void sendResult(long id) {
         Intent intent = new Intent(Constants.BROADCAST_SENT_GROUP_MESSAGE);
@@ -191,7 +201,7 @@ public class Compose extends ActionBarActivity {
             if(var.length() == 0) {
                 continue; // I don't know why, but there is sometimes a blank variable
             }
-            if(!Constants.contains(Constants.AUTO_VARIABLES, var)) {
+            if(!Constants.contains(getAutoVariables(getBaseContext()), var, englishAutoVariables)) {
                 return true;
             }
         }
@@ -200,20 +210,37 @@ public class Compose extends ActionBarActivity {
 
     private void fillInVariables() {
         for(String var : variables) {
-            if(!Constants.contains(Constants.AUTO_VARIABLES, var)) {
-                switch (var) {
-                    case "time":
-                        showTimePickerDialog();
-                        return;
-                    case "date":
-                        showDatePickerDialog();
-                        return;
-                    case "day of the week":
-                        showDayOfTheWeekPickerDialog();
-                        return;
-                    default:
-                        showCustomVariablePickerDialog(var);
-                        return;
+            if(!Constants.contains(getAutoVariables(getBaseContext()), var, englishAutoVariables)) {
+                if (var.equals(getString(R.string.var_time))) {
+                    showTimePickerDialog();
+                    return;
+                }
+                else if (var.equals(getString(R.string.var_date))) {
+                    showDatePickerDialog();
+                    return;
+                }
+                else if (var.equals(getString(R.string.var_day_of_week))) {
+                    showDayOfTheWeekPickerDialog();
+                    return;
+                }
+                else {
+                    if (!Locale.getDefault().getLanguage().equals("en"))
+                    {
+                        if (var.equals("time")) {
+                            showTimePickerDialog();
+                            return;
+                        }
+                        else if (var.equals("date")) {
+                            showDatePickerDialog();
+                            return;
+                        }
+                        else if (var.equals("day of the week")) {
+                            showDayOfTheWeekPickerDialog();
+                            return;
+                        }
+                    }
+                    showCustomVariablePickerDialog(var);
+                    return;
                 }
             }
         }
@@ -222,7 +249,7 @@ public class Compose extends ActionBarActivity {
     private void replaceVariable(String replacement) {
         final FloatingLabelEditText editText = (FloatingLabelEditText) findViewById(R.id.composeBody);
         for(int i=0; i<variables.size(); i++) {
-            if(!Constants.contains(Constants.AUTO_VARIABLES, variables.get(i))) {
+            if(!Constants.contains(getAutoVariables(getBaseContext()), variables.get(i), englishAutoVariables)) {
                 String original = editText.getInputWidgetText().toString();
                 int var_pos = nthOccurrence(original, '¬', i);
                 Editable widgetText = editText.getInputWidgetText();

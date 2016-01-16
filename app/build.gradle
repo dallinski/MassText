@@ -19,7 +19,7 @@ android {
         applicationId "com.dallinc.masstext"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 16
+        versionCode 17
         versionName "2.0.8"
     }
     buildTypes {

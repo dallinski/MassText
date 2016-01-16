@@ -9,7 +9,7 @@
     <string name="action_send_new_to_all">Envoyer un nouveau messages à tous les destinataires</string>
     <string name="action_send_this_message_to_others">Envoyer ce message aux autres destinataires</string>
     <string name="action_settings">Paramètres</string>
-    <string name="action_show_change_log">Montrer le change log</string>
+    <string name="action_show_change_log">Liste des mises à jour</string>
     <string name="action_toggle_views">Activer/Désactiver la vue de groupe</string>
     <string name="action_toggle_views_short">Activer/Désactiver</string>
     <string name="app_name">Mass Text</string>
@@ -42,7 +42,7 @@
     <string name="action_close">Fermer</string>
     <string name="action_delete">Supprimer</string>
     <string name="action_insert">Insérer</string>
-    <string name="action_quick_compose">Compose rapide</string>
+    <string name="action_quick_compose">Nouveau message </string>
     <string name="action_resend">Renvoyez</string>
     <string name="action_resend_message">Voulez-vous de renvoyer ce message</string>
     <string name="action_set">Fixer</string>
@@ -90,12 +90,14 @@
     <string name="var_day_of_week">jour de la semaine</string>
     <string name="var_first_name">prénom</string>
     <string name="var_friday">vendredi</string>
-    <string name="var_last_name">le nom</string>
+    <string name="var_full_name">nom complet</string>
+    <string name="var_last_name">nom</string>
+    <string name="var_location">emplacement</string>
     <string name="var_monday">lundi</string>
     <string name="var_saturday">samedi</string>
     <string name="var_sunday">dimanche</string>
     <string name="var_thursday">jeudi</string>
-    <string name="var_time">temps</string>
+    <string name="var_time">heure</string>
     <string name="var_tuesday">mardi</string>
     <string name="var_wednesday">mercredi</string>
     <string name="variable_not_set">Valeur de la variable non établie</string>
