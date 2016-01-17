@@ -48,15 +48,15 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         SendSMS.startActionSendSMS(context, this.getId(), delay);
     }
 
-    public String individualizedMessage() {
+    public String individualizedMessage(Context c) {
         groupMessage.buildArrayListFromString();
         if(groupMessage.variables.size() > 0) {
-            return replaceNameVariables(groupMessage.messageBody, groupMessage.variables);
+            return replaceNameVariables(groupMessage.messageBody, groupMessage.variables, c);
         }
         return groupMessage.messageBody;
     }
 
-    private String replaceNameVariables(String message, ArrayList<String> variables) {
+    private String replaceNameVariables(String message, ArrayList<String> variables, Context c) {
         String fullName;
         String[] parts;
         if(contactName == null) {
@@ -72,13 +72,13 @@ public class SingleMessage extends SugarRecord<SingleMessage> {
         }
 
         for(String variable : variables) {
-            if (variable.equals(R.string.var_first_name)) {
+            if (variable.equals(c.getString(R.string.var_first_name))) {
                 message = message.replaceFirst("¬", parts[0]);
             }
-            else if (variable.equals(R.string.var_last_name)) {
+            else if (variable.equals(c.getString(R.string.var_last_name))) {
                 message = message.replaceFirst("¬", parts[parts.length-1]);
             }
-            else if (variable.equals(R.string.var_full_name)) {
+            else if (variable.equals(c.getString(R.string.var_full_name))) {
                 message = message.replaceFirst("¬", fullName);
             }
             else if (!Locale.getDefault().getLanguage().equals("en")) {

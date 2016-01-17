@@ -85,7 +85,7 @@ public class SendSMS extends IntentService {
 
     private void sendLongSmsMessage4(Context context, final SingleMessage singleMessage, final int delay) {
         SmsManager smsManager = SmsManager.getDefault();
-        final ArrayList<String> messageParts = smsManager.divideMessage(singleMessage.individualizedMessage());
+        final ArrayList<String> messageParts = smsManager.divideMessage(singleMessage.individualizedMessage(context));
         ArrayList<PendingIntent> pendingIntents = new ArrayList<PendingIntent>(messageParts.size());
 
         // Receive when each part of the SMS has been sent
