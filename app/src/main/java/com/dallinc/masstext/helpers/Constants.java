@@ -8,6 +8,7 @@ import java.util.Locale;
 public abstract class Constants {
     public static final int MESSAGING_FRAGMENT_POS = 0;
     public static final int TEMPLATES_FRAGMENT_POS = 1;
+    public static final int MAX_MILLIS_BEFORE_FAILURE = 45000; // retry sending until the delay is greater than 45 seconds
 
     public static final String SENT = "SMS_SENT";
     public static final String ACTION_SEND_SMS = "com.dallinc.masstexter.action.SEND_SMS";

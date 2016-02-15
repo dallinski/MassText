@@ -117,11 +117,20 @@ public class SentMessageDetails extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//        if (id == R.id.action_resend_to_all) {
-//            return true;
-//        } else if (id == R.id.action_resend_to_failed) {
-//            return true;
-//        } else if (id == R.id.action_send_new_to_all) {
+        if (id == R.id.action_resend_to_all) {
+            for (SingleMessage message : singleMessages) {
+                message.sendMessage(getBaseContext(), 1);
+            }
+            return true;
+        } else if (id == R.id.action_resend_to_failed) {
+            for (SingleMessage message : singleMessages) {
+                if (message.isFailed()) {
+                    message.sendMessage(getBaseContext(), 1);
+                }
+            }
+            return true;
+        }
+//        else if (id == R.id.action_send_new_to_all) {
 //            return true;
 //        } else if (id == R.id.action_send_this_message_to_others) {
 //            return true;

@@ -121,7 +121,7 @@ public class SendSMS extends IntentService {
                     if (singleMessage.isFailed()) {
 //                        Log.d("SendSMS", "SMS Failure for message id: " + singleMessage.getId());
                         sendResult(singleMessage.getId(), "failure", delay);
-                        if(delay < 60000) { // retry sending until the delay is greater than a minute
+                        if(delay < Constants.MAX_MILLIS_BEFORE_FAILURE) { // retry sending until the delay is greater than the specified max
                             SystemClock.sleep(500 + delay);
                             int newDelay = 2 * delay; // double the length of the delay each failure
                             singleMessage.sendMessage(context, newDelay);
