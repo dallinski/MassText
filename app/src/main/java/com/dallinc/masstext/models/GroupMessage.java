@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by dallin on 2/7/15.
  */
-public class GroupMessage extends SugarRecord<GroupMessage> {
+public class GroupMessage extends SugarRecord {
     public String sentAt;
     public String messageBody;
     @Ignore
@@ -50,8 +50,8 @@ public class GroupMessage extends SugarRecord<GroupMessage> {
     }
 
     @Override
-    public void save() {
+    public long save() {
         saveVariablesAsJson();
-        super.save();
+        return super.save();
     }
 }

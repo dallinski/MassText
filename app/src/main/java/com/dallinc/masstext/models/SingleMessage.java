@@ -17,7 +17,7 @@ import java.util.Locale;
 /**
  * Created by dallin on 2/7/15.
  */
-public class SingleMessage extends SugarRecord<SingleMessage> {
+public class SingleMessage extends SugarRecord {
     public String phoneNumber;
     public int deliveryAttempts;
     public String successfullySentAt;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by dallin on 1/31/15.
  */
-public class Template extends SugarRecord<Template> {
+public class Template extends SugarRecord {
     public String title;
     public String body;
     @Ignore
@@ -43,8 +43,8 @@ public class Template extends SugarRecord<Template> {
     }
 
     @Override
-    public void save() {
+    public long save() {
         saveVariablesAsJson();
-        super.save();
+        return super.save();
     }
 }
