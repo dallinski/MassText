@@ -33,6 +33,11 @@
             android:textSize="12sp"
             android:layout_below="@id/templateCardTitle"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="3dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:singleLine="false"
             />
 
         <TextView
@@ -47,8 +52,8 @@
 
         <ImageView
             android:id="@+id/recipientIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

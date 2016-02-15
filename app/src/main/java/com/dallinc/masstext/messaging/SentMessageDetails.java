@@ -19,6 +19,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 //import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.QuickContactBadge;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +78,9 @@ public class SentMessageDetails extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.messageRecipientsListView);
         final MessageListAdapter adapter = new MessageListAdapter(getBaseContext(), singleMessages);
         listView.setAdapter(adapter);
+        LayoutParams lp = (LayoutParams) listView.getLayoutParams();
+        lp.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55 * adapter.getCount(), getResources().getDisplayMetrics());
+        listView.setLayoutParams(lp);
 
         groupMessage.buildArrayListFromString();
         title.setText(groupMessage.sentAt);
