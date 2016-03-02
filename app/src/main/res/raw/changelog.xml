@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion versionName="2.1.0" changeDate="March 2, 2016">
+        <changelogtext>Russian translation</changelogtext>
+        <changelogtext>Special thanks to Leonid Rosin for his help</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="2.0.9" changeDate="February 15, 2016">
         <changelogtext>Layout improvements (for long messages)</changelogtext>
         <changelogtext>Ability to resend a message to all recipients or just failed recipients</changelogtext>
