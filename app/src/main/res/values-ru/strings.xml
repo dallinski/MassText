@@ -6,7 +6,7 @@
     <string name="action_donate">Пожертвовать</string>
     <string name="action_insert">Вставить</string>
     <string name="action_insert_variable">Вставить переменную</string>
-    <string name="action_quick_compose">Quick Compose</string>
+    <string name="action_quick_compose">Быстрое создание</string>
     <string name="action_resend">Повторно</string>
     <string name="action_resend_message">Вы хотите повторно отправить это сообщение</string>
     <string name="action_resend_to_all">Повторная отправка этого сообщение всем</string>
@@ -38,7 +38,7 @@
     <string name="delete_template">Удалить шаблон?</string>
     <string name="delivery_attempt">Попытка доставки:</string>
     <string name="didnt_write_var_name">Вы не написали имя переменной!</string>
-    <string name="donate_explanation">Создабать приложения не легко и не быстро, но мне это нравится. Первоначально я сделал Mass Text по необходимости - мне нужно было приложение для отправки персонализированных рассылок, но я не нашёл в Play Store хорошо работающего приложения. Я подумал, что это приложение может оказаться полезным для некоторых людей, но я не ожидал, что так много людей будет загрузить его и просить новые возможности. Я не хочу помещать рекламу везде, но я хотел бы получить некоторую прибыль от этого приложения. Вместо того чтобы сделать приложение менее полезным или более раздражающим или вводить некоторые премиум функции, я просто прошу вас заплатить столько, сколько вы думаете, что приложение стоит вам. Если это приложение помогло вам или сохранило ваше время - пожалуйста сделайте пожертвование.</string>
+    <string name="donate_explanation">Создавать приложения не легко и не быстро, но мне это нравится.\nПервоначально я сделал Mass Text по необходимости - мне нужно было приложение для отправки персонализированных рассылок, но я не нашёл в Play Store хорошо работающего приложения. Я подумал, что это приложение может оказаться полезным для некоторых людей, но я не ожидал, что так много людей будет загрузить его и просить новые возможности.\nЯ не хочу помещать рекламу везде, но хотел бы получить некоторую прибыль от этого приложения. Вместо того чтобы сделать приложение менее полезным или более раздражающим или вводить некоторые премиум функции, я просто прошу вас заплатить столько, сколько вам хочется.\n\nЕсли это приложение помогло вам или сохранило ваше время - пожалуйста сделайте пожертвование.</string>
     <string name="error_generic_failure">Error - Generic failure</string>
     <string name="error_no_service">Error - No Service</string>
     <string name="error_null_pdu">Error - Null PDU</string>
@@ -73,7 +73,7 @@
     <string name="title_insert_variable">Вставить переменную</string>
     <string name="title_message_body">Сообщение</string>
     <string name="title_resend_message">Повторить сообщение</string>
-    <string name="title_section1">Messaging</string>
+    <string name="title_section1">Сообщения</string>
     <string name="title_section2">Шаблоны</string>
     <string name="title_section3">Об</string>
     <string name="title_select_template">Выбрать шаблон</string>
@@ -93,14 +93,14 @@
     <string name="var_last_name">фамилия</string>
     <string name="var_location">местоположение</string>
     <string name="var_monday">понедельник</string>
-    <string name="var_saturday">Saturday</string>
-    <string name="var_sunday">суббота</string>
+    <string name="var_saturday">суббота</string>
+    <string name="var_sunday">воскресенье</string>
     <string name="var_thursday">четверг</string>
     <string name="var_time">время</string>
     <string name="var_tuesday">вторник</string>
     <string name="var_wednesday">среда</string>
     <string name="variable_not_set">Значение переменной не установлено</string>
-    <string name="want_to_delete_template">Вы хотите удалить шаблон?</string>
+    <string name="want_to_delete_template">Вы хотите удалить шаблон</string>
     <string name="work">Работа</string>
     <string name="ok">ОК</string>
 </resources>
