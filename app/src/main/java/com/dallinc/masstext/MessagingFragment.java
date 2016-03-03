@@ -233,7 +233,7 @@ public class MessagingFragment extends Fragment {
                     return false;
                 }
             });
-            Long totalRecipients = SingleMessage.count(SingleMessage.class, "group_message = ?", new String[]{Long.toString(sentMessage.getId())});
+            long totalRecipients = SingleMessage.count(SingleMessage.class, "group_message = ?", new String[]{Long.toString(sentMessage.getId())});
             GroupMessageViewHolder.vRecipientCount.setText(Long.toString(totalRecipients));
         }
 
