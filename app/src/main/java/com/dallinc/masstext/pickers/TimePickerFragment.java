@@ -12,10 +12,11 @@ import org.joda.time.LocalTime;
  */
 public class TimePickerFragment extends DialogFragment {
     private TimePickerDialog.OnTimeSetListener onTimeSetListener;
+    private boolean is24HourFormat = false;
 
-    public static TimePickerFragment withCustomListener(TimePickerDialog.OnTimeSetListener onTimeSetListener) {
+    public static TimePickerFragment withCustomListener(TimePickerDialog.OnTimeSetListener onTimeSetListener, boolean is24HourFormat) {
         TimePickerFragment pickerFragment = new TimePickerFragment();
-        pickerFragment.setOnTimeSetListener(onTimeSetListener);
+        pickerFragment.setOnTimeSetListener(onTimeSetListener, is24HourFormat);
         return pickerFragment;
     }
 
@@ -23,11 +24,16 @@ public class TimePickerFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LocalTime localTime = LocalTime.now();
-        TimePickerDialog dialog = new TimePickerDialog(getActivity(), onTimeSetListener, localTime.getHourOfDay(), localTime.getMinuteOfHour(), false);
+        TimePickerDialog dialog = new TimePickerDialog(getActivity(),
+                                                        onTimeSetListener,
+                                                        localTime.getHourOfDay(),
+                                                        localTime.getMinuteOfHour(),
+                                                        this.is24HourFormat);
         return dialog;
     }
 
-    private void setOnTimeSetListener(TimePickerDialog.OnTimeSetListener listener) {
+    private void setOnTimeSetListener(TimePickerDialog.OnTimeSetListener listener, boolean is24HourFormat) {
         this.onTimeSetListener = listener;
+        this.is24HourFormat = is24HourFormat;
     }
 }
