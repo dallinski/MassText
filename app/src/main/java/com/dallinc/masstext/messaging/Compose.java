@@ -16,6 +16,7 @@ import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +54,6 @@ import java.util.Locale;
 import contactpicker.Contact;
 import contactpicker.ContactManager;
 import contactpicker.FlowLayout;
-
 
 public class Compose extends ActionBarActivity {
     private LocalBroadcastManager broadcaster;
@@ -273,13 +273,15 @@ public class Compose extends ActionBarActivity {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                LocalTime localTime = new LocalTime().withHourOfDay(hourOfDay).withMinuteOfHour(minute);
-                DateTimeFormatter fmt = DateTimeFormat.forPattern("h:mm a");
+              LocalTime localTime = new LocalTime().withHourOfDay(hourOfDay).withMinuteOfHour(minute);
+              DateTimeFormatter fmt = DateTimeFormat.forPattern(
+                                  DateFormat.is24HourFormat(getBaseContext())?"HH:mm":"h:mm a");
                 String str = localTime.toString(fmt);
                 replaceVariable(str);
             }
         };
-        TimePickerFragment timePickerFragment = TimePickerFragment.withCustomListener(timeSetListener);
+        TimePickerFragment timePickerFragment = TimePickerFragment.withCustomListener(timeSetListener,
+                                                            DateFormat.is24HourFormat(getBaseContext()));
         timePickerFragment.show(this.getSupportFragmentManager(), "timePicker");
     }
 
