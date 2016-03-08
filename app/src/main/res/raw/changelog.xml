@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion versionName="2.1.1" changeDate="March 7, 2016">
-        <changelogtext>Time variable formatted according to system settings (12H/24H)</changelogtext>
-    </changelogversion>
-
     <changelogversion versionName="2.1.0" changeDate="March 2, 2016">
         <changelogtext>Russian translation</changelogtext>
         <changelogtext>Special thanks to Leonid Rosin for his help</changelogtext>
