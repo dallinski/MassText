@@ -291,7 +291,7 @@ public class Compose extends ActionBarActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear = monthOfYear + 1; // make it one-indexed instead of zero-indexed
                 LocalDate date = new LocalDate().withYear(year).withMonthOfYear(monthOfYear).withDayOfMonth(dayOfMonth);
-                DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM d, yyyy");
+                DateTimeFormatter fmt = DateTimeFormat.mediumDate();
                 String str = date.toString(fmt);
                 replaceVariable(str);
             }
