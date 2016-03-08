@@ -9,12 +9,12 @@
     <string name="action_quick_compose">Быстрое создание</string>
     <string name="action_resend">Повторно</string>
     <string name="action_resend_message">Вы хотите повторно отправить это сообщение</string>
-    <string name="action_resend_to_all">Повторная отправка этого сообщение всем</string>
-    <string name="action_resend_to_failed">Повторная отправка этого сообщение тем, кому не удалось послать</string>
+    <string name="action_resend_to_all">Повторная отправка всем</string>
+    <string name="action_resend_to_failed">Повторно тем, кому не удалось</string>
     <string name="action_save">Сохранить</string>
     <string name="action_select_recipients">Выбрать получателей</string>
     <string name="action_send_new_to_all">Послать новое сообщение всем</string>
-    <string name="action_send_this_message_to_others">Послать тоже сообщение другим получателям</string>
+    <string name="action_send_this_message_to_others">Послать другим получателям</string>
     <string name="action_set">Установить</string>
     <string name="action_settings">Настройки</string>
     <string name="action_show_change_log">Показать журнал изменений</string>
