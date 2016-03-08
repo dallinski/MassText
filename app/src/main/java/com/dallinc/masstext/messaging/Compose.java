@@ -275,7 +275,7 @@ public class Compose extends ActionBarActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
               LocalTime localTime = new LocalTime().withHourOfDay(hourOfDay).withMinuteOfHour(minute);
               DateTimeFormatter fmt = DateTimeFormat.forPattern(
-                      DateFormat.is24HourFormat(getBaseContext()) ? "HH:mm" : "h:mm a");
+                                  DateFormat.is24HourFormat(getBaseContext()) ? "HH:mm" : "h:mm a");
                 String str = localTime.toString(fmt);
                 replaceVariable(str);
             }
