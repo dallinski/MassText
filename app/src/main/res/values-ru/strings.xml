@@ -9,12 +9,12 @@
     <string name="action_quick_compose">Быстрое создание</string>
     <string name="action_resend">Повторно</string>
     <string name="action_resend_message">Вы хотите повторно отправить это сообщение</string>
-    <string name="action_resend_to_all">Повторная отправка этого сообщение всем</string>
-    <string name="action_resend_to_failed">Повторная отправка этого сообщение тем, кому не удалось послать</string>
+    <string name="action_resend_to_all">Повторная отправка всем</string>
+    <string name="action_resend_to_failed">Повторно тем, кому не удалось послать</string>
     <string name="action_save">Сохранить</string>
     <string name="action_select_recipients">Выбрать получателей</string>
     <string name="action_send_new_to_all">Послать новое сообщение всем</string>
-    <string name="action_send_this_message_to_others">Послать тоже сообщение другим получателям</string>
+    <string name="action_send_this_message_to_others">Послать другим получателям</string>
     <string name="action_set">Установить</string>
     <string name="action_settings">Настройки</string>
     <string name="action_show_change_log">Показать журнал изменений</string>
@@ -36,7 +36,6 @@
     <string name="delete_message">Удалить сообщение?</string>
     <string name="delete_message_from_list">Вы хотите удалить это сообщение из списка?</string>
     <string name="delete_template">Удалить шаблон?</string>
-    <string name="delivery_attempt">Попытка доставки:</string>
     <string name="didnt_write_var_name">Вы не написали имя переменной!</string>
     <string name="donate_explanation">Создавать приложения не легко и не быстро, но мне это нравится.\nПервоначально я сделал Mass Text по необходимости - мне нужно было приложение для отправки персонализированных рассылок, но я не нашёл в Play Store хорошо работающего приложения. Я подумал, что это приложение может оказаться полезным для некоторых людей, но я не ожидал, что столько людей будет загружать его и просить о новых возможностях.\nЯ совершенно не хочу размещать рекламу, но хотел бы получить некоторую прибыль от этого приложения. Вместо того чтобы сделать приложение менее полезным или более раздражающим или вводить некоторые премиум функции, я просто прошу Вас заплатить столько, сколько вам хочется.\n\nЕсли это приложение помогло Вам или сохранило ваше время - пожалуйста сделайте пожертвование.</string>
     <string name="error_generic_failure">Error - Generic failure</string>
@@ -103,4 +102,5 @@
     <string name="want_to_delete_template">Вы хотите удалить шаблон</string>
     <string name="work">Работа</string>
     <string name="ok">ОК</string>
+    <string name="delivery_attempt">Попытка доставки:</string>
 </resources>
