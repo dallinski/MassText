@@ -266,12 +266,14 @@ public class EditTemplate extends ActionBarActivity {
 
         builder.setPositiveButton(R.string.action_insert, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialogInterface, int n) {
-                if (customVariable.getInputWidgetText().toString().length() < 1) {
+                String var_text = customVariable.getInputWidgetText().toString();
+                if (var_text.length() < 1) {
                     // This should never happen
                     Toast.makeText(context, R.string.didnt_write_var_name, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                String var_text = customVariable.getInputWidgetText().toString().replaceAll("[^a-zA-Z0-9 ]","");
+//                TODO: investigate why I was stripping out all non-alphanumeric characters. Probably just wanted it to look clean.
+//                String var_text = customVariable.getInputWidgetText().toString().replaceAll("[^a-zA-Z0-9 ]","");
                 if(Constants.contains(getVariableOptions(context), var_text, englishVariableOptions)) {
                     Toast.makeText(context, R.string.cant_be_define_as_custom_var, Toast.LENGTH_SHORT).show();
                     return;
