@@ -11,6 +11,7 @@
     <string name="action_resend_message">האם תרצה לשלוח את ההודעה הזאת שוב ל-</string>
     <string name="action_resend_to_all">שלח שוב לכולם</string>
     <string name="action_resend_to_failed">שלוח שוב למי שהשליחה נכשלה</string>
+    <string name="action_resend_to_pending">Resend all pending messages</string>
     <string name="action_save">שמור</string>
     <string name="action_select_recipients">בחר נמען</string>
     <string name="action_send_new_to_all">שלח לכל הנמענים</string>

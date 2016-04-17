@@ -129,6 +129,13 @@ public class SentMessageDetails extends ActionBarActivity {
                 }
             }
             return true;
+        } else if (id == R.id.action_resend_to_pending) {
+            for (SingleMessage message : singleMessages) {
+                if (message.isPendingDelivery()) {
+                    message.sendMessage(getBaseContext(), 1);
+                }
+            }
+            return true;
         }
 //        else if (id == R.id.action_send_new_to_all) {
 //            return true;

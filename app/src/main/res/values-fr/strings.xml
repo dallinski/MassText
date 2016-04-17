@@ -4,6 +4,7 @@
     <string name="action_insert_variable">Insérer une variable</string>
     <string name="action_resend_to_all">Renvoyer ce message à tous les destinataires</string>
     <string name="action_resend_to_failed">Renvoyer ce message aux destinataires qui ont échoué</string>
+    <string name="action_resend_to_pending">Envoyer à nouveau tous les messages attente de livraison</string>
     <string name="action_save">Enregistrer</string>
     <string name="action_select_recipients">Selectionner les destinataires</string>
     <string name="action_send_new_to_all">Envoyer un nouveau messages à tous les destinataires</string>

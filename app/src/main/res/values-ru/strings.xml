@@ -11,6 +11,7 @@
     <string name="action_resend_message">Вы хотите повторно отправить это сообщение</string>
     <string name="action_resend_to_all">Повторная отправка всем</string>
     <string name="action_resend_to_failed">Повторно тем, кому не удалось послать</string>
+    <string name="action_resend_to_pending">Отправить все отложенные сообщения</string>
     <string name="action_save">Сохранить</string>
     <string name="action_select_recipients">Выбрать получателей</string>
     <string name="action_send_new_to_all">Послать новое сообщение всем</string>

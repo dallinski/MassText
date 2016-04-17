@@ -15,6 +15,12 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_resend_to_pending"
+        android:title="@string/action_resend_to_pending"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
     <!--<item-->
         <!--android:id="@+id/action_send_new_to_all"-->
         <!--android:title="@string/action_send_new_to_all"-->

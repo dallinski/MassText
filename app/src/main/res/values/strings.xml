@@ -11,6 +11,7 @@
     <string name="action_resend_message">Would you like to resend this message to</string>
     <string name="action_resend_to_all">Resend this message to all recipients</string>
     <string name="action_resend_to_failed">Resend this message to failed recipients</string>
+    <string name="action_resend_to_pending">Resend all pending messages</string>
     <string name="action_save">Save</string>
     <string name="action_select_recipients">Select Recipients</string>
     <string name="action_send_new_to_all">Send a new message to all recipients</string>

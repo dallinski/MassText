@@ -101,6 +101,14 @@ public class SingleMessage extends SugarRecord {
         return failureMessage != null;
     }
 
+    public boolean wasSuccessfullySent() {
+        return successfullySentAt != null && successfullySentAt.length() > 0;
+    }
+
+    public boolean isPendingDelivery() {
+        return !isFailed() && !wasSuccessfullySent();
+    }
+
     public void setAsSent() {
         failureMessage = null;
         DateTime dateTime = DateTime.now();

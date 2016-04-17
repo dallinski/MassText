@@ -11,6 +11,7 @@
     <string name="action_resend_message">¿Quieres volver a enviar este mensaje a</string>
     <string name="action_resend_to_all">Vuelva a enviar este mensaje a todos los destinatarios</string>
     <string name="action_resend_to_failed">Vuelva a enviar el mensaje a los destinatarios fallidos</string>
+    <string name="action_resend_to_pending">Vuelva a enviar todos los mensajes pendientes</string>
     <string name="action_save">Guardar</string>
     <string name="action_select_recipients">Seleccionar Destinatarios</string>
     <string name="action_send_new_to_all">Enviar un nuevo mensaje a todos los destinatarios</string>
