@@ -39,4 +39,10 @@
             app:flw_inputWidgetTextSize="20sp" />
     </ScrollView>
 
+    <TextView
+        android:id="@+id/characterCount2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

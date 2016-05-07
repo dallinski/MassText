@@ -61,6 +61,15 @@
             app:flw_labelTextSize="18sp"
             app:flw_inputWidgetTextSize="20sp" />
 
+        <TextView
+            android:id="@+id/characterCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="65dp"
+            android:layout_marginRight="8dp"/>
+
         <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/sendMessage"
             android:layout_width="wrap_content"

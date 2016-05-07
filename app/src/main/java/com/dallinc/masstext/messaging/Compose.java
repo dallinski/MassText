@@ -107,6 +107,7 @@ public class Compose extends ActionBarActivity {
         maxHeightScrollView.setMaxHeight((int) (90 * getResources().getDisplayMetrics().density));
 
         final FloatingLabelEditText editText = (FloatingLabelEditText) findViewById(R.id.composeBody);
+        final TextView characterCountTextView = (TextView) findViewById(R.id.characterCount);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
@@ -115,34 +116,36 @@ public class Compose extends ActionBarActivity {
             variables = template.variables;
             setSendButtonVisibility();
             editText.setInputWidgetText(template.body);
+            setCharacterCount(characterCountTextView, variables, template.body);
             styleEditText();
-
-            editText.addInputWidgetTextChangedListener(new TextWatcher() {
-                String before_text = "";
-                int before_variable_count = 0;
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    before_text = s.toString();
-                    before_variable_count = variableInstances(s.toString(), start+count);
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    int after_variable_count = variableInstances(s.toString(), start+count);
-                    while(after_variable_count < before_variable_count) {
-                        // Remove the appropriate variable(s)
-                        variables.remove(before_variable_count - 1);
-                        before_variable_count--;
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    setSendButtonVisibility();
-                }
-            });
         }
+
+        editText.addInputWidgetTextChangedListener(new TextWatcher() {
+            String before_text = "";
+            int before_variable_count = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                before_text = s.toString();
+                before_variable_count = variableInstances(s.toString(), start+count);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int after_variable_count = variableInstances(s.toString(), start+count);
+                while(after_variable_count < before_variable_count) {
+                    // Remove the appropriate variable(s)
+                    variables.remove(before_variable_count - 1);
+                    before_variable_count--;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                setSendButtonVisibility();
+                setCharacterCount(characterCountTextView, variables, s.toString());
+            }
+        });
 
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +189,32 @@ public class Compose extends ActionBarActivity {
         });
 
         setSendButtonVisibility();
+    }
+
+    public static void setCharacterCount(TextView characterCountTextView, ArrayList<String> variables, String message) {
+        String characterCount = "" + message.length();
+        int numVariables = variables.size();
+
+        // Account for weird case where variables has a blank string
+        if (variables.size() == 1 && variables.get(0).equals("")) {
+            numVariables = 0;
+        }
+
+        if (numVariables > 0) {
+            characterCount += "+";
+        }
+
+        int multipleOf160 = 160;
+        while (message.length() > multipleOf160) {
+            multipleOf160 += 160;
+        }
+        characterCount += "/" + multipleOf160;
+
+        if (numVariables > 0) {
+            characterCount += "?";
+        }
+
+        characterCountTextView.setText(characterCount);
     }
 
     private void setSendButtonVisibility() {

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.dallinc.masstext.helpers.Constants;
 import com.dallinc.masstext.R;
 import com.dallinc.masstext.helpers.TextDrawable;
+import com.dallinc.masstext.messaging.Compose;
 import com.dallinc.masstext.models.Template;
 import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 
@@ -60,6 +61,8 @@ public class EditTemplate extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_template);
 
+        final TextView characterCountTextView = (TextView) findViewById(R.id.characterCount2);
+
         final FloatingLabelEditText bodyInputField = (FloatingLabelEditText) findViewById(R.id.templateBodyInput);
         bodyInputField.getInputWidget().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -91,7 +94,7 @@ public class EditTemplate extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                Compose.setCharacterCount(characterCountTextView, variables, s.toString());
             }
         });
 
