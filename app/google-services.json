@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "327384936150",
+    "firebase_url": "https://api-8993303552891599458-941456.firebaseio.com",
+    "project_id": "api-8993303552891599458-941456",
+    "storage_bucket": "api-8993303552891599458-941456.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327384936150:android:0f33d2c26bea9813",
+        "android_client_info": {
+          "package_name": "com.dallinc.masstext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327384936150-na1vfoakqqg3dmuvbb14619i565r38n9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiQxh5ikAm8Ed_2Mi7x-9Mc0Ov1ajqMqs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

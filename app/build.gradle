@@ -43,3 +43,5 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.2'
     compile 'com.github.gabrielemariotti.changeloglib:changelog:2.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
