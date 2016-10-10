@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion versionName="2.1.5" changeDate="October 10, 2016">
+        <changelogtext>Portuguese (Brazil) translation</changelogtext>
+        <changelogtext>Special thanks to Frederico Maia for his help</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="2.1.4" changeDate="May 7, 2016">
         <changelogtext>Character count when composing messages</changelogtext>
     </changelogversion>
