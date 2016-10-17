@@ -2,11 +2,11 @@
 <resources>
     <string name="action_cancel">Cancelar</string>
     <string name="action_close">Fechar</string>
-    <string name="action_delete">Eliminar</string>
+    <string name="action_delete">Apagar</string>
     <string name="action_donate">Doar</string>
     <string name="action_insert">Inserir</string>
     <string name="action_insert_variable">Inserir Variável</string>
-    <string name="action_quick_compose">Redigir Rápido</string>
+    <string name="action_quick_compose">Escrever Mensagem</string>
     <string name="action_resend">Reenviar</string>
     <string name="action_resend_message">Quer enviar novamente esta mensagem a</string>
     <string name="action_resend_to_all">Reenviar à todos os destinatários</string>
@@ -17,11 +17,11 @@
     <string name="action_send_new_to_all">Enviar uma nova mensagem à todos os destinatários</string>
     <string name="action_send_this_message_to_others">Enviar esta mensagem a outros destinatários</string>
     <string name="action_set">Escolher</string>
-    <string name="action_settings">Configuração</string>
+    <string name="action_settings">Configurações</string>
     <string name="action_show_change_log">Mostrar Lista de Modificações</string>
     <string name="action_toggle_views">Modificar vista de grupo</string>
     <string name="action_toggle_views_short">Modificar</string>
-    <string name="action_use_template">Usar modelo</string>
+    <string name="action_use_template">Usar Modelo</string>
     <string name="app_name">Mass Text</string>
     <string name="callback">Devolução de chamadas</string>
     <string name="cant_be_define_as_custom_var">A Variável de entrada não pode ser definida como uma variável personalizada.</string>
@@ -87,7 +87,7 @@
     <string name="unknown_type">Tipo desconhecido</string>
     <string name="var_custom_variable">variável personalizada</string>
     <string name="var_full_name">nome completo</string>
-    <string name="var_first_name">primeiro nome</string>
+    <string name="var_first_name">primeiro nome</string>  
     <string name="var_last_name">apelido</string>
     <string name="var_date">data</string>
     <string name="var_day_of_week">dia da semana</string>
