@@ -18,5 +18,10 @@ public class FAQs extends ActionBarActivity {
         emailView.setLinksClickable(true);
         emailView.setText(Html.fromHtml("<a href=\"mailto:dallin.christensen+masstext2@gmail.com\">Email me (Dallin) directly</a>"));
         emailView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView privacyPolicyLink = (TextView) findViewById(R.id.privacyPolicyLink);
+        privacyPolicyLink.setLinksClickable(true);
+        privacyPolicyLink.setText(Html.fromHtml("<a href=\"https://plus.google.com/+DallinChristensen1/posts/L5xXSRyktNA\">Click here to see it</a>"));
+        privacyPolicyLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
