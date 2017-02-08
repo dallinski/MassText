@@ -1,6 +1,12 @@
 # Mass Text
 An Android app for sending texts to many recipients. Message templates can be saved for reuse and variables can be inserted in templates for dynamically personalizing messages.
 
+### Google+ Page
+https://plus.google.com/communities/111584451863093153339
+
+### Privacy Policy
+https://plus.google.com/+DallinChristensen1/posts/L5xXSRyktNA
+
 ### Play Store listings
 <img src="https://lh4.ggpht.com/iix3tDNVAs67Obc5nEAdT002WC3aArrJfLGGfwC7fg1Vx2RxvEc9Micp3_ukjx36uoM" width="48" title="Mass Text Original logo"> [Original Version](https://play.google.com/store/apps/details?id=com.dallinc.masstexter)
 
