@@ -12,15 +12,15 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.dallinc.masstext"
         minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 30
-        versionName "2.1.6"
+        targetSdkVersion 26
+        versionCode 31
+        versionName "2.1.7"
     }
     buildTypes {
         release {
@@ -31,17 +31,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.1.0'
-    compile 'com.android.support:recyclerview-v7:22.1.0'
-    compile 'com.android.support:cardview-v7:22.1.0'
-    compile 'com.github.satyan:sugar:1.4'
-    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.getbase:floatingactionbutton:1.10.1'
-    compile 'com.marvinlabs:android-floatinglabel-widgets:1.5.0@aar' // 1.6.1 is giving me issues
-    compile 'net.danlew:android.joda:2.9.2'
-    compile 'com.github.gabrielemariotti.changeloglib:changelog:2.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    implementation 'com.android.support:recyclerview-v7:26.0.0'
+    implementation 'com.android.support:cardview-v7:26.0.0'
+    implementation 'com.github.satyan:sugar:1.5'
+    implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
+    implementation 'com.marvinlabs:android-floatinglabel-widgets:1.5.0@aar' // 1.6.1 is giving me issues
+    implementation 'net.danlew:android.joda:2.9.2'
+    implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
 }
-
-apply plugin: 'com.google.gms.google-services'

@@ -1,16 +1,19 @@
 package com.dallinc.masstext.messaging;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Build;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.Spannable;
@@ -55,7 +58,12 @@ import contactpicker.Contact;
 import contactpicker.ContactManager;
 import contactpicker.FlowLayout;
 
-public class Compose extends ActionBarActivity {
+public class Compose extends AppCompatActivity {
+    // Request code for SEND_SMS. It can be any number > 0.
+    private static final int PERMISSIONS_REQUEST_SEND_SMS = 100;
+    // Request code for READ_PHONE_STATE. It can be any number > 0.
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 101;
+
     private LocalBroadcastManager broadcaster;
     final int REQUEST_CODE = 100;
     boolean repeatCheck = false;
@@ -150,34 +158,45 @@ public class Compose extends ActionBarActivity {
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editText.getInputWidgetText().toString().length() < 1) {
-                    Toast.makeText(getBaseContext(), R.string.cant_send_empty_msg, Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (contactsSharePhone.size() < 1) {
-                    Toast.makeText(getBaseContext(), R.string.must_specify_recipient, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                // Check the SDK version and whether the permission is already granted or not.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
+                    //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                    //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+                } else {
+                    // Android version is lesser than 6.0 or the permission is already granted.
 
-                // TODO: get these lines working. For some reason the visibility isn't changing
-                progressLayout.setVisibility(View.VISIBLE);
-                sendMessageBtn.setVisibility(View.INVISIBLE);
-
-                GroupMessage masterGroup = new GroupMessage(editText.getInputWidgetText().toString(), variables);
-                masterGroup.save();
-
-                for(int i=0; i<contactsSharePhone.size(); i++) {
-                    SingleMessage singleMessage = new SingleMessage(contactsSharePhone.get(i), contactsShareDetail.get(i).getContactName(), masterGroup);
-                    if(contactsShareDetail.get(i).getContactPhotoUri() != null) {
-                        singleMessage.setPhotoUri(contactsShareDetail.get(i).getContactPhotoUri());
+                    if(editText.getInputWidgetText().toString().length() < 1) {
+                        Toast.makeText(getBaseContext(), R.string.cant_send_empty_msg, Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (contactsSharePhone.size() < 1) {
+                        Toast.makeText(getBaseContext(), R.string.must_specify_recipient, Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                    singleMessage.save();
-                    singleMessage.sendMessage(getBaseContext(), 1);
+
+                    // TODO: get these lines working. For some reason the visibility isn't changing
+                    progressLayout.setVisibility(View.VISIBLE);
+                    sendMessageBtn.setVisibility(View.INVISIBLE);
+
+                    GroupMessage masterGroup = new GroupMessage(editText.getInputWidgetText().toString(), variables);
+                    masterGroup.save();
+
+                    for(int i=0; i<contactsSharePhone.size(); i++) {
+                        SingleMessage singleMessage = new SingleMessage(contactsSharePhone.get(i), contactsShareDetail.get(i).getContactName(), masterGroup);
+                        if(contactsShareDetail.get(i).getContactPhotoUri() != null) {
+                            singleMessage.setPhotoUri(contactsShareDetail.get(i).getContactPhotoUri());
+                        }
+                        singleMessage.save();
+                        singleMessage.sendMessage(getBaseContext(), 1);
+                    }
+
+                    sendResult(masterGroup.getId());
+
+                    // return to main activity (Messages fragment)
+                    finish();
                 }
-
-                sendResult(masterGroup.getId());
-
-                // return to main activity (Messages fragment)
-                finish();
             }
         });
 

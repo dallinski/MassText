@@ -1,13 +1,13 @@
 package com.dallinc.masstext;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 
-public class FAQs extends ActionBarActivity {
+public class FAQs extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

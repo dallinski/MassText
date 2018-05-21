@@ -1,13 +1,16 @@
 package contactpicker;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
@@ -16,7 +19,7 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.internal.view.menu.ActionMenuItemView;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -62,6 +65,10 @@ public final class ContactManager extends FragmentActivity {
     private GroupAdapter groupAdapter = null;
     private ListView contactLV, groupLV;
     private ViewSwitcher viewSwitcher;
+
+    // Request code for READ_CONTACTS. It can be any number > 0.
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+
     Animation a1, a2;
     CheckBox check_all;
     ActionMenuItemView btnDone, btnToggle;
@@ -489,8 +496,17 @@ public final class ContactManager extends FragmentActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            // Obtain contacts
-            getContactsNewApi();
+            // Check the SDK version and whether the permission is already granted or not.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+                //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+            } else {
+                // Android version is lesser than 6.0 or the permission is already granted.
+
+                // Obtain contacts
+                getContactsNewApi();
+            }
+
             return null;
         }
 

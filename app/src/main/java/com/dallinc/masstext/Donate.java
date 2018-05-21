@@ -3,9 +3,9 @@ package com.dallinc.masstext;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 //import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Donate extends ActionBarActivity {
+public class Donate extends AppCompatActivity {
     IabHelper mHelper;
     IabHelper.QueryInventoryFinishedListener mQueryFinishedListener;
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener;

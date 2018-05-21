@@ -12,8 +12,8 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -40,7 +40,7 @@ import com.dallinc.masstext.models.SingleMessage;
 
 import java.util.List;
 
-public class SentMessageDetails extends ActionBarActivity {
+public class SentMessageDetails extends AppCompatActivity {
     private GroupMessage groupMessage;
     private List<SingleMessage> singleMessages;
     private BroadcastReceiver receiver;

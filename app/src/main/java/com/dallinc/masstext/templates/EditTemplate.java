@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.Spannable;
@@ -32,7 +32,7 @@ import com.marvinlabs.widget.floatinglabel.edittext.FloatingLabelEditText;
 import java.util.ArrayList;
 
 
-public class EditTemplate extends ActionBarActivity {
+public class EditTemplate extends AppCompatActivity {
 
     Boolean disableInsertVariable = true;
     ArrayList<String> variables = new ArrayList<String>();

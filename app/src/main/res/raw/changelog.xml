@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion versionName="2.1.7" changeDate="April 12, 2018">
+        <changelogtext>Updated code dependencies so that app works better on Android 7.0 and newer</changelogtext>
+    </changelogversion>
+
     <changelogversion versionName="2.1.6" changeDate="February 7, 2017">
         <changelogtext>Added link to privacy policy - [a href="https://plus.google.com/+DallinChristensen1/posts/L5xXSRyktNA"]See it now[/a]</changelogtext>
     </changelogversion>
